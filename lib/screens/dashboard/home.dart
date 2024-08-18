@@ -541,7 +541,7 @@ class _HomePageState extends State<HomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    // width: 200.0,
+                    width: 312.0,
                     // width: double.infinity,
                     height: 32.0,
                     decoration: const BoxDecoration(
@@ -555,11 +555,11 @@ class _HomePageState extends State<HomePage> {
                         child: Text(
                           'Restuarants Near You',
                           style: TextStyle(
-                            fontFamily: 'Lora',
-                            fontSize: 20.0,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                              fontFamily: 'Lora',
+                              fontSize: 20.0,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.bold,
+                              fontStyle: FontStyle.normal),
                         ),
                       ),
                     ),
@@ -625,6 +625,26 @@ class _HomePageState extends State<HomePage> {
                             width: 394.0,
                             height: 197.0,
                             fit: BoxFit.cover,
+                          ),
+                        ),
+                        const Align(
+                          alignment: AlignmentDirectional(-1.0, 0.0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                              12.0,
+                              0.0,
+                              0.0,
+                              0.0,
+                            ),
+                            child: Text(
+                              'Mr Biggs',
+                              style: TextStyle(
+                                fontFamily: 'Lora',
+                                fontSize: 30,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
                           ),
                         ),
                         const Align(
