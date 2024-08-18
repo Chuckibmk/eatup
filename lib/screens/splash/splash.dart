@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: Container(
+              child: SizedBox(
                 width: double.infinity,
                 height: 500.0,
                 // decoration: BoxDecoration(color: Colors.grey[200]),

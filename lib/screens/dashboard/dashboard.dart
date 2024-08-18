@@ -30,7 +30,7 @@ class _StartedState extends State<Started> {
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-                child: Container(
+                child: SizedBox(
                   width: double.infinity,
                   height: 500,
                   child: Stack(
