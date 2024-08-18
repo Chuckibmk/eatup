@@ -1,3 +1,4 @@
+import 'package:eatup/screens/dashboard/home.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -26,7 +27,7 @@ class _StartedState extends State<Started> {
               Container(
                 width: double.infinity,
                 height: 618,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: Container(
@@ -35,8 +36,8 @@ class _StartedState extends State<Started> {
                   child: Stack(
                     children: [
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 40),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 0.0, 0.0, 40),
                         child: PageView(
                           controller: pcont,
                           scrollDirection: Axis.horizontal,
@@ -72,7 +73,7 @@ class _StartedState extends State<Started> {
                         ),
                       ),
                       Align(
-                        alignment: AlignmentDirectional(0.0, 1.0),
+                        alignment: const AlignmentDirectional(0.0, 1.0),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 0.0, 16.0),
@@ -104,29 +105,34 @@ class _StartedState extends State<Started> {
               ),
               Expanded(
                   child: Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: const AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 2.0),
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 2.0),
                   child: SizedBox(
                     height: 70.0,
                     width: 300.0,
                     child: ElevatedButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        var route = MaterialPageRoute(
+                            builder: (context) => const HomePage());
+                        Navigator.push(context, route);
+                      },
                       style: ButtonStyle(
                         padding: WidgetStateProperty.all<EdgeInsets>(
-                          EdgeInsets.fromLTRB(24, 0, 24, 0),
+                          const EdgeInsets.fromLTRB(24, 0, 24, 0),
                         ),
                         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
-                            side: BorderSide(
+                            side: const BorderSide(
                               color: Colors.transparent,
                               width: 3,
                             ),
                           ),
                         ),
                       ),
-                      label: Text(
+                      label: const Text(
                         'Get Started',
                         style: TextStyle(
                           color: Colors.black,
@@ -135,7 +141,7 @@ class _StartedState extends State<Started> {
                           fontSize: 30,
                         ),
                       ),
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.change_history,
                         color: Color(0xFFEF2707),
                         size: 35,
