@@ -1,3 +1,14 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.5.0'
+    }
+}
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
@@ -5,7 +16,26 @@ plugins {
     id "dev.flutter.flutter-gradle-plugin"
 }
 
+group 'io.flutter.plugins.pathprovider'
+version '1.0-SNAPSHOT'
+
+
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+// apply plugin: 'com.android.library'
+
+
 android {
+    if (project.android.hasProperty("namespace")) {
+        namespace 'io.flutter.plugins.pathprovider'
+    }
+
     namespace = "com.example.eatup"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion

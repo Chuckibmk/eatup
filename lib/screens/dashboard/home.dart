@@ -1,3 +1,4 @@
+import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -369,7 +370,11 @@ class _HomePageState extends State<HomePage> {
               style: ButtonStyle(
                 fixedSize: WidgetStateProperty.all<Size>(const Size.square(60)),
               ),
-              onPressed: () {},
+              onPressed: () {
+                var route =
+                    MaterialPageRoute(builder: (context) => const Cart());
+                Navigator.push(context, route);
+              },
               icon: const Icon(
                 Icons.shopping_cart,
                 color: Color(0xFFE10E0E),
