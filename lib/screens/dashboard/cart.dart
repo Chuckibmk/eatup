@@ -1,3 +1,4 @@
+import 'package:counter_button/counter_button.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,6 +12,8 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  int _counterVal = 0;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -254,20 +257,29 @@ class _CartState extends State<Cart> {
                             ),
                             Expanded(
                               child: Align(
-                                alignment: AlignmentDirectional(1.0, 0.0),
-                                child: Container(
-                                  width: 100.0,
-                                  height: 25.0,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey,
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    shape: BoxShape.rectangle,
-                                    border: Border.all(
-                                      color: Colors.grey,
-                                    ),
-                                  ),
-                                  // child: ,
+                                alignment: const AlignmentDirectional(1.0, 0.0),
+                                // child: Container(
+                                // width: 100.0,
+                                // height: 25.0,
+                                // decoration: BoxDecoration(
+                                //   color: Colors.transparent,
+                                //   borderRadius: BorderRadius.circular(8.0),
+                                //   shape: BoxShape.rectangle,
+                                //   border: Border.all(
+                                //     color: Colors.transparent,
+                                //   ),
+                                // ),
+                                child: CounterButton(
+                                  count: _counterVal,
+                                  onChange: (int val) {
+                                    setState(() {
+                                      _counterVal = val;
+                                    });
+                                  },
+                                  loading: false,
+                                  buttonColor: const Color(0xFFE10E0E),
                                 ),
+                                // ),
                               ),
                             )
                           ],
@@ -277,6 +289,99 @@ class _CartState extends State<Cart> {
                   ),
                 ),
               ),
+              SizedBox(
+                width: double.infinity,
+                height: 170.0,
+                // decoration: BoxDecoration(
+                //   color: Colors.grey,
+                // ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Align(
+                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      child: SizedBox(
+                        width: 300.0,
+                        height: 50.0,
+                        child: ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            elevation: WidgetStateProperty.all<double>(3.0),
+                            backgroundColor: WidgetStateProperty.all<Color>(
+                              const Color(0xFFE10E0E),
+                            ),
+                            padding: WidgetStateProperty.all<EdgeInsets>(
+                              const EdgeInsets.fromLTRB(30.0, 0, 30.0, 0),
+                            ),
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                                side: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Login To Checkout',
+                            style: TextStyle(
+                              fontFamily: 'Readex Pro',
+                              color: Colors.white,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20.0, 0.0, 20.0, 0.0),
+                        child: SizedBox(
+                          width: 300.0,
+                          height: 50.0,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              elevation: WidgetStateProperty.all<double>(3.0),
+                              padding: WidgetStateProperty.all<EdgeInsets>(
+                                const EdgeInsets.fromLTRB(24, 0, 24, 0),
+                              ),
+                              backgroundColor:
+                                  WidgetStateProperty.all<Color>(Colors.white),
+                              shape: WidgetStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  side: const BorderSide(
+                                    color: Color(0xFFE10E0E),
+                                    width: 3,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            child: const Text(
+                              'Check Out As Guest',
+                              style: TextStyle(
+                                fontFamily: 'Readex Pro',
+                                color: Colors.black,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.normal,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         ),
