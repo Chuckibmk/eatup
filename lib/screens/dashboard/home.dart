@@ -1,4 +1,5 @@
 import 'package:eatup/screens/dashboard/cart.dart';
+import 'package:eatup/screens/dashboard/help.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -260,7 +261,9 @@ class _HomePageState extends State<HomePage> {
                               size: 20.0,
                             ),
                             onPressed: () {
-                              print('IconButton pressed ...');
+                              var route = MaterialPageRoute(
+                                  builder: (context) => const Help());
+                              Navigator.push(context, route);
                             },
                           ),
                         ),
