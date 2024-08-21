@@ -66,7 +66,7 @@ class _ProductState extends State<Product> {
                                   ),
                                   backgroundColor:
                                       WidgetStateProperty.all<Color>(
-                                    const Color(0x6EE10E0E),
+                                    const Color(0xFFE10E0E),
                                   ),
                                   fixedSize: WidgetStateProperty.all<Size>(
                                     const Size.square(40.0),
@@ -100,7 +100,7 @@ class _ProductState extends State<Product> {
                                   ),
                                   backgroundColor:
                                       WidgetStateProperty.all<Color>(
-                                    const Color(0x6EE10E0E),
+                                    const Color(0xFFE10E0E),
                                   ),
                                   fixedSize: WidgetStateProperty.all<Size>(
                                     const Size.square(40.0),
@@ -177,7 +177,7 @@ class _ProductState extends State<Product> {
                                   ),
                                 ),
                                 backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0x6EE10E0E),
+                                  const Color(0xFFE10E0E),
                                 ),
                                 fixedSize: WidgetStateProperty.all<Size>(
                                   const Size.fromHeight(40.0),
@@ -311,7 +311,7 @@ class _ProductState extends State<Product> {
                       Container(
                         width: 100.0,
                         height: 161.0,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white,
                         ),
                         child: Column(
@@ -319,7 +319,7 @@ class _ProductState extends State<Product> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
+                            const Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 15.0),
                               child: Row(
@@ -335,6 +335,123 @@ class _ProductState extends State<Product> {
                                   )
                                 ],
                               ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 0.0, 0.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: Image.network(
+                                      'https://images.unsplash.com/photo-1558896450-09e9d93b30ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwyMnx8d2FmZmxlfGVufDB8fHx8MTcyMzY0MTQzN3ww&ixlib=rb-4.0.3&q=80&w=1080',
+                                      width: 85.0,
+                                      height: 105.0,
+                                      fit: BoxFit.cover,
+                                      alignment: const Alignment(-1.0, 1.0),
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      15.0, 0.0, 0.0, 0.0),
+                                  child: Container(
+                                    width: 192.0,
+                                    height: 100.0,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Align(
+                                          alignment: const AlignmentDirectional(
+                                              -1.0, 0.0),
+                                          child: Container(
+                                            decoration: const BoxDecoration(),
+                                            child: const Text(
+                                              'Waffle (45mins Wait)',
+                                              style: TextStyle(
+                                                fontFamily: 'Readex Pro',
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        Container(
+                                          decoration: const BoxDecoration(),
+                                          child: const Text(
+                                            'Experience the perfect balance of crispy and fluffy textures with a waffle, customizable with endless sweet or savory top.....',
+                                            style: TextStyle(
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.normal,
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: const AlignmentDirectional(
+                                              -1.0, 0.0),
+                                          child: Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(0.0, 5.0, 0.0, 0.0),
+                                            child: Container(
+                                              decoration: const BoxDecoration(),
+                                              child: const Text(
+                                                '#1500',
+                                                style: TextStyle(
+                                                  fontFamily: 'Readex Pro',
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                  fontSize: 13,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      15.0, 0.0, 0.0, 0.0),
+                                  child: IconButton(
+                                    style: ButtonStyle(
+                                      shape: WidgetStateProperty.all<
+                                          RoundedRectangleBorder>(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(20.0),
+                                          side: const BorderSide(
+                                              width: 1.0,
+                                              color: Colors.transparent),
+                                        ),
+                                      ),
+                                      backgroundColor:
+                                          WidgetStateProperty.all<Color>(
+                                        const Color(0xFFE10E0E),
+                                      ),
+                                      fixedSize: WidgetStateProperty.all<Size>(
+                                          const Size.square(35.0)),
+                                    ),
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                      Icons.add,
+                                      color: Colors.white,
+                                      size: 20.0,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Divider(
+                              thickness: 1.0,
+                              color: Colors.white,
                             ),
                           ],
                         ),
