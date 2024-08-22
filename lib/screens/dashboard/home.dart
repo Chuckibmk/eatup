@@ -1,5 +1,6 @@
 import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:eatup/screens/dashboard/help.dart';
+import 'package:eatup/screens/dashboard/product.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -597,80 +598,87 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-              Container(
-                width: 394.0,
-                height: 340.0,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 4.0,
-                      color: Color(0x43FFFFFF),
-                      offset: Offset(0.0, 2.0),
-                    )
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
+              GestureDetector(
+                onTap: () {
+                  var route =
+                      MaterialPageRoute(builder: (context) => const Product());
+                  Navigator.push(context, route);
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 340.0,
+                  decoration: const BoxDecoration(
                     color: Colors.white,
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            'https://picsum.photos/seed/137/600',
-                            width: 394.0,
-                            height: 197.0,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                              12.0,
-                              0.0,
-                              0.0,
-                              0.0,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 4.0,
+                        color: Color(0x43FFFFFF),
+                        offset: Offset(0.0, 2.0),
+                      )
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(18.0),
+                    child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      color: Colors.white,
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              'https://picsum.photos/seed/137/600',
+                              width: 394.0,
+                              height: 197.0,
+                              fit: BoxFit.cover,
                             ),
-                            child: Text(
-                              'Mr Biggs',
-                              style: TextStyle(
-                                fontFamily: 'Lora',
-                                fontSize: 30,
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w500,
+                          ),
+                          const Align(
+                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0,
+                                0.0,
+                                0.0,
+                                0.0,
+                              ),
+                              child: Text(
+                                'Mr Biggs',
+                                style: TextStyle(
+                                  fontFamily: 'Lora',
+                                  fontSize: 30,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        const Align(
-                          alignment: Alignment(-1.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'African | Rice | Soups | Pasta',
-                              style: TextStyle(
-                                fontFamily: 'Readex Pro',
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.w500,
+                          const Align(
+                            alignment: Alignment(-1.0, 0.0),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                'African | Rice | Soups | Pasta',
+                                style: TextStyle(
+                                  fontFamily: 'Readex Pro',
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

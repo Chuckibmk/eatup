@@ -66,7 +66,7 @@ class _ProductState extends State<Product> {
                                   ),
                                   backgroundColor:
                                       WidgetStateProperty.all<Color>(
-                                    const Color(0xFFE10E0E),
+                                    Colors.white,
                                   ),
                                   fixedSize: WidgetStateProperty.all<Size>(
                                     const Size.square(40.0),
@@ -100,7 +100,7 @@ class _ProductState extends State<Product> {
                                   ),
                                   backgroundColor:
                                       WidgetStateProperty.all<Color>(
-                                    const Color(0xFFE10E0E),
+                                    Colors.white,
                                   ),
                                   fixedSize: WidgetStateProperty.all<Size>(
                                     const Size.square(40.0),
@@ -133,7 +133,7 @@ class _ProductState extends State<Product> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
-                                'Stephanies\'s Cook',
+                                'Stephanie\'s Cook',
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   letterSpacing: 0.0,
