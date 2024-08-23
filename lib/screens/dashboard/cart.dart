@@ -1,4 +1,5 @@
 import 'package:counter_button/counter_button.dart';
+import 'package:eatup/screens/account/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -305,7 +306,11 @@ class _CartState extends State<Cart> {
                         width: 300.0,
                         height: 50.0,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            var route = MaterialPageRoute(
+                                builder: (context) => const Login());
+                            Navigator.push(context, route);
+                          },
                           style: ButtonStyle(
                             elevation: WidgetStateProperty.all<double>(3.0),
                             backgroundColor: WidgetStateProperty.all<Color>(
