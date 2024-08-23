@@ -52,11 +52,11 @@ class _CartState extends State<Cart> {
               ),
             ),
           ),
-          title: const Text(
+          title: Text(
             'Cart',
-            style: TextStyle(
-              fontFamily: 'Outfit',
-              color: Color(0xFFE10E0E),
+            style: GoogleFonts.readexPro(
+              textStyle: Theme.of(context).textTheme.headlineMedium,
+              color: const Color(0xFFE10E0E),
               fontSize: 22.0,
               letterSpacing: 0.0,
             ),
@@ -90,19 +90,18 @@ class _CartState extends State<Cart> {
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
-                        const Align(
-                          alignment: AlignmentDirectional(-1.0, 0.0),
+                        Align(
+                          alignment: const AlignmentDirectional(-1.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 10.0, 20.0, 0.0, 0.0),
                             child: Text(
                               'Product Summary',
-                              style: TextStyle(
-                                fontFamily: 'Readex Pro',
+                              style: GoogleFonts.readexPro(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w500,
                                 letterSpacing: 0.0,
-                                fontSize: 23,
+                                fontSize: 20,
                               ),
                             ),
                           ),
@@ -141,13 +140,12 @@ class _CartState extends State<Cart> {
                                 ),
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                            Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   10.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'Fried Yam',
-                                style: TextStyle(
-                                  fontFamily: 'Readex Pro',
+                                style: GoogleFonts.readexPro(
                                   letterSpacing: 0.0,
                                   fontSize: 20,
                                 ),
@@ -194,26 +192,31 @@ class _CartState extends State<Cart> {
                                   50.0, 0.0, 0.0, 0.0),
                               child: RichText(
                                 textScaler: MediaQuery.of(context).textScaler,
-                                text: const TextSpan(
+                                text: TextSpan(
                                   children: [
                                     TextSpan(
                                       text: '1x',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
-                                        color: Color.fromARGB(255, 90, 90, 90),
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        color: const Color.fromARGB(
+                                            255, 90, 90, 90),
                                         fontSize: 15.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    TextSpan(
+                                    const TextSpan(
                                       text: 'Fried Egg',
                                       style: TextStyle(),
                                     )
                                   ],
-                                  style: TextStyle(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color.fromARGB(255, 54, 54, 54),
+                                  style: GoogleFonts.readexPro(
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    color:
+                                        const Color.fromARGB(255, 54, 54, 54),
                                     fontSize: 15.0,
                                     letterSpacing: 0.0,
                                   ),
@@ -230,25 +233,30 @@ class _CartState extends State<Cart> {
                                   50.0, 0.0, 0.0, 0.0),
                               child: RichText(
                                 textScaler: MediaQuery.of(context).textScaler,
-                                text: const TextSpan(
+                                text: TextSpan(
                                   children: [
                                     TextSpan(
                                       text: 'NGN',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
-                                        color: Color.fromARGB(255, 90, 90, 90),
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        color: const Color.fromARGB(
+                                            255, 90, 90, 90),
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    TextSpan(
+                                    const TextSpan(
                                       text: '6000',
                                       style: TextStyle(),
                                     ),
                                   ],
-                                  style: TextStyle(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color.fromARGB(255, 90, 90, 90),
+                                  style: GoogleFonts.readexPro(
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    color:
+                                        const Color.fromARGB(255, 90, 90, 90),
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 17,
@@ -330,10 +338,10 @@ class _CartState extends State<Cart> {
                               ),
                             ),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Login To Checkout',
-                            style: TextStyle(
-                              fontFamily: 'Readex Pro',
+                            style: GoogleFonts.readexPro(
+                              textStyle: Theme.of(context).textTheme.titleSmall,
                               color: Colors.white,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.normal,
@@ -370,11 +378,12 @@ class _CartState extends State<Cart> {
                                 ),
                               ),
                             ),
-                            child: const Text(
+                            child: Text(
                               'Check Out As Guest',
-                              style: TextStyle(
-                                fontFamily: 'Readex Pro',
-                                color: Colors.black,
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.titleSmall,
+                                color: const Color(0xFFE10E0E),
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.normal,
                                 fontSize: 20,

@@ -2,6 +2,7 @@ import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:eatup/screens/dashboard/help.dart';
 import 'package:eatup/screens/dashboard/product.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
@@ -65,19 +66,21 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                         ),
-                        const Align(
-                          alignment: Alignment(0.0, 0.0),
+                        Align(
+                          alignment: const Alignment(0.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 30.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Home',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Readex Pro'),
+                              style: GoogleFonts.readexPro(
+                                color: Colors.black,
+                                letterSpacing: 0.0,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                              ),
                             ),
                           ),
                         )
@@ -116,19 +119,21 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                         ),
-                        const Align(
+                        Align(
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 30.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Restaurants',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Readex Pro'),
+                              style: GoogleFonts.readexPro(
+                                color: Colors.black,
+                                letterSpacing: 0.0,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                              ),
                             ),
                           ),
                         ),
@@ -166,19 +171,21 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                         ),
-                        const Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 30.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Food Packages',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Readax Pro'),
+                              style: GoogleFonts.readexPro(
+                                color: Colors.black,
+                                letterSpacing: 0.0,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                              ),
                             ),
                           ),
                         ),
@@ -227,7 +234,7 @@ class _HomePageState extends State<HomePage> {
                                 color: Colors.black,
                                 letterSpacing: 0.0,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
                           ),
@@ -268,19 +275,20 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                         ),
-                        const Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 30.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Help',
-                              style: TextStyle(
+                              style: GoogleFonts.readexPro(
                                 color: Colors.black,
                                 letterSpacing: 0.0,
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: 'Readex Pro',
+                                fontWeight: FontWeight.w600,
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
                               ),
                             ),
                           ),
@@ -319,19 +327,21 @@ class _HomePageState extends State<HomePage> {
                             },
                           ),
                         ),
-                        const Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 30.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Login',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Readex Pro'),
+                              style: GoogleFonts.readexPro(
+                                color: Colors.black,
+                                letterSpacing: 0.0,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                              ),
                             ),
                           ),
                         ),
@@ -412,10 +422,14 @@ class _HomePageState extends State<HomePage> {
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'What are you craving?',
-                          labelStyle: const TextStyle(
-                              fontFamily: 'Readex Pro', letterSpacing: 0.0),
-                          hintStyle: const TextStyle(
-                              fontFamily: 'Readex Pro', letterSpacing: 0.0),
+                          labelStyle: GoogleFonts.readexPro(
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 0.0),
+                          hintStyle: GoogleFonts.readexPro(
+                              textStyle:
+                                  Theme.of(context).textTheme.labelMedium,
+                              letterSpacing: 0.0),
                           enabledBorder: UnderlineInputBorder(
                             borderSide: const BorderSide(
                                 color: Colors.grey, width: 2.0),
@@ -444,8 +458,8 @@ class _HomePageState extends State<HomePage> {
                             Icons.search,
                           ),
                         ),
-                        style: const TextStyle(
-                          fontFamily: 'Readex Pro',
+                        style: GoogleFonts.readexPro(
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
                           letterSpacing: 0.0,
                           fontWeight: FontWeight.w500,
                         ),
@@ -556,15 +570,15 @@ class _HomePageState extends State<HomePage> {
                     decoration: const BoxDecoration(
                       color: Colors.white,
                     ),
-                    child: const Align(
+                    child: Align(
                       alignment: Alignment(-1.0, 0.0),
                       child: Padding(
                         padding:
                             EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Restuarants Near You',
-                          style: TextStyle(
-                              fontFamily: 'Lora',
+                          style: GoogleFonts.lora(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 20.0,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.bold,
@@ -586,11 +600,11 @@ class _HomePageState extends State<HomePage> {
                             0.0, 0.0, 20.0, 0.0),
                         child: RichText(
                           textScaler: MediaQuery.of(context).textScaler,
-                          text: const TextSpan(
+                          text: TextSpan(
                             text: 'See All',
-                            style: TextStyle(
-                              fontFamily: 'Readex Pro',
-                              color: Color(0xFFE10E0E),
+                            style: GoogleFonts.readexPro(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              color: const Color(0xFFE10E0E),
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.bold,
                             ),
@@ -642,7 +656,7 @@ class _HomePageState extends State<HomePage> {
                               fit: BoxFit.cover,
                             ),
                           ),
-                          const Align(
+                          Align(
                             alignment: AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -653,8 +667,9 @@ class _HomePageState extends State<HomePage> {
                               ),
                               child: Text(
                                 'Mr Biggs',
-                                style: TextStyle(
-                                  fontFamily: 'Lora',
+                                style: GoogleFonts.lora(
+                                  textStyle:
+                                      Theme.of(context).textTheme.titleLarge,
                                   fontSize: 30,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
@@ -662,15 +677,16 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-                          const Align(
-                            alignment: Alignment(-1.0, 0.0),
+                          Align(
+                            alignment: const Alignment(-1.0, 0.0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                   12.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'African | Rice | Soups | Pasta',
-                                style: TextStyle(
-                                  fontFamily: 'Readex Pro',
+                                style: GoogleFonts.readexPro(
+                                  textStyle:
+                                      Theme.of(context).textTheme.bodyMedium,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w500,
                                 ),

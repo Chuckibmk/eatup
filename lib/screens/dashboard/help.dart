@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Help extends StatefulWidget {
   const Help({super.key});
@@ -45,11 +46,11 @@ class _HelpState extends State<Help> {
               ),
             ),
           ),
-          title: const Text(
+          title: Text(
             'Help',
-            style: TextStyle(
-              fontFamily: 'Outfit',
-              color: Color(0xFFE10E0E),
+            style: GoogleFonts.readexPro(
+              textStyle: Theme.of(context).textTheme.headlineMedium,
+              color: const Color(0xFFE10E0E),
               fontSize: 22.0,
               letterSpacing: 0.0,
             ),
@@ -69,16 +70,16 @@ class _HelpState extends State<Help> {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                const Row(
+                Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 20.0, 0.0, 20.0),
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          10.0, 20.0, 0.0, 20.0),
                       child: Text(
                         'Hello, how can EatUp help you today?',
-                        style: TextStyle(
-                          fontFamily: 'Readex Pro',
+                        style: GoogleFonts.readexPro(
+                          textStyle: Theme.of(context).textTheme.bodyMedium,
                           letterSpacing: 0.0,
                           fontSize: 20,
                         ),
@@ -86,23 +87,23 @@ class _HelpState extends State<Help> {
                     ),
                   ],
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(24.0),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.headset_mic,
                         color: Color(0xFFE10E0E),
                         size: 30.0,
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Customer Service',
-                          style: TextStyle(
-                            fontFamily: 'Readex Pro',
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
                             letterSpacing: 0.0,
                             fontSize: 17,
                           ),
@@ -111,23 +112,23 @@ class _HelpState extends State<Help> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(24.0),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      FaIcon(
+                      const FaIcon(
                         FontAwesomeIcons.whatsapp,
                         color: Color(0xFFE10E0E),
                         size: 30.0,
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Whatsapp',
-                          style: TextStyle(
-                            fontFamily: 'Readex Pro',
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
                             letterSpacing: 0.0,
                             fontSize: 17,
                           ),
@@ -136,23 +137,23 @@ class _HelpState extends State<Help> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(24.0),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.facebook,
                         color: Color(0xFFE10E0E),
                         size: 30.0,
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Facebook',
-                          style: TextStyle(
-                            fontFamily: 'Readex Pro',
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
                             letterSpacing: 0.0,
                             fontSize: 17,
                           ),
@@ -161,23 +162,23 @@ class _HelpState extends State<Help> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(24.0),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      FaIcon(
+                      const FaIcon(
                         FontAwesomeIcons.twitter,
                         color: Color(0xFFE10E0E),
                         size: 30.0,
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Twitter',
-                          style: TextStyle(
-                            fontFamily: 'Readex Pro',
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
                             letterSpacing: 0.0,
                             fontSize: 17,
                           ),
@@ -186,23 +187,23 @@ class _HelpState extends State<Help> {
                     ],
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(24.0),
+                Padding(
+                  padding: const EdgeInsets.all(24.0),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      FaIcon(
+                      const FaIcon(
                         FontAwesomeIcons.instagram,
                         color: Color(0xFFE10E0E),
                         size: 30.0,
                       ),
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            20.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Instagram',
-                          style: TextStyle(
-                            fontFamily: 'Readex Pro',
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
                             letterSpacing: 0.0,
                             fontSize: 17,
                           ),
@@ -227,10 +228,10 @@ class _HelpState extends State<Help> {
                     ),
                   ),
                 ),
-                const Text(
+                Text(
                   'Version 1.0.1',
-                  style: TextStyle(
-                    fontFamily: 'Readex Pro',
+                  style: GoogleFonts.readexPro(
+                    textStyle: Theme.of(context).textTheme.bodyMedium,
                     fontSize: 14.0,
                     letterSpacing: 0.0,
                   ),

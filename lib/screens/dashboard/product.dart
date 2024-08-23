@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Product extends StatefulWidget {
   const Product({super.key});
@@ -126,16 +127,17 @@ class _ProductState extends State<Product> {
                       mainAxisSize: MainAxisSize.max,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        const Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                        Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 20.0, 0.0, 35.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Text(
                                 'Stephanie\'s Cook',
-                                style: TextStyle(
-                                  fontFamily: 'Outfit',
+                                style: GoogleFonts.outfit(
+                                  textStyle:
+                                      Theme.of(context).textTheme.titleLarge,
                                   letterSpacing: 0.0,
                                   fontWeight: FontWeight.w600,
                                   fontSize: 25,
@@ -183,10 +185,12 @@ class _ProductState extends State<Product> {
                                         const Size.fromHeight(40.0),
                                       ),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'Breakfast',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
                                         color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontSize: 12,
@@ -221,10 +225,12 @@ class _ProductState extends State<Product> {
                                         const Size.fromHeight(40.0),
                                       ),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'Snacks',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
                                         color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontSize: 12,
@@ -259,10 +265,12 @@ class _ProductState extends State<Product> {
                                         const Size.fromHeight(40.0),
                                       ),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'Grills',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
                                         color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontSize: 12,
@@ -297,10 +305,12 @@ class _ProductState extends State<Product> {
                                         const Size.fromHeight(40.0),
                                       ),
                                     ),
-                                    child: const Text(
+                                    child: Text(
                                       'Cakes',
-                                      style: TextStyle(
-                                        fontFamily: 'Readex Pro',
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
                                         color: Colors.white,
                                         letterSpacing: 0.0,
                                         fontSize: 12,
@@ -328,16 +338,19 @@ class _ProductState extends State<Product> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 15.0),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 15.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Text(
                                           'breakfast',
-                                          style: TextStyle(
-                                            fontFamily: 'Readex Pro',
+                                          style: GoogleFonts.readexPro(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                             letterSpacing: 0.0,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -383,10 +396,14 @@ class _ProductState extends State<Product> {
                                                 child: Container(
                                                   decoration:
                                                       const BoxDecoration(),
-                                                  child: const Text(
+                                                  child: Text(
                                                     'Waffle (45mins Wait)',
-                                                    style: TextStyle(
-                                                      fontFamily: 'Readex Pro',
+                                                    style:
+                                                        GoogleFonts.readexPro(
+                                                      textStyle:
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.w600,
@@ -398,10 +415,12 @@ class _ProductState extends State<Product> {
                                               Container(
                                                 decoration:
                                                     const BoxDecoration(),
-                                                child: const Text(
+                                                child: Text(
                                                   'Experience the perfect balance of crispy and fluffy textures with a waffle, customizable with endless sweet or savory top.....',
-                                                  style: TextStyle(
-                                                    fontFamily: 'Readex Pro',
+                                                  style: GoogleFonts.readexPro(
+                                                    textStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodySmall,
                                                     color: Colors.black87,
                                                     letterSpacing: 0.0,
                                                     fontWeight:
@@ -421,11 +440,14 @@ class _ProductState extends State<Product> {
                                                   child: Container(
                                                     decoration:
                                                         const BoxDecoration(),
-                                                    child: const Text(
+                                                    child: Text(
                                                       '#1500',
-                                                      style: TextStyle(
-                                                        fontFamily:
-                                                            'Readex Pro',
+                                                      style:
+                                                          GoogleFonts.readexPro(
+                                                        textStyle:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .bodyMedium,
                                                         letterSpacing: 0.0,
                                                         fontWeight:
                                                             FontWeight.w600,
