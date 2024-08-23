@@ -2,7 +2,7 @@ import 'package:counter_button/counter_button.dart';
 import 'package:eatup/screens/account/login.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
