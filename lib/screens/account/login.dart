@@ -18,6 +18,8 @@ class _LoginState extends State<Login> {
   final pword = TextEditingController();
   final pwordfocus = FocusNode();
 
+  late bool passwordVisibility = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -53,9 +55,9 @@ class _LoginState extends State<Login> {
                             color: Colors.white,
                           ),
                           child: Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
+                            alignment: const AlignmentDirectional(0.0, 0.0),
                             child: Padding(
-                              padding: EdgeInsets.all(24.0),
+                              padding: const EdgeInsets.all(24.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,8 +73,9 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 0.0, 24.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 24.0),
                                     child: Text(
                                       'Login below or create a new Eatup Account',
                                       style: GoogleFonts.readexPro(
@@ -84,91 +87,98 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 16.0),
-                                    child: ElevatedButton(
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                        fixedSize:
-                                            WidgetStateProperty.all<Size>(
-                                          Size(double.infinity, 44.0),
-                                        ),
-                                        backgroundColor:
-                                            WidgetStateProperty.all<Color>(
-                                          Color(0xFFE10E0E),
-                                        ),
-                                        shape: WidgetStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                            side: BorderSide(width: 2.0),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 16.0),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      height: 44.0,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStateProperty.all<Color>(
+                                            const Color(0xFFE10E0E),
+                                          ),
+                                          shape: WidgetStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                              side:
+                                                  const BorderSide(width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                      child: Text(
-                                        'Register on Eatup',
-                                        style: GoogleFonts.readexPro(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 16.0),
-                                    child: ElevatedButton.icon(
-                                      onPressed: () {},
-                                      label: Text(
-                                        'Continue with Google',
-                                      ),
-                                      icon: FaIcon(
-                                        FontAwesomeIcons.google,
-                                        color: Color(0xFFE10E0E),
-                                        size: 20.0,
-                                      ),
-                                      style: ButtonStyle(
-                                        fixedSize:
-                                            WidgetStateProperty.all<Size>(
-                                          Size(double.infinity, 44.0),
-                                        ),
-                                        backgroundColor:
-                                            WidgetStateProperty.all<Color>(
-                                          Colors.white,
-                                        ),
-                                        shape: WidgetStatePropertyAll(
-                                          RoundedRectangleBorder(
-                                            side: BorderSide(width: 2.0),
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
+                                        child: Text(
+                                          'Register on Eatup',
+                                          style: GoogleFonts.readexPro(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 24.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 16.0),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      height: 44.0,
+                                      child: ElevatedButton.icon(
+                                        onPressed: () {},
+                                        label: const Text(
+                                          'Continue with Google',
+                                        ),
+                                        icon: const FaIcon(
+                                          FontAwesomeIcons.google,
+                                          color: Color(0xFFE10E0E),
+                                          size: 20.0,
+                                        ),
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStateProperty.all<Color>(
+                                            Colors.white,
+                                          ),
+                                          shape: WidgetStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                              side:
+                                                  const BorderSide(width: 2.0),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 24.0),
                                     child: Container(
                                       width: 370.0,
                                       child: Stack(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                        alignment: const AlignmentDirectional(
+                                            0.0, 0.0),
                                         children: [
                                           Align(
                                             alignment:
-                                                AlignmentDirectional(0.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    0.0, 0.0),
                                             child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
                                                       0.0, 12.0, 0.0, 12.0),
                                               child: Container(
                                                 width: double.infinity,
                                                 height: 2.0,
-                                                decoration: BoxDecoration(
+                                                decoration: const BoxDecoration(
                                                   color: Colors.white,
                                                 ),
                                               ),
@@ -176,15 +186,17 @@ class _LoginState extends State<Login> {
                                           ),
                                           Align(
                                             alignment:
-                                                AlignmentDirectional(0.0, 0.0),
+                                                const AlignmentDirectional(
+                                                    0.0, 0.0),
                                             child: Container(
                                               width: 150.0,
                                               height: 32.0,
-                                              decoration: BoxDecoration(
+                                              decoration: const BoxDecoration(
                                                 color: Colors.white,
                                               ),
-                                              alignment: AlignmentDirectional(
-                                                  0.0, 0.0),
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0.0, 0.0),
                                               child: Text(
                                                 'Or continue with',
                                                 style: GoogleFonts.readexPro(
@@ -201,18 +213,247 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 16.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 16.0),
                                     child: Container(
                                       width: double.infinity,
-                                      child: TextFormField(),
+                                      child: TextFormField(
+                                        controller: email,
+                                        focusNode: emailfocus,
+                                        autofocus: true,
+                                        autofillHints: const [
+                                          AutofillHints.email
+                                        ],
+                                        obscureText: false,
+                                        decoration: InputDecoration(
+                                          labelText: 'Email',
+                                          labelStyle: GoogleFonts.readexPro(
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.green,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.orange,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.red,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                        ),
+                                        style: GoogleFonts.readexPro(
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
+                                          letterSpacing: 0.0,
+                                          fontSize: 12,
+                                        ),
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 16.0),
+                                    child: Container(
+                                      width: double.infinity,
+                                      child: TextFormField(
+                                        controller: pword,
+                                        focusNode: pwordfocus,
+                                        autofocus: true,
+                                        autofillHints: const [
+                                          AutofillHints.password
+                                        ],
+                                        obscureText: passwordVisibility,
+                                        decoration: InputDecoration(
+                                          labelText: 'Password',
+                                          labelStyle: GoogleFonts.readexPro(
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ),
+                                          enabledBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.white,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.green,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          errorBorder: OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.orange,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          focusedErrorBorder:
+                                              OutlineInputBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                            borderSide: const BorderSide(
+                                              color: Colors.red,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                          filled: true,
+                                          fillColor: Colors.white,
+                                          suffixIcon: InkWell(
+                                            onTap: () => setState(() =>
+                                                passwordVisibility =
+                                                    !passwordVisibility),
+                                            focusNode:
+                                                FocusNode(skipTraversal: true),
+                                            child: Icon(
+                                              passwordVisibility
+                                                  ? Icons.visibility_outlined
+                                                  : Icons
+                                                      .visibility_off_outlined,
+                                              color: Colors.black,
+                                              size: 24.0,
+                                            ),
+                                          ),
+                                        ),
+                                        style: GoogleFonts.readexPro(
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge,
+                                          letterSpacing: 0.0,
+                                          fontSize: 12,
+                                        ),
+                                        keyboardType:
+                                            TextInputType.emailAddress,
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment:
+                                        const AlignmentDirectional(1.0, 0.0),
+                                    child: Padding(
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 0.0, 0.0, 30.0),
+                                      child: RichText(
+                                        textScaler:
+                                            MediaQuery.of(context).textScaler,
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: 'Forgot your password',
+                                              style: GoogleFonts.readexPro(
+                                                letterSpacing: 0.0,
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
+                                                fontSize: 12,
+                                                fontWeight: FontWeight.bold,
+                                                color: const Color(0xFFE10E0E),
+                                              ),
+                                            ),
+                                          ],
+                                          style: GoogleFonts.readexPro(
+                                            letterSpacing: 0.0,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 16.0),
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      height: 60.0,
+                                      child: ElevatedButton(
+                                        onPressed: () {},
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              WidgetStatePropertyAll(
+                                            email.text == 'true' &&
+                                                    pword.text == 'true'
+                                                ? const Color(0xFFE10E0E)
+                                                : Colors.grey,
+                                          ),
+                                          elevation:
+                                              const WidgetStatePropertyAll(3.0),
+                                          side: const WidgetStatePropertyAll(
+                                            BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1.0,
+                                            ),
+                                          ),
+                                          shape: WidgetStatePropertyAll(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'Login',
+                                          style: GoogleFonts.readexPro(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .titleSmall,
+                                            color: Colors.white,
+                                            letterSpacing: 0.0,
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
