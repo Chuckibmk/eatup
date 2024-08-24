@@ -1,3 +1,4 @@
+import 'package:eatup/screens/account/register.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -160,7 +161,7 @@ class _LoginState extends State<Login> {
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 24.0),
-                                    child: Container(
+                                    child: SizedBox(
                                       width: 370.0,
                                       child: Stack(
                                         alignment: const AlignmentDirectional(
@@ -216,7 +217,7 @@ class _LoginState extends State<Login> {
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 16.0),
-                                    child: Container(
+                                    child: SizedBox(
                                       width: double.infinity,
                                       child: TextFormField(
                                         controller: email,
@@ -287,7 +288,7 @@ class _LoginState extends State<Login> {
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 16.0),
-                                    child: Container(
+                                    child: SizedBox(
                                       width: double.infinity,
                                       child: TextFormField(
                                         controller: pword,
@@ -412,7 +413,12 @@ class _LoginState extends State<Login> {
                                       width: double.infinity,
                                       height: 60.0,
                                       child: ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          var route = MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Register());
+                                          Navigator.push(context, route);
+                                        },
                                         style: ButtonStyle(
                                           backgroundColor:
                                               WidgetStatePropertyAll(
