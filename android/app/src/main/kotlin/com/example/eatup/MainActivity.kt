@@ -1,4 +1,4 @@
-package com.example.eatup
+package com.eatup.app
 
 import io.flutter.embedding.android.FlutterActivity
 

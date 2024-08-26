@@ -11,7 +11,7 @@ import 'package:flutter/foundation.dart'
 //  import 'firebase_options.dart';
 // /// // ...
 // await Firebase.initializeApp(
-//     options: DefaultFirebaseOptions.currentPlatform,
+//    options: DefaultFirebaseOptions.currentPlatform,
 // );
 /// ```
 class DefaultFirebaseOptions {
@@ -59,7 +59,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '7997260111',
     projectId: 'eatup-f145e',
     storageBucket: 'eatup-f145e.appspot.com',
-    iosBundleId: 'com.example.eatup',
+    iosBundleId: 'com.eatup.app',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
