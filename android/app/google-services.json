@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "7997260111",
+    "project_id": "eatup-f145e",
+    "storage_bucket": "eatup-f145e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7997260111:android:86a47af23e31450013853a",
+        "android_client_info": {
+          "package_name": "com.eatup.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP0bTs_53ffjMTQ5CqMbvGWkOkpe07vNo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
