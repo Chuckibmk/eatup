@@ -46,19 +46,19 @@ class _RegisterState extends State<Register> {
                 child: Container(
                   width: 100.0,
                   height: double.infinity,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                   ),
-                  alignment: AlignmentDirectional(0.0, -1.0),
+                  alignment: const AlignmentDirectional(0.0, -1.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: const AlignmentDirectional(0.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsets.all(32.0),
+                            padding: const EdgeInsets.all(32.0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +74,7 @@ class _RegisterState extends State<Register> {
                                       fontWeight: FontWeight.w600),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 12.0, 0.0, 24.0),
                                   child: RichText(
                                     textScaler:
@@ -92,7 +92,7 @@ class _RegisterState extends State<Register> {
                                                 .bodyMedium,
                                           ),
                                         ),
-                                        TextSpan(
+                                        const TextSpan(
                                           text: 'Sign In',
                                           style: TextStyle(
                                             color: Color(0xFFE10E0E),
@@ -110,9 +110,9 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: namecont,
@@ -130,7 +130,7 @@ class _RegisterState extends State<Register> {
                                           fontSize: 14,
                                         ),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blueAccent,
                                             width: 2.0,
                                           ),
@@ -138,7 +138,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blue,
                                             width: 2.0,
                                           ),
@@ -146,7 +146,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.redAccent,
                                             width: 2.0,
                                           ),
@@ -154,7 +154,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -176,9 +176,9 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: emailAddressTextController,
@@ -197,7 +197,7 @@ class _RegisterState extends State<Register> {
                                           letterSpacing: 0.0,
                                         ),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blueAccent,
                                             width: 2.0,
                                           ),
@@ -205,7 +205,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blue,
                                             width: 2.0,
                                           ),
@@ -213,7 +213,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.redAccent,
                                             width: 2.0,
                                           ),
@@ -221,7 +221,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -242,9 +242,9 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: passwordTextController,
@@ -263,7 +263,7 @@ class _RegisterState extends State<Register> {
                                           letterSpacing: 0.0,
                                         ),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blueAccent,
                                             width: 2.0,
                                           ),
@@ -271,7 +271,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blue,
                                             width: 2.0,
                                           ),
@@ -279,7 +279,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.redAccent,
                                             width: 2.0,
                                           ),
@@ -287,7 +287,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -322,9 +322,9 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: passwordConfirmTextController,
@@ -343,7 +343,7 @@ class _RegisterState extends State<Register> {
                                           letterSpacing: 0.0,
                                         ),
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blueAccent,
                                             width: 2.0,
                                           ),
@@ -351,7 +351,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blue,
                                             width: 2.0,
                                           ),
@@ -359,7 +359,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.redAccent,
                                             width: 2.0,
                                           ),
@@ -367,7 +367,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -403,9 +403,9 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
-                                  child: Container(
+                                  child: SizedBox(
                                     width: 370.0,
                                     child: TextFormField(
                                       controller: referralTextController,
@@ -428,7 +428,7 @@ class _RegisterState extends State<Register> {
                                           letterSpacing: 0.0,
                                         ),
                                         enabledBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blueAccent,
                                             width: 2.0,
                                           ),
@@ -436,7 +436,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         focusedBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.blue,
                                             width: 2.0,
                                           ),
@@ -444,7 +444,7 @@ class _RegisterState extends State<Register> {
                                               BorderRadius.circular(12.0),
                                         ),
                                         errorBorder: UnderlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.redAccent,
                                             width: 2.0,
                                           ),
@@ -453,7 +453,7 @@ class _RegisterState extends State<Register> {
                                         ),
                                         focusedErrorBorder:
                                             UnderlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -474,7 +474,7 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 16.0),
                                   child: SizedBox(
                                     width: 370.0,
@@ -484,7 +484,7 @@ class _RegisterState extends State<Register> {
                                       style: ButtonStyle(
                                         shape: WidgetStatePropertyAll(
                                           RoundedRectangleBorder(
-                                            side: BorderSide(
+                                            side: const BorderSide(
                                               color: Colors.transparent,
                                               width: 1.0,
                                             ),
@@ -492,7 +492,8 @@ class _RegisterState extends State<Register> {
                                                 BorderRadius.circular(12.0),
                                           ),
                                         ),
-                                        elevation: WidgetStatePropertyAll(3.0),
+                                        elevation:
+                                            const WidgetStatePropertyAll(3.0),
                                         backgroundColor: WidgetStatePropertyAll(
                                             namecont.text == 'true' &&
                                                     emailAddressTextController
@@ -504,7 +505,7 @@ class _RegisterState extends State<Register> {
                                                     passwordTextController
                                                             .text ==
                                                         'true'
-                                                ? Color(0xFFE10E0E)
+                                                ? const Color(0xFFE10E0E)
                                                 : Colors.black),
                                       ),
                                       child: Text(
@@ -521,16 +522,18 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
+                                  alignment:
+                                      const AlignmentDirectional(0.0, 0.0),
                                   child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 0.0, 12.0),
+                                    padding:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 12.0, 0.0, 12.0),
                                     child: RichText(
                                       textScaler:
                                           MediaQuery.of(context).textScaler,
                                       text: TextSpan(
                                         children: [
-                                          TextSpan(
+                                          const TextSpan(
                                             text:
                                                 'By Clicking on the register button you accept our',
                                             style: TextStyle(),
@@ -542,7 +545,7 @@ class _RegisterState extends State<Register> {
                                                   .textTheme
                                                   .labelSmall,
                                               letterSpacing: 0.0,
-                                              color: Color(0xFFE10E0E),
+                                              color: const Color(0xFFE10E0E),
                                             ),
                                           ),
                                         ],

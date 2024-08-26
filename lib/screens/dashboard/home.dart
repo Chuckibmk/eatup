@@ -114,15 +114,13 @@ class _HomePageState extends State<HomePage> {
                               color: Color(0xFFE10E0E),
                               size: 20.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
-                            },
+                            onPressed: () {},
                           ),
                         ),
                         Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
+                          alignment: const AlignmentDirectional(0.0, 0.0),
                           child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
                                 30.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Restaurants',
@@ -166,9 +164,7 @@ class _HomePageState extends State<HomePage> {
                               color: Color(0xFFE10E0E),
                               size: 20.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
-                            },
+                            onPressed: () {},
                           ),
                         ),
                         Align(
@@ -218,9 +214,7 @@ class _HomePageState extends State<HomePage> {
                               color: Color(0xFFE10E0E),
                               size: 20.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
-                            },
+                            onPressed: () {},
                           ),
                         ),
                         const Align(
@@ -322,9 +316,7 @@ class _HomePageState extends State<HomePage> {
                               color: Color(0xFFE10E0E),
                               size: 20.0,
                             ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
-                            },
+                            onPressed: () {},
                           ),
                         ),
                         Align(
@@ -571,10 +563,10 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.white,
                     ),
                     child: Align(
-                      alignment: Alignment(-1.0, 0.0),
+                      alignment: const Alignment(-1.0, 0.0),
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 0.0, 0.0),
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 0.0, 0.0),
                         child: Text(
                           'Restuarants Near You',
                           style: GoogleFonts.lora(
@@ -657,9 +649,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           Align(
-                            alignment: AlignmentDirectional(-1.0, 0.0),
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
                             child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
                                 12.0,
                                 0.0,
                                 0.0,
