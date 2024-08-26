@@ -95,7 +95,12 @@ class _LoginState extends State<Login> {
                                       width: double.infinity,
                                       height: 44.0,
                                       child: ElevatedButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          var route = MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Register());
+                                          Navigator.push(context, route);
+                                        },
                                         style: ButtonStyle(
                                           backgroundColor:
                                               WidgetStateProperty.all<Color>(
@@ -222,7 +227,7 @@ class _LoginState extends State<Login> {
                                       child: TextFormField(
                                         controller: email,
                                         focusNode: emailfocus,
-                                        autofocus: true,
+                                        autofocus: false,
                                         autofillHints: const [
                                           AutofillHints.email
                                         ],
@@ -293,7 +298,7 @@ class _LoginState extends State<Login> {
                                       child: TextFormField(
                                         controller: pword,
                                         focusNode: pwordfocus,
-                                        autofocus: true,
+                                        autofocus: false,
                                         autofillHints: const [
                                           AutofillHints.password
                                         ],
@@ -353,7 +358,7 @@ class _LoginState extends State<Login> {
                                                   ? Icons.visibility_outlined
                                                   : Icons
                                                       .visibility_off_outlined,
-                                              color: Colors.black,
+                                              color: Colors.grey,
                                               size: 24.0,
                                             ),
                                           ),
@@ -413,12 +418,7 @@ class _LoginState extends State<Login> {
                                       width: double.infinity,
                                       height: 60.0,
                                       child: ElevatedButton(
-                                        onPressed: () {
-                                          var route = MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const Register());
-                                          Navigator.push(context, route);
-                                        },
+                                        onPressed: () {},
                                         style: ButtonStyle(
                                           backgroundColor:
                                               WidgetStatePropertyAll(
