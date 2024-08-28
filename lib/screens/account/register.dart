@@ -290,7 +290,7 @@ class _RegisterState extends State<Register> {
                                         autofillHints: const [
                                           AutofillHints.password
                                         ],
-                                        obscureText: passwordVisibility,
+                                        obscureText: !passwordVisibility,
                                         decoration: InputDecoration(
                                           labelText: 'Password',
                                           labelStyle: GoogleFonts.readexPro(
@@ -441,7 +441,7 @@ class _RegisterState extends State<Register> {
                                                   ? Icons.visibility_outlined
                                                   : Icons
                                                       .visibility_off_outlined,
-                                              color: Colors.black,
+                                              color: Colors.grey,
                                               size: 24.0,
                                             ),
                                           ),
@@ -456,7 +456,8 @@ class _RegisterState extends State<Register> {
                                           if (value!.isEmpty) {
                                             return "Confirm above Password";
                                           }
-                                          if (value != password) {
+                                          if (value !=
+                                              passwordTextController.text) {
                                             return "Passwords don't match";
                                           }
                                         },
@@ -590,19 +591,19 @@ class _RegisterState extends State<Register> {
                                           ),
                                           elevation:
                                               const WidgetStatePropertyAll(3.0),
-                                          backgroundColor: WidgetStatePropertyAll(
-                                              namecont.text == 'true' &&
+                                          backgroundColor:
+                                              WidgetStatePropertyAll(namecont
+                                                              .text !=
+                                                          '' &&
                                                       emailAddressTextController
-                                                              .text ==
-                                                          'true' &&
+                                                              .text !=
+                                                          '' &&
                                                       passwordConfirmTextController
                                                               .text ==
-                                                          'true' &&
-                                                      passwordTextController
-                                                              .text ==
-                                                          'true'
+                                                          passwordTextController
+                                                              .text
                                                   ? const Color(0xFFE10E0E)
-                                                  : Colors.black),
+                                                  : Colors.grey),
                                         ),
                                         child: Text(
                                           'Register',
