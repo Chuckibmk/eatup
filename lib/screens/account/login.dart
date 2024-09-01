@@ -1,7 +1,9 @@
 import 'package:eatup/screens/account/register.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -20,6 +22,24 @@ class _LoginState extends State<Login> {
   final pwordfocus = FocusNode();
 
   late bool passwordVisibility = false;
+
+  Future<UserCredential> signInWithGoogle() async {
+    // trigger auth flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    //obtain the auth details from request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // create new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    //once signed in, return usercredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
 
   @override
   Widget build(BuildContext context) {

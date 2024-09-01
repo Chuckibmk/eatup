@@ -1,3 +1,4 @@
+import 'package:eatup/screens/account/login.dart';
 import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:eatup/screens/dashboard/help.dart';
 import 'package:eatup/screens/dashboard/product.dart';
@@ -316,7 +317,11 @@ class _HomePageState extends State<HomePage> {
                               color: Color(0xFFE10E0E),
                               size: 20.0,
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              var route = MaterialPageRoute(
+                                  builder: (context) => const Login());
+                              Navigator.push(context, route);
+                            },
                           ),
                         ),
                         Align(
