@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -14,7 +15,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  var _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   String name = '';
   String email = '';
@@ -38,6 +39,67 @@ class _RegisterState extends State<Register> {
 
   late bool passwordVisibility = false;
   late bool passwordConfirmVisibility = false;
+
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  FirebaseFirestore firebaseStore = FirebaseFirestore.instance;
+
+  bool _progress = false;
+
+  Future<void> signUpUser(String email, String password, String name) async {
+    setState(() {
+      _progress = true;
+    });
+    try {
+      UserCredential userCredential = await firebaseAuth
+          .createUserWithEmailAndPassword(email: email, password: password);
+      if (userCredential.user != null) {
+        await firebaseStore
+            .collection("users")
+            .doc(userCredential.user!.uid)
+            .set({"name": name, "id": userCredential.user!.uid}).onError(
+                (e, _) => Fluttertoast.showToast(
+                      msg: "Error writing: $e",
+                      toastLength: Toast.LENGTH_LONG,
+                      gravity: ToastGravity.BOTTOM,
+                      backgroundColor: const Color(0xFFE10E0E),
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    ));
+
+        Fluttertoast.showToast(
+          msg: 'Signup Successful',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: const Color(0xFFE10E0E),
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      } else {
+        showSnackbar("Other issues");
+        Fluttertoast.showToast(
+          msg: 'Signup Successful',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Color(0xFFE10E0E),
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Color(0xFFE10E0E),
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    } finally {
+      setState(() {
+        _progress = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -490,7 +552,7 @@ class _RegisterState extends State<Register> {
                                                 .labelMedium,
                                             letterSpacing: 0.0,
                                           ),
-                                          enabledBorder: UnderlineInputBorder(
+                                          enabledBorder: OutlineInputBorder(
                                             borderSide: const BorderSide(
                                               color: Colors.white,
                                               width: 2.0,
@@ -498,7 +560,7 @@ class _RegisterState extends State<Register> {
                                             borderRadius:
                                                 BorderRadius.circular(12.0),
                                           ),
-                                          focusedBorder: UnderlineInputBorder(
+                                          focusedBorder: OutlineInputBorder(
                                             borderSide: const BorderSide(
                                               color: Colors.green,
                                               width: 2.0,
@@ -506,7 +568,7 @@ class _RegisterState extends State<Register> {
                                             borderRadius:
                                                 BorderRadius.circular(12.0),
                                           ),
-                                          errorBorder: UnderlineInputBorder(
+                                          errorBorder: OutlineInputBorder(
                                             borderSide: const BorderSide(
                                               color: Colors.orange,
                                               width: 2.0,
@@ -515,7 +577,7 @@ class _RegisterState extends State<Register> {
                                                 BorderRadius.circular(12.0),
                                           ),
                                           focusedErrorBorder:
-                                              UnderlineInputBorder(
+                                              OutlineInputBorder(
                                             borderSide: const BorderSide(
                                               color: Colors.red,
                                               width: 2.0,
@@ -548,34 +610,7 @@ class _RegisterState extends State<Register> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             _formKey.currentState!.save();
-                                            FirebaseAuth firebaseAuth =
-                                                await FirebaseAuth.instance;
-
-                                            try {
-                                              UserCredential userCredential =
-                                                  await firebaseAuth
-                                                      .createUserWithEmailAndPassword(
-                                                          email: email,
-                                                          password: password);
-                                              if (userCredential.user != null) {
-                                                FirebaseFirestore.instance
-                                                    .collection("users")
-                                                    .doc(userCredential
-                                                        .user!.uid)
-                                                    .set({
-                                                  "name": name,
-                                                  "email": email,
-                                                  "password": password,
-                                                  "id": userCredential.user!.uid
-                                                });
-                                                print("Success");
-                                              } else {
-                                                print("Other issues");
-                                              }
-                                              ;
-                                            } catch (e) {
-                                              print(e);
-                                            }
+                                            signUpUser(email, password, name);
                                           }
                                         },
                                         style: ButtonStyle(
@@ -656,12 +691,16 @@ class _RegisterState extends State<Register> {
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
                             ),
                           ),
-                        )
+                        ),
+                        if (_progress)
+                          const LinearProgressIndicator(
+                            color: Color(0xFFE10E0E),
+                          ),
                       ],
                     ),
                   ),
@@ -672,5 +711,9 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  showSnackbar(String text) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(text)));
   }
 }

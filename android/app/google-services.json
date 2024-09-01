@@ -12,7 +12,12 @@
           "package_name": "com.eatup.app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "7997260111-u9q39morahc5bmc7dd0u7k6makirllrk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBP0bTs_53ffjMTQ5CqMbvGWkOkpe07vNo"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7997260111-u9q39morahc5bmc7dd0u7k6makirllrk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "7997260111-kdct4qpfcjm6vnas9gscc3odso7du5nk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eatup"
+              }
+            }
+          ]
         }
       }
     }
