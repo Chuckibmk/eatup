@@ -156,7 +156,9 @@ class _LoginState extends State<Login> {
                                       width: double.infinity,
                                       height: 44.0,
                                       child: ElevatedButton.icon(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          signInWithGoogle();
+                                        },
                                         label: const Text(
                                           'Continue with Google',
                                         ),

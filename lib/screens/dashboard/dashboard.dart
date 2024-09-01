@@ -26,13 +26,13 @@ class _StartedState extends State<Started> {
             children: [
               Container(
                 width: double.infinity,
-                height: 618,
+                height: 468,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
                 child: SizedBox(
                   width: double.infinity,
-                  height: 500,
+                  height: double.infinity,
                   child: Stack(
                     children: [
                       Padding(
