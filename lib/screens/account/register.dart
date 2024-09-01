@@ -255,6 +255,7 @@ class _RegisterState extends State<Register> {
                                           if (value!.isEmpty) {
                                             return "Fill in Name";
                                           }
+                                          return null;
                                         },
                                         onSaved: (newValue) {
                                           name = newValue!;
@@ -332,6 +333,7 @@ class _RegisterState extends State<Register> {
                                           if (value!.isEmpty) {
                                             return "Fill in Email";
                                           }
+                                          return null;
                                         },
                                         onSaved: (newValue) {
                                           email = newValue!;
@@ -423,9 +425,10 @@ class _RegisterState extends State<Register> {
                                           if (value!.isEmpty) {
                                             return "Fill in Password";
                                           }
-                                          if (value!.trim().length < 6) {
+                                          if (value.trim().length < 6) {
                                             return "Password cannot be smaller than six Characters";
                                           }
+                                          return null;
                                         },
                                         onSaved: (newValue) {
                                           password = newValue!;
@@ -522,6 +525,7 @@ class _RegisterState extends State<Register> {
                                               passwordTextController.text) {
                                             return "Passwords don't match";
                                           }
+                                          return null;
                                         },
                                       ),
                                     ),

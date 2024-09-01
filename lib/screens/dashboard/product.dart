@@ -1,3 +1,4 @@
+import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -75,9 +76,11 @@ class _ProductState extends State<Product> {
                                       const Size.square(40.0),
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
                                   icon: const Icon(
-                                    Icons.add,
+                                    Icons.chevron_left,
                                     color: Color(0xFFE10E0E),
                                     size: 25.0,
                                   ),
@@ -110,7 +113,12 @@ class _ProductState extends State<Product> {
                                       const Size.square(40.0),
                                     ),
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    var route = MaterialPageRoute(
+                                      builder: (context) => const Cart(),
+                                    );
+                                    Navigator.push(context, route);
+                                  },
                                   icon: const Icon(
                                     Icons.shopping_cart,
                                     color: Color(0xFFE10E0E),
