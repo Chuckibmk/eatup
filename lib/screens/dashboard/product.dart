@@ -383,6 +383,8 @@ class _ProductState extends State<Product> {
                                     ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Padding(
                                           padding: const EdgeInsetsDirectional
@@ -392,7 +394,7 @@ class _ProductState extends State<Product> {
                                                 BorderRadius.circular(8.0),
                                             child: Image.network(
                                               'https://images.unsplash.com/photo-1558896450-09e9d93b30ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwyMnx8d2FmZmxlfGVufDB8fHx8MTcyMzY0MTQzN3ww&ixlib=rb-4.0.3&q=80&w=1080',
-                                              width: 85.0,
+                                              width: 60.0,
                                               height: 105.0,
                                               fit: BoxFit.cover,
                                               alignment:
@@ -404,7 +406,7 @@ class _ProductState extends State<Product> {
                                           padding: const EdgeInsetsDirectional
                                               .fromSTEB(15.0, 0.0, 0.0, 0.0),
                                           child: Container(
-                                            width: 192.0,
+                                            width: 150.0,
                                             height: 100.0,
                                             decoration: const BoxDecoration(
                                               color: Colors.white,
@@ -435,9 +437,9 @@ class _ProductState extends State<Product> {
                                                     ),
                                                   ),
                                                 ),
-                                                Container(
-                                                  decoration:
-                                                      const BoxDecoration(),
+                                                Expanded(
+                                                  // decoration:
+                                                  //     const BoxDecoration(),
                                                   child: Text(
                                                     'Experience the perfect balance of crispy and fluffy textures with a waffle, customizable with endless sweet or savory top.....',
                                                     style:
@@ -488,7 +490,7 @@ class _ProductState extends State<Product> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15.0, 0.0, 0.0, 0.0),
+                                              .fromSTEB(5.0, 0.0, 0.0, 0.0),
                                           child: IconButton(
                                             style: ButtonStyle(
                                               shape: WidgetStateProperty.all<

@@ -80,7 +80,7 @@ class _RegisterState extends State<Register> {
           msg: 'Signup Successful',
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Color(0xFFE10E0E),
+          backgroundColor: const Color(0xFFE10E0E),
           textColor: Colors.white,
           fontSize: 16.0,
         );
@@ -90,7 +90,7 @@ class _RegisterState extends State<Register> {
         msg: e.toString(),
         toastLength: Toast.LENGTH_LONG,
         gravity: ToastGravity.BOTTOM,
-        backgroundColor: Color(0xFFE10E0E),
+        backgroundColor: const Color(0xFFE10E0E),
         textColor: Colors.white,
         fontSize: 16.0,
       );
