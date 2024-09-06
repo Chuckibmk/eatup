@@ -46,9 +46,6 @@ class _RegisterState extends State<Register> {
   bool _progress = false;
 
   Future<void> signUpUser(String email, String password, String name) async {
-    setState(() {
-      _progress = true;
-    });
     try {
       UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -94,11 +91,7 @@ class _RegisterState extends State<Register> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {
-      setState(() {
-        _progress = false;
-      });
-    }
+    } finally {}
   }
 
   @override
@@ -614,7 +607,13 @@ class _RegisterState extends State<Register> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             _formKey.currentState!.save();
+                                            setState(() {
+                                              _progress = true;
+                                            });
                                             signUpUser(email, password, name);
+                                            setState(() {
+                                              _progress = false;
+                                            });
                                           }
                                         },
                                         style: ButtonStyle(
