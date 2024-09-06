@@ -1,5 +1,6 @@
 import 'package:eatup/screens/dashboard/home.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class Started extends StatefulWidget {
@@ -24,12 +25,8 @@ class _StartedState extends State<Started> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-              Container(
-                width: double.infinity,
-                height: 468,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
+              Expanded(
+                flex: 3,
                 child: SizedBox(
                   width: double.infinity,
                   height: double.infinity,
@@ -85,7 +82,7 @@ class _StartedState extends State<Started> {
                                 spacing: 8,
                                 radius: 16,
                                 dotWidth: 16,
-                                dotHeight: 8,
+                                dotHeight: 3,
                                 activeDotColor: Color(0xFFEF2707),
                                 paintStyle: PaintingStyle.fill),
                             onDotClicked: (index) async {
@@ -104,52 +101,54 @@ class _StartedState extends State<Started> {
                 ),
               ),
               Expanded(
+                  flex: 1,
                   child: Align(
-                alignment: const AlignmentDirectional(0.0, 0.0),
-                child: Padding(
-                  padding:
-                      const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 2.0),
-                  child: SizedBox(
-                    height: 70.0,
-                    width: 300.0,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        var route = MaterialPageRoute(
-                            builder: (context) => const HomePage());
-                        Navigator.push(context, route);
-                      },
-                      style: ButtonStyle(
-                        padding: WidgetStateProperty.all<EdgeInsets>(
-                          const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                        ),
-                        shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                            side: const BorderSide(
-                              color: Colors.transparent,
-                              width: 3,
+                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 0.0, 0.0, 2.0),
+                      child: SizedBox(
+                        height: 70.0,
+                        width: 300.0,
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            var route = MaterialPageRoute(
+                                builder: (context) => const HomePage());
+                            Navigator.push(context, route);
+                          },
+                          style: ButtonStyle(
+                            padding: WidgetStateProperty.all<EdgeInsets>(
+                              const EdgeInsets.fromLTRB(24, 0, 24, 0),
                             ),
+                            shape:
+                                WidgetStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                                side: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 3,
+                                ),
+                              ),
+                            ),
+                          ),
+                          label: const Text(
+                            'Get Started',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w500,
+                              letterSpacing: 0.0,
+                              fontSize: 30,
+                            ),
+                          ),
+                          icon: const Icon(
+                            Icons.change_history,
+                            color: Color(0xFFEF2707),
+                            size: 35,
                           ),
                         ),
                       ),
-                      label: const Text(
-                        'Get Started',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0.0,
-                          fontSize: 30,
-                        ),
-                      ),
-                      icon: const Icon(
-                        Icons.change_history,
-                        color: Color(0xFFEF2707),
-                        size: 35,
-                      ),
                     ),
-                  ),
-                ),
-              ))
+                  ))
             ],
           ),
         ),

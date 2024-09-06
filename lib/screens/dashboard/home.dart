@@ -51,12 +51,31 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Align(
+                          Align(
                             alignment: Alignment(-1.0, -1.0),
-                            child: Icon(
-                              Icons.home_filled,
-                              color: Color(0xFFE10E0E),
-                              size: 20.0,
+                            child: IconButton(
+                              onPressed: () {
+                                var route = MaterialPageRoute(
+                                  builder: (context) => const HomePage(),
+                                );
+                                Navigator.push(context, route);
+                              },
+                              style: ButtonStyle(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color(0xECF2B8B8),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.home_filled,
+                                color: Color(0xFFE10E0E),
+                                size: 25.0,
+                              ),
                             ),
                           ),
                           Align(
@@ -67,10 +86,10 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 'Home',
                                 style: GoogleFonts.readexPro(
-                                  color: Colors.black,
+                                  color: Colors.black87,
                                   letterSpacing: 0.0,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                   textStyle:
                                       Theme.of(context).textTheme.labelLarge,
                                 ),
@@ -94,12 +113,31 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Align(
+                          Align(
                             alignment: AlignmentDirectional(-1.0, -1.0),
-                            child: Icon(
-                              Icons.restaurant,
-                              color: Color(0xFFE10E0E),
-                              size: 20.0,
+                            child: IconButton(
+                              onPressed: () {
+                                // var route = MaterialPageRoute(
+                                //   builder: (context) => const HomePage(),
+                                // );
+                                // Navigator.push(context, route);
+                              },
+                              style: ButtonStyle(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color(0xECF2B8B8),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.restaurant,
+                                color: Color(0xFFE10E0E),
+                                size: 25.0,
+                              ),
                             ),
                           ),
                           Align(
@@ -110,10 +148,10 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 'Restaurants',
                                 style: GoogleFonts.readexPro(
-                                  color: Colors.black,
+                                  color: Colors.black87,
                                   letterSpacing: 0.0,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                   textStyle:
                                       Theme.of(context).textTheme.labelLarge,
                                 ),
@@ -137,12 +175,31 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Align(
+                          Align(
                             alignment: AlignmentDirectional(-1.0, -1.0),
-                            child: Icon(
-                              Icons.fastfood_sharp,
-                              color: Color(0xFFE10E0E),
-                              size: 20.0,
+                            child: IconButton(
+                              onPressed: () {
+                                // var route = MaterialPageRoute(
+                                //   builder: (context) => const HomePage(),
+                                // );
+                                // Navigator.push(context, route);
+                              },
+                              style: ButtonStyle(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color(0xECF2B8B8),
+                                ),
+                              ),
+                              icon: Icon(
+                                Icons.fastfood_sharp,
+                                color: Color(0xFFE10E0E),
+                                size: 25.0,
+                              ),
                             ),
                           ),
                           Align(
@@ -153,10 +210,10 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 'Food Packages',
                                 style: GoogleFonts.readexPro(
-                                  color: Colors.black,
+                                  color: Colors.black87,
                                   letterSpacing: 0.0,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                   textStyle:
                                       Theme.of(context).textTheme.labelLarge,
                                 ),
@@ -180,12 +237,31 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Align(
+                          Align(
                             alignment: AlignmentDirectional(-1.0, -1.0),
-                            child: Icon(
-                              Icons.store,
-                              color: Color(0xFFE10E0E),
-                              size: 20.0,
+                            child: IconButton(
+                              onPressed: () {
+                                // var route = MaterialPageRoute(
+                                //   builder: (context) => const HomePage(),
+                                // );
+                                // Navigator.push(context, route);
+                              },
+                              style: ButtonStyle(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color(0xECF2B8B8),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.store,
+                                color: Color(0xFFE10E0E),
+                                size: 25.0,
+                              ),
                             ),
                           ),
                           Align(
@@ -196,10 +272,10 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 'Stores',
                                 style: GoogleFonts.readexPro(
-                                  color: Colors.black,
+                                  color: Colors.black87,
                                   letterSpacing: 0.0,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                   textStyle:
                                       Theme.of(context).textTheme.labelLarge,
                                 ),
@@ -223,12 +299,31 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Align(
+                          Align(
                             alignment: AlignmentDirectional(-1.0, -1.0),
-                            child: Icon(
-                              Icons.question_mark,
-                              color: Color(0xFFE10E0E),
-                              size: 20.0,
+                            child: IconButton(
+                              onPressed: () {
+                                var route = MaterialPageRoute(
+                                  builder: (context) => const Help(),
+                                );
+                                Navigator.push(context, route);
+                              },
+                              style: ButtonStyle(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color(0xECF2B8B8),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.question_mark,
+                                color: Color(0xFFE10E0E),
+                                size: 25.0,
+                              ),
                             ),
                           ),
                           Align(
@@ -239,10 +334,10 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 'Help',
                                 style: GoogleFonts.readexPro(
-                                  color: Colors.black,
+                                  color: Colors.black87,
                                   letterSpacing: 0.0,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                   textStyle:
                                       Theme.of(context).textTheme.labelLarge,
                                 ),
@@ -266,12 +361,31 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          const Align(
+                          Align(
                             alignment: AlignmentDirectional(-1.0, -1.0),
-                            child: Icon(
-                              Icons.login_rounded,
-                              color: Color(0xFFE10E0E),
-                              size: 20.0,
+                            child: IconButton(
+                              onPressed: () {
+                                var route = MaterialPageRoute(
+                                  builder: (context) => const Login(),
+                                );
+                                Navigator.push(context, route);
+                              },
+                              style: ButtonStyle(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color(0xECF2B8B8),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.login_rounded,
+                                color: Color(0xFFE10E0E),
+                                size: 25.0,
+                              ),
                             ),
                           ),
                           Align(
@@ -282,10 +396,10 @@ class _HomePageState extends State<HomePage> {
                               child: Text(
                                 'Login',
                                 style: GoogleFonts.readexPro(
-                                  color: Colors.black,
+                                  color: Colors.black87,
                                   letterSpacing: 0.0,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w600,
+                                  fontWeight: FontWeight.w400,
                                   textStyle:
                                       Theme.of(context).textTheme.labelLarge,
                                 ),

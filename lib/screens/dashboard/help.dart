@@ -33,12 +33,14 @@ class _HelpState extends State<Help> {
                   ),
                 ),
                 backgroundColor: WidgetStateProperty.all<Color>(
-                  const Color(0x6EE10E0E),
+                  const Color(0xECF2B8B8),
                 ),
                 fixedSize:
                     WidgetStateProperty.all<Size>(const Size.square(60.0)),
               ),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               icon: const Icon(
                 Icons.chevron_left,
                 color: Color(0xFFE10E0E),
