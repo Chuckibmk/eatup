@@ -46,6 +46,9 @@ class _RegisterState extends State<Register> {
   bool _progress = false;
 
   Future<void> signUpUser(String email, String password, String name) async {
+    setState(() {
+      _progress = true;
+    });
     try {
       UserCredential userCredential = await firebaseAuth
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -72,9 +75,9 @@ class _RegisterState extends State<Register> {
           fontSize: 16.0,
         );
       } else {
-        showSnackbar("Other issues");
+        // showSnackbar("Other issues");
         Fluttertoast.showToast(
-          msg: 'Signup Successful',
+          msg: 'Other issues',
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           backgroundColor: const Color(0xFFE10E0E),
@@ -91,7 +94,11 @@ class _RegisterState extends State<Register> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-    } finally {}
+    } finally {
+      setState(() {
+        _progress = false;
+      });
+    }
   }
 
   @override
@@ -607,13 +614,7 @@ class _RegisterState extends State<Register> {
                                           if (_formKey.currentState!
                                               .validate()) {
                                             _formKey.currentState!.save();
-                                            setState(() {
-                                              _progress = true;
-                                            });
                                             signUpUser(email, password, name);
-                                            setState(() {
-                                              _progress = false;
-                                            });
                                           }
                                         },
                                         style: ButtonStyle(
