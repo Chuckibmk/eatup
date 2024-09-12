@@ -34,46 +34,68 @@ class _LoginState extends State<Login> {
 
   bool _progress = false;
 
+  // Future<void> signInUser(String email, String password) async {
+  // setState(() {
+  //   _progress = true;
+  // });
+  // try {
+  //   UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+  //       email: email, password: password);
+  //   if (userCredential.user != null) {
+  //     await _firestore
+  //         .collection('users')
+  //         .doc(userCredential.user!.uid)
+  //         .update({'lastlogin': FieldValue.serverTimestamp()});
+
+  //     Fluttertoast.showToast(
+  //       msg: 'Login Successful',
+  //       toastLength: Toast.LENGTH_LONG,
+  //       gravity: ToastGravity.BOTTOM,
+  //       backgroundColor: const Color(0xFFE10E0E),
+  //       textColor: Colors.white,
+  //       fontSize: 16.0,
+  //     );
+  //   } else {
+  //     Fluttertoast.showToast(
+  //       msg: 'Other issues',
+  //       toastLength: Toast.LENGTH_LONG,
+  //       gravity: ToastGravity.BOTTOM,
+  //       backgroundColor: const Color(0xFFE10E0E),
+  //       textColor: Colors.white,
+  //       fontSize: 16.0,
+  //     );
+  //   }
+  // } on FirebaseAuthException catch (e) {
+  //   Fluttertoast.showToast(
+  //   msg: e.toString(),
+  //   toastLength: Toast.LENGTH_LONG,
+  //   gravity: ToastGravity.BOTTOM,
+  //   backgroundColor: const Color(0xFFE10E0E),
+  //   textColor: Colors.white,
+  //   fontSize: 16.0,
+  // );
+
   Future<void> signInUser(String email, String password) async {
-    setState(() {
-      _progress = true;
-    });
     try {
+      setState(() {
+        _progress = true;
+      });
       UserCredential userCredential = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
-      if (userCredential.user != null) {
-        await _firestore
-            .collection('users')
-            .doc(userCredential.user!.uid)
-            .update({'lastlogin': FieldValue.serverTimestamp()});
 
-        Fluttertoast.showToast(
-          msg: 'Login Successful',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: const Color(0xFFE10E0E),
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      } else {
-        Fluttertoast.showToast(
-          msg: 'Other issues',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: const Color(0xFFE10E0E),
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-      }
+      //     await _firestore
+      //         .collection('users')
+      //         .doc(userCredential.user!.uid)
+      //         .update({'lastlogin': FieldValue.serverTimestamp()});
+
+      // Handle successful login
+      print('Login successful! User: ${userCredential.user?.email}');
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: const Color(0xFFE10E0E),
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
     } finally {
       setState(() {
         _progress = false;
