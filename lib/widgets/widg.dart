@@ -59,7 +59,7 @@ void showWarningToast({
 }) {
   toastification.show(
     context: context, // optional if you use ToastificationWrapper
-    type: ToastificationType.success,
+    type: ToastificationType.warning,
     style: ToastificationStyle.flat,
     autoCloseDuration: const Duration(seconds: 5),
     title: const Text('Warning'),
@@ -110,7 +110,7 @@ void showErrorToast({
 }) {
   toastification.show(
     context: context, // optional if you use ToastificationWrapper
-    type: ToastificationType.success,
+    type: ToastificationType.error,
     style: ToastificationStyle.flat,
     autoCloseDuration: const Duration(seconds: 5),
     title: const Text('Error'),
@@ -161,7 +161,7 @@ void showInfoToast({
 }) {
   toastification.show(
     context: context, // optional if you use ToastificationWrapper
-    type: ToastificationType.success,
+    type: ToastificationType.info,
     style: ToastificationStyle.flat,
     autoCloseDuration: const Duration(seconds: 5),
     title: const Text('Info'),

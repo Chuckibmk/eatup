@@ -34,32 +34,23 @@ class _LoginState extends State<Login> {
 
   late bool passwordVisibility = false;
 
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final firebaseAuth = FirebaseService().firebaseAuth;
+  final firebaseFirestore = FirebaseService().firebaseFirestore;
 
   bool _progress = false;
 
-  void signInUser(String email, String password) {
+  Future<void> signInUser(String email, String password) async {
     setState(() {
       _progress = true; // Show progress indicator
     });
 
-    // Sign in the user
-    _auth
-        .signInWithEmailAndPassword(email: email, password: password)
-        .then((UserCredential userCredential) {
-      // Successful login
-      if (mounted) {
-        showSuccessToast(
-            context: context,
-            message: 'Login Successful! ${userCredential.user?.email}');
-      }
-      var route = MaterialPageRoute(builder: (context) => const HomePage());
-      Navigator.push(context, route);
-
+    try {
+      UserCredential userCredential = await firebaseAuth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .timeout(const Duration(seconds: 10));
       // Update Firestore with last login timestamp
       if (userCredential.user != null) {
-        _firestore
+        firebaseFirestore
             .collection('users')
             .doc(userCredential.user!.uid)
             .update({'lastlogin': FieldValue.serverTimestamp()}).then((_) {
@@ -67,35 +58,34 @@ class _LoginState extends State<Login> {
         }).catchError((error) {
           print('Failed to update last login: $error');
         });
-      }
-    }).catchError((error) {
-      if (error is FirebaseAuthException) {
-        if (error.code == 'user-not-found') {
-          if (mounted) {
-            showWarningToast(
-                context: context, message: 'No user found for that email.');
-          }
-        } else if (error.code == 'wrong-password') {
-          if (mounted) {
-            showWarningToast(
-                context: context,
-                message: 'Wrong password provided for that user.');
-          }
+        if (mounted) {
+          showSuccessToast(
+              context: context,
+              message: 'Login Successful! ${userCredential.user?.email}');
         }
+        var route = MaterialPageRoute(builder: (context) => const HomePage());
+        Navigator.push(context, route);
       } else {
-        print('An unknown error occurred: $error');
+        if (mounted) {
+          showSuccessToast(context: context, message: 'Other Issues');
+        }
       }
-    }).whenComplete(() {
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        showErrorToast(context: context, message: e.toString());
+      }
+    } finally {
       // Always hide progress indicator
       setState(() {
         _progress = false;
       });
-    });
+    }
+    ;
   }
 
 // google sign in
   // Future<void> updateLastLogin(String uid) async {
-  //   await _firestore
+  //   await firebaseFirestore
   //       .collection('users')
   //       .doc(uid)
   //       .update({'lastlogin': FieldValue.serverTimestamp()});
