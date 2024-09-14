@@ -7,9 +7,9 @@ import 'package:eatup/screens/dashboard/product.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eatup/widgets/widg.dart';
+import 'package:eatup/widgets/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:toastification/toastification.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,73 +24,30 @@ class _HomePageState extends State<HomePage> {
   final fcus = FocusNode();
   final pcont = PageController(initialPage: 0);
 
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  FirebaseFirestore firebaseStore = FirebaseFirestore.instance;
-
-  void toastxn(msg) {
-    toastification.show(
-      context: context, // optional if you use ToastificationWrapper
-      type: ToastificationType.success,
-      style: ToastificationStyle.flat,
-      autoCloseDuration: const Duration(seconds: 5),
-      title: const Text('title'),
-      // you can also use RichText widget for title and description parameters
-      description: RichText(
-          text: TextSpan(
-        text: msg.toString(),
-        style: TextStyle(color: Colors.black),
-      )),
-      alignment: Alignment.topRight,
-      direction: TextDirection.ltr,
-      animationDuration: const Duration(milliseconds: 300),
-      animationBuilder: (context, animation, alignment, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-      icon: const Icon(Icons.check),
-      showIcon: true, // show or hide the icon
-      primaryColor: Colors.green,
-      backgroundColor: Colors.white,
-      foregroundColor: Colors.black,
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-      borderRadius: BorderRadius.circular(12),
-
-      showProgressBar: true,
-      closeButtonShowType: CloseButtonShowType.always,
-      closeOnClick: true,
-      pauseOnHover: true,
-      dragToClose: true,
-      applyBlurEffect: false,
-      callbacks: ToastificationCallbacks(
-        onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
-        onCloseButtonTap: (toastItem) =>
-            print('Toast ${toastItem.id} close button tapped'),
-        onAutoCompleteCompleted: (toastItem) =>
-            print('Toast ${toastItem.id} auto complete completed'),
-        onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
-      ),
-    );
-  }
+  final firebaseAuth = FirebaseService().firebaseAuth;
+  final firebaseFirestore = FirebaseService().firebaseFirestore;
 
   void logout() async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
+      User? user = firebaseAuth.currentUser;
       if (user != null) {
-        await FirebaseAuth.instance
-            .signOut()
-            .timeout(const Duration(seconds: 10));
+        await firebaseAuth.signOut().timeout(const Duration(seconds: 10));
 
-        toastxn('Logout Successful');
+        if (mounted) {
+          showSuccessToast(context: context, message: 'Logout Successful');
+        }
         scaffoldKey.currentState?.closeDrawer();
       } else {
-        toastxn('No Account Signed In');
+        if (mounted) {
+          showWarningToast(context: context, message: 'No Account Signed In');
+        }
         scaffoldKey.currentState?.closeDrawer();
       }
     } on TimeoutException {
-      toastxn('Network Issues, signout failed');
+      if (mounted) {
+        showErrorToast(
+            context: context, message: 'Network Issues, signout failed');
+      }
     }
   }
 

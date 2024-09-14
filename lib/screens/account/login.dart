@@ -1,13 +1,16 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/screens/account/register.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../dashboard/home.dart';
-// import 'package:google_sign_in/google_sign_in.dart';
+
+import 'package:eatup/widgets/widg.dart';
+import 'package:eatup/widgets/firebase_services.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -36,17 +39,6 @@ class _LoginState extends State<Login> {
 
   bool _progress = false;
 
-  void ftoast(msg) {
-    Fluttertoast.showToast(
-      msg: msg.toString(),
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.BOTTOM,
-      backgroundColor: const Color(0xFFE10E0E),
-      textColor: Colors.white,
-      fontSize: 16.0,
-    );
-  }
-
   void signInUser(String email, String password) {
     setState(() {
       _progress = true; // Show progress indicator
@@ -57,7 +49,11 @@ class _LoginState extends State<Login> {
         .signInWithEmailAndPassword(email: email, password: password)
         .then((UserCredential userCredential) {
       // Successful login
-      ftoast('Login successful!  ${userCredential.user?.email}');
+      if (mounted) {
+        showSuccessToast(
+            context: context,
+            message: 'Login Successful! ${userCredential.user?.email}');
+      }
       var route = MaterialPageRoute(builder: (context) => const HomePage());
       Navigator.push(context, route);
 
@@ -75,9 +71,16 @@ class _LoginState extends State<Login> {
     }).catchError((error) {
       if (error is FirebaseAuthException) {
         if (error.code == 'user-not-found') {
-          ftoast('No user found for that email.');
+          if (mounted) {
+            showWarningToast(
+                context: context, message: 'No user found for that email.');
+          }
         } else if (error.code == 'wrong-password') {
-          ftoast('Wrong password provided for that user.');
+          if (mounted) {
+            showWarningToast(
+                context: context,
+                message: 'Wrong password provided for that user.');
+          }
         }
       } else {
         print('An unknown error occurred: $error');

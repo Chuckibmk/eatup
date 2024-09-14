@@ -4,9 +4,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eatup/widgets/widg.dart';
+import 'package:eatup/widgets/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -43,22 +44,17 @@ class _RegisterState extends State<Register> {
   late bool passwordVisibility = false;
   late bool passwordConfirmVisibility = false;
 
-  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
-  FirebaseFirestore firebaseStore = FirebaseFirestore.instance;
+  final firebaseAuth = FirebaseService().firebaseAuth;
+  final firebaseFirestore = FirebaseService().firebaseFirestore;
 
   bool _progress = false;
 
   void checkFirebaseConnection() {
-    User? user = FirebaseAuth.instance.currentUser;
+    User? user = firebaseAuth.currentUser;
     if (user != null) {
-      Fluttertoast.showToast(
-        msg: 'Sign In Successful',
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: const Color(0xFFE10E0E),
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      if (mounted) {
+        showSuccessToast(context: context, message: 'Sign In Successful');
+      }
       var route = MaterialPageRoute(builder: (context) => const HomePage());
       Navigator.push(context, route);
     } else {
@@ -76,52 +72,31 @@ class _RegisterState extends State<Register> {
           .createUserWithEmailAndPassword(email: email, password: password)
           .timeout(const Duration(seconds: 10));
       if (userCredential.user != null) {
-        await firebaseStore
+        await firebaseFirestore
             .collection("users")
             .doc(userCredential.user!.uid)
             .set({
           "name": name,
           "id": userCredential.user!.uid,
           'lastlogin': FieldValue.serverTimestamp()
-        }).onError((e, _) => Fluttertoast.showToast(
-                  msg: "Error writing: $e",
-                  toastLength: Toast.LENGTH_LONG,
-                  gravity: ToastGravity.BOTTOM,
-                  backgroundColor: const Color(0xFFE10E0E),
-                  textColor: Colors.white,
-                  fontSize: 16.0,
-                ));
+        }).onError((e, _) =>
+                showErrorToast(context: context, message: 'Error writing $e'));
 
-        Fluttertoast.showToast(
-          msg: 'Signup Successful',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: const Color(0xFFE10E0E),
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        if (mounted) {
+          showSuccessToast(context: context, message: 'Signup Successful');
+        }
+
         var route = MaterialPageRoute(builder: (context) => const HomePage());
         Navigator.push(context, route);
       } else {
-        // showSnackbar("Other issues");
-        Fluttertoast.showToast(
-          msg: 'Other issues',
-          toastLength: Toast.LENGTH_LONG,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: const Color(0xFFE10E0E),
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        if (mounted) {
+          showWarningToast(context: context, message: 'Other Issues');
+        }
       }
     } on FirebaseAuthException catch (e) {
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.BOTTOM,
-        backgroundColor: const Color(0xFFE10E0E),
-        textColor: Colors.white,
-        fontSize: 16.0,
-      );
+      if (mounted) {
+        showErrorToast(context: context, message: e.toString());
+      }
     } finally {
       setState(() {
         _progress = false;
