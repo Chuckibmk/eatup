@@ -75,33 +75,74 @@ class _LoginState extends State<Login> {
   //   fontSize: 16.0,
   // );
 
-  Future<void> signInUser(String email, String password) async {
-    try {
-      setState(() {
-        _progress = true;
-      });
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-          email: email, password: password);
+  void signInUser(String email, String password) {
+    setState(() {
+      _progress = true; // Show progress indicator
+    });
 
-      //     await _firestore
-      //         .collection('users')
-      //         .doc(userCredential.user!.uid)
-      //         .update({'lastlogin': FieldValue.serverTimestamp()});
+    // Sign in the user
+    _auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((UserCredential userCredential) {
+      // Successful login
+      print('Login successful!  ${userCredential.user?.email}');
 
-      // Handle successful login
-      print('Login successful! User: ${userCredential.user?.email}');
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
+      // Update Firestore with last login timestamp
+      if (userCredential.user != null) {
+        _firestore
+            .collection('users')
+            .doc(userCredential.user!.uid)
+            .update({'lastlogin': FieldValue.serverTimestamp()}).then((_) {
+          print('Last login timestamp updated.');
+        }).catchError((error) {
+          print('Failed to update last login: $error');
+        });
       }
-    } finally {
+    }).catchError((error) {
+      if (error is FirebaseAuthException) {
+        if (error.code == 'user-not-found') {
+          print('No user found for that email.');
+        } else if (error.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+        }
+      } else {
+        print('An unknown error occurred: $error');
+      }
+    }).whenComplete(() {
+      // Always hide progress indicator
       setState(() {
         _progress = false;
       });
-    }
+    });
   }
+
+  // Future<void> signInUser(String email, String password) async {
+  //   try {
+  //     setState(() {
+  //       _progress = true;
+  //     });
+  //     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+  //         email: email, password: password);
+
+  //     //     await _firestore
+  //     //         .collection('users')
+  //     //         .doc(userCredential.user!.uid)
+  //     //         .update({'lastlogin': FieldValue.serverTimestamp()});
+
+  //     // Handle successful login
+  //     print('Login successful! User: ${userCredential.user?.email}');
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'user-not-found') {
+  //       print('No user found for that email.');
+  //     } else if (e.code == 'wrong-password') {
+  //       print('Wrong password provided for that user.');
+  //     }
+  //   } finally {
+  //     setState(() {
+  //       _progress = false;
+  //     });
+  //   }
+  // }
 
   // Future<void> updateLastLogin(String uid) async {
   //   await _firestore

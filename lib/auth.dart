@@ -29,4 +29,14 @@ class AuthenticationService {
         .doc(uid)
         .update({'lastlogin': FieldValue.serverTimestamp()});
   }
+
+  void checkFirebaseConnection() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      print('Firebase is connected. User is signed in as ${user.email}.');
+    } else {
+      print('Firebase is connected, but no user is signed in.');
+    }
+    // await FirebaseAuth.instance.signOut();
+  }
 }

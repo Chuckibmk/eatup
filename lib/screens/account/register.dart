@@ -1,3 +1,4 @@
+import 'package:eatup/screens/dashboard/home.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -51,7 +52,8 @@ class _RegisterState extends State<Register> {
     });
     try {
       UserCredential userCredential = await firebaseAuth
-          .createUserWithEmailAndPassword(email: email, password: password);
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .timeout(const Duration(seconds: 10));
       if (userCredential.user != null) {
         await firebaseStore
             .collection("users")
@@ -74,6 +76,8 @@ class _RegisterState extends State<Register> {
           textColor: Colors.white,
           fontSize: 16.0,
         );
+        var route = MaterialPageRoute(builder: (context) => const HomePage());
+        Navigator.push(context, route);
       } else {
         // showSnackbar("Other issues");
         Fluttertoast.showToast(
