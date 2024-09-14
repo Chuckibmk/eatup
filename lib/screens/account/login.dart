@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import '../dashboard/home.dart';
 // import 'package:google_sign_in/google_sign_in.dart';
 
 class Login extends StatefulWidget {
@@ -34,46 +36,16 @@ class _LoginState extends State<Login> {
 
   bool _progress = false;
 
-  // Future<void> signInUser(String email, String password) async {
-  // setState(() {
-  //   _progress = true;
-  // });
-  // try {
-  //   UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-  //       email: email, password: password);
-  //   if (userCredential.user != null) {
-  //     await _firestore
-  //         .collection('users')
-  //         .doc(userCredential.user!.uid)
-  //         .update({'lastlogin': FieldValue.serverTimestamp()});
-
-  //     Fluttertoast.showToast(
-  //       msg: 'Login Successful',
-  //       toastLength: Toast.LENGTH_LONG,
-  //       gravity: ToastGravity.BOTTOM,
-  //       backgroundColor: const Color(0xFFE10E0E),
-  //       textColor: Colors.white,
-  //       fontSize: 16.0,
-  //     );
-  //   } else {
-  //     Fluttertoast.showToast(
-  //       msg: 'Other issues',
-  //       toastLength: Toast.LENGTH_LONG,
-  //       gravity: ToastGravity.BOTTOM,
-  //       backgroundColor: const Color(0xFFE10E0E),
-  //       textColor: Colors.white,
-  //       fontSize: 16.0,
-  //     );
-  //   }
-  // } on FirebaseAuthException catch (e) {
-  //   Fluttertoast.showToast(
-  //   msg: e.toString(),
-  //   toastLength: Toast.LENGTH_LONG,
-  //   gravity: ToastGravity.BOTTOM,
-  //   backgroundColor: const Color(0xFFE10E0E),
-  //   textColor: Colors.white,
-  //   fontSize: 16.0,
-  // );
+  void ftoast(msg) {
+    Fluttertoast.showToast(
+      msg: msg.toString(),
+      toastLength: Toast.LENGTH_LONG,
+      gravity: ToastGravity.BOTTOM,
+      backgroundColor: const Color(0xFFE10E0E),
+      textColor: Colors.white,
+      fontSize: 16.0,
+    );
+  }
 
   void signInUser(String email, String password) {
     setState(() {
@@ -85,7 +57,9 @@ class _LoginState extends State<Login> {
         .signInWithEmailAndPassword(email: email, password: password)
         .then((UserCredential userCredential) {
       // Successful login
-      print('Login successful!  ${userCredential.user?.email}');
+      ftoast('Login successful!  ${userCredential.user?.email}');
+      var route = MaterialPageRoute(builder: (context) => const HomePage());
+      Navigator.push(context, route);
 
       // Update Firestore with last login timestamp
       if (userCredential.user != null) {
@@ -101,9 +75,9 @@ class _LoginState extends State<Login> {
     }).catchError((error) {
       if (error is FirebaseAuthException) {
         if (error.code == 'user-not-found') {
-          print('No user found for that email.');
+          ftoast('No user found for that email.');
         } else if (error.code == 'wrong-password') {
-          print('Wrong password provided for that user.');
+          ftoast('Wrong password provided for that user.');
         }
       } else {
         print('An unknown error occurred: $error');
@@ -116,34 +90,7 @@ class _LoginState extends State<Login> {
     });
   }
 
-  // Future<void> signInUser(String email, String password) async {
-  //   try {
-  //     setState(() {
-  //       _progress = true;
-  //     });
-  //     UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-  //         email: email, password: password);
-
-  //     //     await _firestore
-  //     //         .collection('users')
-  //     //         .doc(userCredential.user!.uid)
-  //     //         .update({'lastlogin': FieldValue.serverTimestamp()});
-
-  //     // Handle successful login
-  //     print('Login successful! User: ${userCredential.user?.email}');
-  //   } on FirebaseAuthException catch (e) {
-  //     if (e.code == 'user-not-found') {
-  //       print('No user found for that email.');
-  //     } else if (e.code == 'wrong-password') {
-  //       print('Wrong password provided for that user.');
-  //     }
-  //   } finally {
-  //     setState(() {
-  //       _progress = false;
-  //     });
-  //   }
-  // }
-
+// google sign in
   // Future<void> updateLastLogin(String uid) async {
   //   await _firestore
   //       .collection('users')

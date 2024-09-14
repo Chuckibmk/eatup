@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:eatup/screens/account/login.dart';
 import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:eatup/screens/dashboard/help.dart';
@@ -5,6 +7,9 @@ import 'package:eatup/screens/dashboard/product.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:toastification/toastification.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,6 +23,77 @@ class _HomePageState extends State<HomePage> {
   final cont = TextEditingController();
   final fcus = FocusNode();
   final pcont = PageController(initialPage: 0);
+
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  FirebaseFirestore firebaseStore = FirebaseFirestore.instance;
+
+  void toastxn(msg) {
+    toastification.show(
+      context: context, // optional if you use ToastificationWrapper
+      type: ToastificationType.success,
+      style: ToastificationStyle.flat,
+      autoCloseDuration: const Duration(seconds: 5),
+      title: const Text('title'),
+      // you can also use RichText widget for title and description parameters
+      description: RichText(
+          text: TextSpan(
+        text: msg.toString(),
+        style: TextStyle(color: Colors.black),
+      )),
+      alignment: Alignment.topRight,
+      direction: TextDirection.ltr,
+      animationDuration: const Duration(milliseconds: 300),
+      animationBuilder: (context, animation, alignment, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      icon: const Icon(Icons.check),
+      showIcon: true, // show or hide the icon
+      primaryColor: Colors.green,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      borderRadius: BorderRadius.circular(12),
+
+      showProgressBar: true,
+      closeButtonShowType: CloseButtonShowType.always,
+      closeOnClick: true,
+      pauseOnHover: true,
+      dragToClose: true,
+      applyBlurEffect: false,
+      callbacks: ToastificationCallbacks(
+        onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
+        onCloseButtonTap: (toastItem) =>
+            print('Toast ${toastItem.id} close button tapped'),
+        onAutoCompleteCompleted: (toastItem) =>
+            print('Toast ${toastItem.id} auto complete completed'),
+        onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
+      ),
+    );
+  }
+
+  void logout() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        await FirebaseAuth.instance
+            .signOut()
+            .timeout(const Duration(seconds: 10));
+
+        toastxn('Logout Successful');
+        scaffoldKey.currentState?.closeDrawer();
+      } else {
+        toastxn('No Account Signed In');
+        scaffoldKey.currentState?.closeDrawer();
+      }
+    } on TimeoutException {
+      toastxn('Network Issues, signout failed');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -43,22 +119,25 @@ class _HomePageState extends State<HomePage> {
                         0.0, 40.0, 0.0, 0.0),
                     child: GestureDetector(
                       onTap: () {
-                        var route = MaterialPageRoute(
-                          builder: (context) => const HomePage(),
-                        );
-                        Navigator.push(context, route);
+                        scaffoldKey.currentState?.closeDrawer();
+                        // var route = MaterialPageRoute(
+                        //   builder: (context) => const HomePage(),
+                        // );
+                        // Navigator.push(context, route);
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: Alignment(-1.0, -1.0),
+                            alignment: const Alignment(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
-                                var route = MaterialPageRoute(
-                                  builder: (context) => const HomePage(),
-                                );
-                                Navigator.push(context, route);
+                                // var route = MaterialPageRoute(
+                                //   builder: (context) => const HomePage(),
+                                // );
+                                // Navigator.push(context, route);
+
+                                scaffoldKey.currentState?.closeDrawer();
                               },
                               style: ButtonStyle(
                                 shape: WidgetStateProperty.all<
@@ -114,7 +193,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, -1.0),
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
                                 // var route = MaterialPageRoute(
@@ -176,7 +255,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, -1.0),
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
                                 // var route = MaterialPageRoute(
@@ -195,7 +274,7 @@ class _HomePageState extends State<HomePage> {
                                   const Color(0xECF2B8B8),
                                 ),
                               ),
-                              icon: Icon(
+                              icon: const Icon(
                                 Icons.fastfood_sharp,
                                 color: Color(0xFFE10E0E),
                                 size: 25.0,
@@ -238,7 +317,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, -1.0),
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
                                 // var route = MaterialPageRoute(
@@ -300,7 +379,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, -1.0),
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
                                 var route = MaterialPageRoute(
@@ -362,7 +441,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Align(
-                            alignment: AlignmentDirectional(-1.0, -1.0),
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
                                 var route = MaterialPageRoute(
@@ -395,6 +474,70 @@ class _HomePageState extends State<HomePage> {
                                   30.0, 0.0, 0.0, 0.0),
                               child: Text(
                                 'Login',
+                                style: GoogleFonts.readexPro(
+                                  color: Colors.black87,
+                                  letterSpacing: 0.0,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelLarge,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 20.0, 0.0, 0.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        logout();
+                        // var route = MaterialPageRoute(
+                        //   builder: (context) => const Login(),
+                        // );
+                        // Navigator.push(context, route);
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Align(
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
+                            child: IconButton(
+                              onPressed: () {
+                                logout();
+                                // var route = MaterialPageRoute(
+                                //   builder: (context) => const HomePage(),
+                                // );
+                                // Navigator.push(context, route);
+                              },
+                              style: ButtonStyle(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color(0xECF2B8B8),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.logout,
+                                color: Color(0xFFE10E0E),
+                                size: 25.0,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  30.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                'Logout',
                                 style: GoogleFonts.readexPro(
                                   color: Colors.black87,
                                   letterSpacing: 0.0,

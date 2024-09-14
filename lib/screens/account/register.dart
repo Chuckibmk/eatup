@@ -1,4 +1,6 @@
+import 'package:eatup/screens/account/login.dart';
 import 'package:eatup/screens/dashboard/home.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -46,6 +48,25 @@ class _RegisterState extends State<Register> {
 
   bool _progress = false;
 
+  void checkFirebaseConnection() {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      Fluttertoast.showToast(
+        msg: 'Sign In Successful',
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: const Color(0xFFE10E0E),
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      var route = MaterialPageRoute(builder: (context) => const HomePage());
+      Navigator.push(context, route);
+    } else {
+      var route = MaterialPageRoute(builder: (context) => const Login());
+      Navigator.push(context, route);
+    }
+  }
+
   Future<void> signUpUser(String email, String password, String name) async {
     setState(() {
       _progress = true;
@@ -58,15 +79,18 @@ class _RegisterState extends State<Register> {
         await firebaseStore
             .collection("users")
             .doc(userCredential.user!.uid)
-            .set({"name": name, "id": userCredential.user!.uid}).onError(
-                (e, _) => Fluttertoast.showToast(
-                      msg: "Error writing: $e",
-                      toastLength: Toast.LENGTH_LONG,
-                      gravity: ToastGravity.BOTTOM,
-                      backgroundColor: const Color(0xFFE10E0E),
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    ));
+            .set({
+          "name": name,
+          "id": userCredential.user!.uid,
+          'lastlogin': FieldValue.serverTimestamp()
+        }).onError((e, _) => Fluttertoast.showToast(
+                  msg: "Error writing: $e",
+                  toastLength: Toast.LENGTH_LONG,
+                  gravity: ToastGravity.BOTTOM,
+                  backgroundColor: const Color(0xFFE10E0E),
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                ));
 
         Fluttertoast.showToast(
           msg: 'Signup Successful',
@@ -171,9 +195,13 @@ class _RegisterState extends State<Register> {
                                                   .bodyMedium,
                                             ),
                                           ),
-                                          const TextSpan(
+                                          TextSpan(
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                checkFirebaseConnection();
+                                              },
                                             text: 'Sign In',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               color: Color(0xFFE10E0E),
                                             ),
                                           ),

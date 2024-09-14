@@ -3,17 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthenticationService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  Future<UserCredential> signInWithEmailAndPassword(
-      String email, String password) async {
-    return await _auth.signInWithEmailAndPassword(
-        email: email, password: password);
-  }
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+  FirebaseFirestore firebaseStore = FirebaseFirestore.instance;
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    await firebaseAuth.signOut();
 
     await _clearSession();
   }
@@ -24,7 +18,7 @@ class AuthenticationService {
   }
 
   Future<void> updateLastLogin(String uid) async {
-    await _firestore
+    await firebaseStore
         .collection('users')
         .doc(uid)
         .update({'lastlogin': FieldValue.serverTimestamp()});
@@ -37,6 +31,5 @@ class AuthenticationService {
     } else {
       print('Firebase is connected, but no user is signed in.');
     }
-    // await FirebaseAuth.instance.signOut();
   }
 }
