@@ -1,7 +1,9 @@
+import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/screens/account/login.dart';
 import 'package:eatup/screens/dashboard/home.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:eatup/widgets/widg.dart';
@@ -55,11 +57,9 @@ class _RegisterState extends State<Register> {
       if (mounted) {
         showSuccessToast(context: context, message: 'Sign In Successful');
       }
-      var route = MaterialPageRoute(builder: (context) => const HomePage());
-      Navigator.push(context, route);
+      Get.toNamed(home);
     } else {
-      var route = MaterialPageRoute(builder: (context) => const Login());
-      Navigator.push(context, route);
+      Get.toNamed(login);
     }
   }
 
@@ -85,9 +85,7 @@ class _RegisterState extends State<Register> {
         if (mounted) {
           showSuccessToast(context: context, message: 'Signup Successful');
         }
-
-        var route = MaterialPageRoute(builder: (context) => const HomePage());
-        Navigator.push(context, route);
+        Get.toNamed(home);
       } else {
         if (mounted) {
           showWarningToast(context: context, message: 'Other Issues');

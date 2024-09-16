@@ -1,5 +1,6 @@
-import 'package:eatup/screens/dashboard/home.dart';
+import 'package:eatup/routes/route_names.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 // import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -112,9 +113,7 @@ class _StartedState extends State<Started> {
                         width: 300.0,
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            var route = MaterialPageRoute(
-                                builder: (context) => const HomePage());
-                            Navigator.push(context, route);
+                            Get.toNamed(home);
                           },
                           style: ButtonStyle(
                             padding: WidgetStateProperty.all<EdgeInsets>(

@@ -1,5 +1,7 @@
+import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class Product extends StatefulWidget {
@@ -114,10 +116,7 @@ class _ProductState extends State<Product> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    var route = MaterialPageRoute(
-                                      builder: (context) => const Cart(),
-                                    );
-                                    Navigator.push(context, route);
+                                    Get.toNamed(cart);
                                   },
                                   icon: const Icon(
                                     Icons.shopping_cart,

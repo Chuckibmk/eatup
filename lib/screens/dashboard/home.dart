@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/screens/account/login.dart';
 import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:eatup/screens/dashboard/help.dart';
 import 'package:eatup/screens/dashboard/product.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:eatup/widgets/widg.dart';
@@ -77,10 +79,6 @@ class _HomePageState extends State<HomePage> {
                     child: GestureDetector(
                       onTap: () {
                         scaffoldKey.currentState?.closeDrawer();
-                        // var route = MaterialPageRoute(
-                        //   builder: (context) => const HomePage(),
-                        // );
-                        // Navigator.push(context, route);
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -89,11 +87,6 @@ class _HomePageState extends State<HomePage> {
                             alignment: const Alignment(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
-                                // var route = MaterialPageRoute(
-                                //   builder: (context) => const HomePage(),
-                                // );
-                                // Navigator.push(context, route);
-
                                 scaffoldKey.currentState?.closeDrawer();
                               },
                               style: ButtonStyle(
@@ -141,10 +134,7 @@ class _HomePageState extends State<HomePage> {
                         0.0, 20.0, 0.0, 0.0),
                     child: GestureDetector(
                       onTap: () {
-                        // var route = MaterialPageRoute(
-                        //   builder: (context) => HomePage(),
-                        // );
-                        // Navigator.push(context, route);
+                        // Get.toNamed();
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -153,10 +143,7 @@ class _HomePageState extends State<HomePage> {
                             alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
-                                // var route = MaterialPageRoute(
-                                //   builder: (context) => const HomePage(),
-                                // );
-                                // Navigator.push(context, route);
+                                // Get.toNamed();
                               },
                               style: ButtonStyle(
                                 shape: WidgetStateProperty.all<
@@ -203,10 +190,7 @@ class _HomePageState extends State<HomePage> {
                         0.0, 20.0, 0.0, 0.0),
                     child: GestureDetector(
                       onTap: () {
-                        // var route = MaterialPageRoute(
-                        //   builder: (context) => HomePage(),
-                        // );
-                        // Navigator.push(context, route);
+                        // Get.toNamed();
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -215,10 +199,7 @@ class _HomePageState extends State<HomePage> {
                             alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
-                                // var route = MaterialPageRoute(
-                                //   builder: (context) => const HomePage(),
-                                // );
-                                // Navigator.push(context, route);
+                                // Get.toNamed();
                               },
                               style: ButtonStyle(
                                 shape: WidgetStateProperty.all<
@@ -265,10 +246,7 @@ class _HomePageState extends State<HomePage> {
                         0.0, 20.0, 0.0, 0.0),
                     child: GestureDetector(
                       onTap: () {
-                        // var route = MaterialPageRoute(
-                        //   builder: (context) => HomePage(),
-                        // );
-                        // Navigator.push(context, route);
+                        // Get.toNamed();
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -277,10 +255,7 @@ class _HomePageState extends State<HomePage> {
                             alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
-                                // var route = MaterialPageRoute(
-                                //   builder: (context) => const HomePage(),
-                                // );
-                                // Navigator.push(context, route);
+                                // Get.toNamed();
                               },
                               style: ButtonStyle(
                                 shape: WidgetStateProperty.all<
@@ -327,10 +302,7 @@ class _HomePageState extends State<HomePage> {
                         0.0, 20.0, 0.0, 0.0),
                     child: GestureDetector(
                       onTap: () {
-                        var route = MaterialPageRoute(
-                          builder: (context) => const Help(),
-                        );
-                        Navigator.push(context, route);
+                        Get.toNamed(help);
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -339,10 +311,7 @@ class _HomePageState extends State<HomePage> {
                             alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
-                                var route = MaterialPageRoute(
-                                  builder: (context) => const Help(),
-                                );
-                                Navigator.push(context, route);
+                                Get.toNamed(help);
                               },
                               style: ButtonStyle(
                                 shape: WidgetStateProperty.all<
@@ -389,10 +358,7 @@ class _HomePageState extends State<HomePage> {
                         0.0, 20.0, 0.0, 0.0),
                     child: GestureDetector(
                       onTap: () {
-                        var route = MaterialPageRoute(
-                          builder: (context) => const Login(),
-                        );
-                        Navigator.push(context, route);
+                        Get.toNamed(login);
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -401,10 +367,7 @@ class _HomePageState extends State<HomePage> {
                             alignment: const AlignmentDirectional(-1.0, -1.0),
                             child: IconButton(
                               onPressed: () {
-                                var route = MaterialPageRoute(
-                                  builder: (context) => const Login(),
-                                );
-                                Navigator.push(context, route);
+                                Get.toNamed(login);
                               },
                               style: ButtonStyle(
                                 shape: WidgetStateProperty.all<
@@ -452,10 +415,6 @@ class _HomePageState extends State<HomePage> {
                     child: GestureDetector(
                       onTap: () {
                         logout();
-                        // var route = MaterialPageRoute(
-                        //   builder: (context) => const Login(),
-                        // );
-                        // Navigator.push(context, route);
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
@@ -465,10 +424,6 @@ class _HomePageState extends State<HomePage> {
                             child: IconButton(
                               onPressed: () {
                                 logout();
-                                // var route = MaterialPageRoute(
-                                //   builder: (context) => const HomePage(),
-                                // );
-                                // Navigator.push(context, route);
                               },
                               style: ButtonStyle(
                                 shape: WidgetStateProperty.all<
@@ -547,9 +502,7 @@ class _HomePageState extends State<HomePage> {
                 fixedSize: WidgetStateProperty.all<Size>(const Size.square(60)),
               ),
               onPressed: () {
-                var route =
-                    MaterialPageRoute(builder: (context) => const Cart());
-                Navigator.push(context, route);
+                Get.toNamed(cart);
               },
               icon: const Icon(
                 Icons.shopping_cart,
@@ -783,9 +736,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    var route = MaterialPageRoute(
-                        builder: (context) => const Product());
-                    Navigator.push(context, route);
+                    Get.toNamed(product);
                   },
                   child: Container(
                     width: double.infinity,

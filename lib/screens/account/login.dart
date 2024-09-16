@@ -1,8 +1,10 @@
+import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/screens/account/register.dart';
 
 import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../dashboard/home.dart';
@@ -63,8 +65,7 @@ class _LoginState extends State<Login> {
               context: context,
               message: 'Login Successful! ${userCredential.user?.email}');
         }
-        var route = MaterialPageRoute(builder: (context) => const HomePage());
-        Navigator.push(context, route);
+        Get.toNamed(home);
       } else {
         if (mounted) {
           showSuccessToast(context: context, message: 'Other Issues');
@@ -186,10 +187,7 @@ class _LoginState extends State<Login> {
                                         height: 44.0,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            var route = MaterialPageRoute(
-                                                builder: (context) =>
-                                                    const Register());
-                                            Navigator.push(context, route);
+                                            Get.toNamed(register);
                                           },
                                           style: ButtonStyle(
                                             backgroundColor:
