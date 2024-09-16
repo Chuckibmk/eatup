@@ -1,7 +1,5 @@
 import 'package:counter_button/counter_button.dart';
 import 'package:eatup/routes/route_names.dart';
-import 'package:eatup/screens/account/login.dart';
-// import 'package:eatup/screens/account/login.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';

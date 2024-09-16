@@ -1,6 +1,5 @@
 import 'package:eatup/routes/route_names.dart';
-import 'package:eatup/screens/account/login.dart';
-import 'package:eatup/screens/dashboard/home.dart';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -79,8 +78,11 @@ class _RegisterState extends State<Register> {
           "name": name,
           "id": userCredential.user!.uid,
           'lastlogin': FieldValue.serverTimestamp()
-        }).onError((e, _) =>
-                showErrorToast(context: context, message: 'Error writing $e'));
+        }).onError((e, _) {
+          if (mounted) {
+            showErrorToast(context: context, message: 'Error writing $e');
+          }
+        });
 
         if (mounted) {
           showSuccessToast(context: context, message: 'Signup Successful');
