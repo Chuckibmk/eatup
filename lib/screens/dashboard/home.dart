@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -24,6 +25,10 @@ class _HomePageState extends State<HomePage> {
 
   final firebaseAuth = FirebaseService().firebaseAuth;
   final firebaseFirestore = FirebaseService().firebaseFirestore;
+
+  User? user;
+
+  String displayN = '';
 
   void logout() async {
     try {
@@ -50,7 +55,31 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Get the current user when the widget is initialized
+    user = firebaseAuth.currentUser;
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(user?.uid);
+    // try{
+    final usr = firebaseFirestore.collection("users").doc(user?.uid);
+    print(usr);
+    // }catch{
+
+    // }
+    // final docRef = firebaseFirestore.collection("users").doc(user!.uid);
+    // print(docRef);
+    usr.get().then(
+      (DocumentSnapshot doc) {
+        final data = doc.data() as Map<String, dynamic>;
+        displayN = data?['name'];
+        // ...
+      },
+      onError: (e) => print("Error getting document: $e"),
+    );
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -66,55 +95,27 @@ class _HomePageState extends State<HomePage> {
             ),
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 40.0, 0.0, 0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        scaffoldKey.currentState?.closeDrawer();
-                      },
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 5.0, 0.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Align(
-                            alignment: const Alignment(-1.0, -1.0),
-                            child: IconButton(
-                              onPressed: () {
-                                scaffoldKey.currentState?.closeDrawer();
-                              },
-                              style: ButtonStyle(
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0xECF2B8B8),
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.home_filled,
-                                color: Color(0xFFE10E0E),
-                                size: 25.0,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const Alignment(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30.0, 0.0, 0.0, 0.0),
+                          Visibility(
+                            visible: user != null,
+                            child: Align(
+                              alignment: const Alignment(-1.0, -1.0),
                               child: Text(
-                                'Home',
+                                displayN,
                                 style: GoogleFonts.readexPro(
                                   color: Colors.black87,
                                   letterSpacing: 0.0,
                                   fontSize: 20,
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.bold,
                                   textStyle:
                                       Theme.of(context).textTheme.labelLarge,
                                 ),
@@ -124,344 +125,798 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 20.0, 0.0, 0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Get.toNamed();
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(-1.0, -1.0),
-                            child: IconButton(
-                              onPressed: () {
-                                // Get.toNamed();
-                              },
-                              style: ButtonStyle(
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 40.0, 0.0, 0.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          scaffoldKey.currentState?.closeDrawer();
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: const Alignment(-1.0, -1.0),
+                              child: IconButton(
+                                onPressed: () {
+                                  scaffoldKey.currentState?.closeDrawer();
+                                },
+                                style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                    const Color(0xECF2B8B8),
                                   ),
                                 ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0xECF2B8B8),
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.restaurant,
-                                color: Color(0xFFE10E0E),
-                                size: 25.0,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Restaurants',
-                                style: GoogleFonts.readexPro(
-                                  color: Colors.black87,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
+                                icon: const Icon(
+                                  Icons.home_filled,
+                                  color: Color(0xFFE10E0E),
+                                  size: 20.0,
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 20.0, 0.0, 0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Get.toNamed();
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(-1.0, -1.0),
-                            child: IconButton(
-                              onPressed: () {
-                                // Get.toNamed();
-                              },
-                              style: ButtonStyle(
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                            Align(
+                              alignment: const Alignment(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    30.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Home',
+                                  style: GoogleFonts.readexPro(
+                                    color: Colors.black87,
+                                    letterSpacing: 0.0,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
                                   ),
                                 ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0xECF2B8B8),
-                                ),
                               ),
-                              icon: const Icon(
-                                Icons.fastfood_sharp,
-                                color: Color(0xFFE10E0E),
-                                size: 25.0,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Food Packages',
-                                style: GoogleFonts.readexPro(
-                                  color: Colors.black87,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 20.0, 0.0, 0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        // Get.toNamed();
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(-1.0, -1.0),
-                            child: IconButton(
-                              onPressed: () {
-                                // Get.toNamed();
-                              },
-                              style: ButtonStyle(
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                    Visibility(
+                      visible: user != null,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Get.toNamed();
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    // Get.toNamed();
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.person,
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
                                   ),
                                 ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0xECF2B8B8),
-                                ),
                               ),
-                              icon: const Icon(
-                                Icons.store,
-                                color: Color(0xFFE10E0E),
-                                size: 25.0,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Stores',
-                                style: GoogleFonts.readexPro(
-                                  color: Colors.black87,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 20.0, 0.0, 0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed(help);
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(-1.0, -1.0),
-                            child: IconButton(
-                              onPressed: () {
-                                Get.toNamed(help);
-                              },
-                              style: ButtonStyle(
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Profile',
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
                                   ),
                                 ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0xECF2B8B8),
-                                ),
                               ),
-                              icon: const Icon(
-                                Icons.question_mark,
-                                color: Color(0xFFE10E0E),
-                                size: 25.0,
-                              ),
-                            ),
+                            ],
                           ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Help',
-                                style: GoogleFonts.readexPro(
-                                  color: Colors.black87,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 20.0, 0.0, 0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed(login);
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(-1.0, -1.0),
-                            child: IconButton(
-                              onPressed: () {
-                                Get.toNamed(login);
-                              },
-                              style: ButtonStyle(
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                    Visibility(
+                      visible: user != null,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Get.toNamed();
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    // Get.toNamed();
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.shopping_cart,
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
                                   ),
                                 ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0xECF2B8B8),
-                                ),
                               ),
-                              icon: const Icon(
-                                Icons.login_rounded,
-                                color: Color(0xFFE10E0E),
-                                size: 25.0,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Login',
-                                style: GoogleFonts.readexPro(
-                                  color: Colors.black87,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 20.0, 0.0, 0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        logout();
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: const AlignmentDirectional(-1.0, -1.0),
-                            child: IconButton(
-                              onPressed: () {
-                                logout();
-                              },
-                              style: ButtonStyle(
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Orders',
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
                                   ),
                                 ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0xECF2B8B8),
-                                ),
                               ),
-                              icon: const Icon(
-                                Icons.logout,
-                                color: Color(0xFFE10E0E),
-                                size: 25.0,
-                              ),
-                            ),
+                            ],
                           ),
-                          Align(
-                            alignment: const AlignmentDirectional(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Logout',
-                                style: GoogleFonts.readexPro(
-                                  color: Colors.black87,
-                                  letterSpacing: 0.0,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                    Visibility(
+                      visible: user != null,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Get.toNamed();
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    // Get.toNamed();
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.wallet,
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Payments',
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: user != null,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Get.toNamed();
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    // Get.toNamed();
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.how_to_reg,
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'KYC',
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 20.0, 0.0, 0.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          // Get.toNamed();
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, -1.0),
+                              child: IconButton(
+                                onPressed: () {
+                                  // Get.toNamed();
+                                },
+                                style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                    const Color(0xECF2B8B8),
+                                  ),
+                                ),
+                                icon: const Icon(
+                                  Icons.restaurant,
+                                  color: Color(0xFFE10E0E),
+                                  size: 20.0,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    30.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Restaurants',
+                                  style: GoogleFonts.readexPro(
+                                    color: Colors.black87,
+                                    letterSpacing: 0.0,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 20.0, 0.0, 0.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          // Get.toNamed();
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, -1.0),
+                              child: IconButton(
+                                onPressed: () {
+                                  // Get.toNamed();
+                                },
+                                style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                    const Color(0xECF2B8B8),
+                                  ),
+                                ),
+                                icon: const Icon(
+                                  Icons.fastfood_sharp,
+                                  color: Color(0xFFE10E0E),
+                                  size: 20.0,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    30.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Food Packages',
+                                  style: GoogleFonts.readexPro(
+                                    color: Colors.black87,
+                                    letterSpacing: 0.0,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 20.0, 0.0, 0.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          // Get.toNamed();
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, -1.0),
+                              child: IconButton(
+                                onPressed: () {
+                                  // Get.toNamed();
+                                },
+                                style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                    const Color(0xECF2B8B8),
+                                  ),
+                                ),
+                                icon: const Icon(
+                                  Icons.store,
+                                  color: Color(0xFFE10E0E),
+                                  size: 20.0,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    30.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Stores',
+                                  style: GoogleFonts.readexPro(
+                                    color: Colors.black87,
+                                    letterSpacing: 0.0,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 20.0, 0.0, 0.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed(help);
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, -1.0),
+                              child: IconButton(
+                                onPressed: () {
+                                  Get.toNamed(help);
+                                },
+                                style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                    const Color(0xECF2B8B8),
+                                  ),
+                                ),
+                                icon: const Icon(
+                                  Icons.question_mark,
+                                  color: Color(0xFFE10E0E),
+                                  size: 20.0,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    30.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Help',
+                                  style: GoogleFonts.readexPro(
+                                    color: Colors.black87,
+                                    letterSpacing: 0.0,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: user != null,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Get.toNamed(help);
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    // Get.toNamed(help);
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.notification_add,
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Notifications',
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: user != null,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            // Get.toNamed(help);
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    // Get.toNamed(help);
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.settings,
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Settings',
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: user == null,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(login);
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    Get.toNamed(login);
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.login_rounded,
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Login',
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: user != null,
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            logout();
+                            setState(() {});
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    logout();
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.logout,
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Logout',
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

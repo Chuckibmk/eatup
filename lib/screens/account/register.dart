@@ -54,7 +54,8 @@ class _RegisterState extends State<Register> {
     User? user = firebaseAuth.currentUser;
     if (user != null) {
       if (mounted) {
-        showSuccessToast(context: context, message: 'Sign In Successful');
+        showSuccessToast(
+            context: context, message: 'Sign In Successful: $user');
       }
       Get.toNamed(home);
     } else {
