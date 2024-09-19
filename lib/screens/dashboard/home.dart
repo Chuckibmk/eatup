@@ -30,12 +30,11 @@ class _HomePageState extends State<HomePage> {
 
   String displayN = '';
 
-  void logout() async {
+  Future<void> logout() async {
     try {
       User? user = firebaseAuth.currentUser;
       if (user != null) {
         await firebaseAuth.signOut().timeout(const Duration(seconds: 10));
-
         if (mounted) {
           showSuccessToast(context: context, message: 'Logout Successful');
         }
@@ -52,34 +51,41 @@ class _HomePageState extends State<HomePage> {
             context: context, message: 'Network Issues, signout failed');
       }
     }
+    setState(() {
+      user = firebaseAuth.currentUser;
+    });
   }
 
   @override
   void initState() {
+    user = firebaseAuth.currentUser;
     super.initState();
     // Get the current user when the widget is initialized
-    user = firebaseAuth.currentUser;
   }
 
   @override
   Widget build(BuildContext context) {
-    print(user?.uid);
-    // try{
-    final usr = firebaseFirestore.collection("users").doc(user?.uid);
-    print(usr);
-    // }catch{
+    if (user != null) {
+      try {
+        final usr = firebaseFirestore.collection("users").doc(user?.uid);
+        usr.get().then(
+          (DocumentSnapshot doc) {
+            final data = doc.data() as Map<String, dynamic>;
+            setState(() {
+              displayN = data['name'];
+            });
 
-    // }
-    // final docRef = firebaseFirestore.collection("users").doc(user!.uid);
-    // print(docRef);
-    usr.get().then(
-      (DocumentSnapshot doc) {
-        final data = doc.data() as Map<String, dynamic>;
-        displayN = data?['name'];
-        // ...
-      },
-      onError: (e) => print("Error getting document: $e"),
-    );
+            // ...
+          },
+          onError: (e) => print("Error getting document: $e"),
+        );
+      } catch (e) {
+        print("Error trying : $e");
+      }
+    }
+
+    // print(user);
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -105,9 +111,8 @@ class _HomePageState extends State<HomePage> {
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
-                          Visibility(
-                            visible: user != null,
-                            child: Align(
+                          if (user != null)
+                            Align(
                               alignment: const Alignment(-1.0, -1.0),
                               child: Text(
                                 displayN,
@@ -120,8 +125,7 @@ class _HomePageState extends State<HomePage> {
                                       Theme.of(context).textTheme.labelLarge,
                                 ),
                               ),
-                            ),
-                          )
+                            )
                         ],
                       ),
                     ),
@@ -182,9 +186,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    Visibility(
-                      visible: user != null,
-                      child: Padding(
+                    if (user != null)
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
@@ -244,10 +247,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: user != null,
-                      child: Padding(
+                    if (user != null)
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
@@ -307,10 +308,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: user != null,
-                      child: Padding(
+                    if (user != null)
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
@@ -370,10 +369,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: user != null,
-                      child: Padding(
+                    if (user != null)
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
@@ -433,7 +430,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           0.0, 20.0, 0.0, 0.0),
@@ -662,9 +658,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
-                    Visibility(
-                      visible: user != null,
-                      child: Padding(
+                    if (user != null)
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
@@ -724,10 +719,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: user != null,
-                      child: Padding(
+                    if (user != null)
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
@@ -787,10 +780,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: user == null,
-                      child: Padding(
+                    if (user == null)
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
@@ -850,10 +841,8 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
-                    Visibility(
-                      visible: user != null,
-                      child: Padding(
+                    if (user != null)
+                      Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
@@ -914,7 +903,6 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
               ),
