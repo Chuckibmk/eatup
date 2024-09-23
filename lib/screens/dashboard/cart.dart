@@ -3,7 +3,7 @@ import 'package:eatup/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -403,6 +403,92 @@ class _CartState extends State<Cart> {
                       ),
                     ],
                   ),
+                ),
+                // Generated code for this Column Widget...
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              110.0, 110.0, 110.0, 110.0),
+                          child: Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            color: Color(0XFFe0e3e7),
+                            elevation: 0.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(14.0),
+                            ),
+                            child: Opacity(
+                              opacity: 0.5,
+                              child: Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: FaIcon(
+                                  FontAwesomeIcons.shoppingBasket,
+                                  color: Color(0xFF57636c),
+                                  size: 100.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(
+                      'Your cart is empty',
+                      style: GoogleFonts.readexPro(
+                        fontSize: 20.0,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+// Generated code for this Column Widget...
+                Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 0.0),
+                      child: SizedBox(
+                        width: 326.0,
+                        height: 67.0,
+                        child: ElevatedButton(
+                          child: Text(
+                            'Go to home',
+                            style: GoogleFonts.readexPro(
+                              color: Colors.white,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                          onPressed: () {
+                            print('Button pressed ...');
+                          },
+                          style: ButtonStyle(
+                            // padding: EdgeInsetsDirectional.fromSTEB(
+                            //     30.0, 0.0, 30.0, 0.0),
+
+                            backgroundColor:
+                                WidgetStatePropertyAll(Color(0xFFE10E0E)),
+                            elevation: const WidgetStatePropertyAll(3.0),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
