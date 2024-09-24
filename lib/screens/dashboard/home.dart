@@ -935,6 +935,39 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
           ),
+          title: // Generated code for this Column Widget...
+              Column(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Enugu ',
+                    style: GoogleFonts.readexPro(
+                      fontSize: 14,
+                      color: const Color(0xFF57636c),
+                      letterSpacing: 0.0,
+                    ),
+                  ),
+                  const Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Color(0xFF57636c),
+                    size: 24.0,
+                  ),
+                ],
+              ),
+              Text(
+                'Select Your Current Location',
+                style: GoogleFonts.readexPro(
+                  fontSize: 14,
+                  color: const Color(0xFFE10E0E),
+                  letterSpacing: 0.0,
+                ),
+              ),
+            ],
+          ),
           actions: [
             IconButton(
               style: ButtonStyle(
