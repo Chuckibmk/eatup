@@ -26,16 +26,17 @@ class _SplashScreenState extends State<SplashScreen>
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: Colors.grey[200],
+        // backgroundColor: Colors.grey[200],
+        backgroundColor: Colors.white,
         body: Column(
           mainAxisSize: MainAxisSize.max,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-              child: SizedBox(
+              child: Container(
                 width: double.infinity,
                 height: 500.0,
-                // decoration: BoxDecoration(color: Colors.grey[200]),
+                decoration: const BoxDecoration(color: Colors.white),
                 child: Container(
                     width: 100.0,
                     height: 100.0,
@@ -43,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen>
                       gradient: LinearGradient(
                         colors: [
                           Color(0x00ffffff),
-                          Colors.grey,
+                          Colors.white,
                         ],
                         stops: [0.0, 1.0],
                         begin: AlignmentDirectional(0.0, -1.0),
@@ -57,8 +58,8 @@ class _SplashScreenState extends State<SplashScreen>
                         Container(
                           width: 373.0,
                           height: 373.0,
-                          decoration: BoxDecoration(
-                            color: Colors.grey[200],
+                          decoration: const BoxDecoration(
+                            color: Color(0Xccffffff),
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
