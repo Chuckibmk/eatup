@@ -64,7 +64,6 @@ class _NotifyState extends State<Notify> {
           children: [
             Container(
               width: MediaQuery.sizeOf(context).width * 1.0,
-              height: MediaQuery.sizeOf(context).height * 1.0,
               decoration: const BoxDecoration(color: Colors.white),
               child: Column(
                 mainAxisSize: MainAxisSize.max,

@@ -1,10 +1,15 @@
+import 'package:eatup/screens/account/kyc.dart';
 import 'package:eatup/screens/account/login.dart';
+import 'package:eatup/screens/account/notifications.dart';
+import 'package:eatup/screens/account/payments.dart';
+import 'package:eatup/screens/account/profile.dart';
 import 'package:eatup/screens/account/register.dart';
 import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:eatup/screens/dashboard/dashboard.dart';
 import 'package:eatup/screens/dashboard/help.dart';
 import 'package:eatup/screens/dashboard/home.dart';
 import 'package:eatup/screens/dashboard/product.dart';
+import 'package:eatup/screens/dashboard/settings.dart';
 import 'package:eatup/screens/splash/splash.dart';
 import 'package:get/route_manager.dart';
 import 'route_names.dart';
@@ -47,6 +52,31 @@ List<GetPage> getPage = [
   GetPage(
     name: cart,
     page: () => const Cart(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: kyc,
+    page: () => const KYC(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: notify,
+    page: () => const Notify(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: payments,
+    page: () => const Payments(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: profile,
+    page: () => const Profile(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: settings,
+    page: () => const Settings(),
     transition: Transition.cupertino,
   ),
 ];

@@ -192,7 +192,7 @@ class _HomePageState extends State<HomePage> {
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
                           onTap: () {
-                            // Get.toNamed();
+                            Get.toNamed(profile);
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -202,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                                     const AlignmentDirectional(-1.0, -1.0),
                                 child: IconButton(
                                   onPressed: () {
-                                    // Get.toNamed();
+                                    Get.toNamed(profile);
                                   },
                                   style: ButtonStyle(
                                     shape: WidgetStateProperty.all<
@@ -314,7 +314,7 @@ class _HomePageState extends State<HomePage> {
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
                           onTap: () {
-                            // Get.toNamed();
+                            Get.toNamed(payments);
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -324,7 +324,7 @@ class _HomePageState extends State<HomePage> {
                                     const AlignmentDirectional(-1.0, -1.0),
                                 child: IconButton(
                                   onPressed: () {
-                                    // Get.toNamed();
+                                    Get.toNamed(payments);
                                   },
                                   style: ButtonStyle(
                                     shape: WidgetStateProperty.all<
@@ -375,7 +375,7 @@ class _HomePageState extends State<HomePage> {
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
                           onTap: () {
-                            // Get.toNamed();
+                            Get.toNamed(kyc);
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -385,7 +385,7 @@ class _HomePageState extends State<HomePage> {
                                     const AlignmentDirectional(-1.0, -1.0),
                                 child: IconButton(
                                   onPressed: () {
-                                    // Get.toNamed();
+                                    Get.toNamed(kyc);
                                   },
                                   style: ButtonStyle(
                                     shape: WidgetStateProperty.all<
@@ -658,13 +658,70 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ),
+                    Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          0.0, 20.0, 0.0, 0.0),
+                      child: GestureDetector(
+                        onTap: () {
+                          Get.toNamed(settings);
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, -1.0),
+                              child: IconButton(
+                                onPressed: () {
+                                  Get.toNamed(settings);
+                                },
+                                style: ButtonStyle(
+                                  shape: WidgetStateProperty.all<
+                                      RoundedRectangleBorder>(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                  ),
+                                  backgroundColor:
+                                      WidgetStateProperty.all<Color>(
+                                    const Color(0xECF2B8B8),
+                                  ),
+                                ),
+                                icon: const Icon(
+                                  Icons.settings,
+                                  color: Color(0xFFE10E0E),
+                                  size: 20.0,
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(0.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    30.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'Settings',
+                                  style: GoogleFonts.readexPro(
+                                    color: Colors.black87,
+                                    letterSpacing: 0.0,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                    textStyle:
+                                        Theme.of(context).textTheme.labelLarge,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                     if (user != null)
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 0.0),
                         child: GestureDetector(
                           onTap: () {
-                            // Get.toNamed(help);
+                            Get.toNamed(notify);
                           },
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
@@ -674,7 +731,7 @@ class _HomePageState extends State<HomePage> {
                                     const AlignmentDirectional(-1.0, -1.0),
                                 child: IconButton(
                                   onPressed: () {
-                                    // Get.toNamed(help);
+                                    Get.toNamed(notify);
                                   },
                                   style: ButtonStyle(
                                     shape: WidgetStateProperty.all<
@@ -703,67 +760,6 @@ class _HomePageState extends State<HomePage> {
                                       30.0, 0.0, 0.0, 0.0),
                                   child: Text(
                                     'Notifications',
-                                    style: GoogleFonts.readexPro(
-                                      color: Colors.black87,
-                                      letterSpacing: 0.0,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .labelLarge,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    if (user != null)
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 20.0, 0.0, 0.0),
-                        child: GestureDetector(
-                          onTap: () {
-                            // Get.toNamed(help);
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Align(
-                                alignment:
-                                    const AlignmentDirectional(-1.0, -1.0),
-                                child: IconButton(
-                                  onPressed: () {
-                                    // Get.toNamed(help);
-                                  },
-                                  style: ButtonStyle(
-                                    shape: WidgetStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(5.0),
-                                      ),
-                                    ),
-                                    backgroundColor:
-                                        WidgetStateProperty.all<Color>(
-                                      const Color(0xECF2B8B8),
-                                    ),
-                                  ),
-                                  icon: const Icon(
-                                    Icons.settings,
-                                    color: Color(0xFFE10E0E),
-                                    size: 20.0,
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment: const AlignmentDirectional(0.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      30.0, 0.0, 0.0, 0.0),
-                                  child: Text(
-                                    'Settings',
                                     style: GoogleFonts.readexPro(
                                       color: Colors.black87,
                                       letterSpacing: 0.0,
