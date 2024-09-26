@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:country_state_city_pro/country_state_city_pro.dart';
+import 'package:image_picker/image_picker.dart';
 
 class KYC extends StatefulWidget {
   const KYC({super.key});
@@ -25,10 +29,20 @@ class _KYCState extends State<KYC> {
   final cardno = TextEditingController();
   final cnfn = FocusNode();
 
-  // final cntry = drop
-  List<String> listOfcntry = ['USA', 'UK', 'NZ'];
-  List<String> listOfstate = ['ABIA', 'ENU', 'ABJ'];
-  List<String> listOfcity = ['LAG', 'LON', 'NYC'];
+  ///Define Controller
+  TextEditingController LoC = TextEditingController();
+  TextEditingController LoS = TextEditingController();
+  TextEditingController LoCT = TextEditingController();
+
+  ImagePicker picker = ImagePicker();
+  var _image;
+
+  void pickImage() async {
+    var xfile = await picker.pickImage(source: ImageSource.gallery);
+    _image = File(xfile!.path);
+    print(_image);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +132,7 @@ class _KYCState extends State<KYC> {
                           child: TextFormField(
                             controller: cardtype,
                             focusNode: ctfn,
-                            autofocus: true,
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Enter card type',
@@ -195,7 +209,7 @@ class _KYCState extends State<KYC> {
                           child: TextFormField(
                             controller: cardno,
                             focusNode: cnfn,
-                            autofocus: true,
+                            autofocus: false,
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Enter id card number',
@@ -330,28 +344,34 @@ class _KYCState extends State<KYC> {
                     Padding(
                       padding: const EdgeInsetsDirectional.fromSTEB(
                           0.0, 0.0, 0.0, 15.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Align(
-                            alignment: AlignmentDirectional(0.0, 0.0),
-                            child: Icon(
-                              Icons.add,
-                              color: Color(0xFFE10E0E),
-                              size: 12.0,
+                      child: GestureDetector(
+                        onTap: () {
+                          pickImage();
+                        },
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Icon(
+                                Icons.add,
+                                color: Color(0xFFE10E0E),
+                                size: 12.0,
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Upload Image',
-                            style: GoogleFonts.readexPro(
-                              textStyle: Theme.of(context).textTheme.bodyMedium,
-                              fontSize: 14,
-                              color: const Color(0xFFE10E0E),
-                              letterSpacing: 0.0,
+                            Text(
+                              'Upload Image',
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                fontSize: 14,
+                                color: const Color(0xFFE10E0E),
+                                letterSpacing: 0.0,
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                     const Divider(
@@ -364,7 +384,7 @@ class _KYCState extends State<KYC> {
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 20.0, 0.0, 4.0),
                         child: Text(
-                          'Country',
+                          'Select Location',
                           textAlign: TextAlign.start,
                           style: GoogleFonts.readexPro(
                             textStyle: Theme.of(context).textTheme.bodyMedium,
@@ -379,27 +399,15 @@ class _KYCState extends State<KYC> {
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 15.0),
-                        child: DropdownButtonFormField<String>(
-                          items: [],
-                          value: country,
-                          onChanged: (value) {
-                            setState(() {
-                              country = value;
-                            });
-                          },
-                          hint: const Text('-Select-'),
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Color(0xff57636c),
-                            size: 24.0,
-                          ),
-                          elevation: 2,
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            fontSize: 14,
-                            letterSpacing: 0.0,
-                          ),
-                          decoration: InputDecoration(
+                        child:
+
+                            ///Widget initialize
+                            CountryStateCityPicker(
+                          country: LoC,
+                          state: LoS,
+                          city: LoCT,
+                          dialogColor: Colors.grey.shade200,
+                          textFieldDecoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderSide: const BorderSide(
                                 color: Color(0xffe0e3e7),
@@ -407,119 +415,14 @@ class _KYCState extends State<KYC> {
                               ),
                               borderRadius: BorderRadius.circular(8.0),
                             ),
-                          ),
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 4.0, 16.0, 4.0),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 20.0, 0.0, 4.0),
-                        child: Text(
-                          'State',
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            fontSize: 14,
-                            letterSpacing: 0.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 15.0),
-                        child: DropdownButtonFormField<String>(
-                          items: [],
-                          value: state,
-                          onChanged: (value) {
-                            setState(() {
-                              state = value;
-                            });
-                          },
-                          hint: const Text('-Select-'),
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Color(0xff57636c),
-                            size: 24.0,
-                          ),
-                          elevation: 2,
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            fontSize: 14,
-                            letterSpacing: 0.0,
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xffe0e3e7),
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
+                            // fillColor: Colors.blueGrey.shade100,
+                            // filled: true,
+                            suffixIcon: const Icon(
+                              Icons.arrow_drop_down,
+                              color: Color(0xff57636c),
+                              size: 24.0,
                             ),
                           ),
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 4.0, 16.0, 4.0),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 20.0, 0.0, 4.0),
-                        child: Text(
-                          'City',
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            fontSize: 14,
-                            letterSpacing: 0.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 15.0),
-                        child: DropdownButtonFormField<String>(
-                          items: [],
-                          value: city,
-                          onChanged: (value) {
-                            setState(() {
-                              city = value;
-                            });
-                          },
-                          hint: const Text('-Select-'),
-                          icon: const Icon(
-                            Icons.arrow_drop_down,
-                            color: Color(0xff57636c),
-                            size: 24.0,
-                          ),
-                          elevation: 2,
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            fontSize: 14,
-                            letterSpacing: 0.0,
-                          ),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Color(0xffe0e3e7),
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 4.0, 16.0, 4.0),
                         ),
                       ),
                     ),
@@ -533,10 +436,6 @@ class _KYCState extends State<KYC> {
                           style: ButtonStyle(
                             shape: WidgetStatePropertyAll(
                               RoundedRectangleBorder(
-                                side: const BorderSide(
-                                  color: Colors.transparent,
-                                  width: double.infinity,
-                                ),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
                             ),
@@ -558,8 +457,6 @@ class _KYCState extends State<KYC> {
                         ),
                       ),
                     ),
-
-                    // You will have to add an action on this rich text to go to your login page.
                     Align(
                       alignment: const AlignmentDirectional(0.0, 0.0),
                       child: Padding(

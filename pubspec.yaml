@@ -48,6 +48,8 @@ dependencies:
   google_sign_in: ^6.2.1
   shared_preferences: ^2.3.2
   toastification: ^2.2.0
+  country_state_city_pro: ^0.0.6
+  image_picker: ^1.1.2
 
 dev_dependencies:
   flutter_test:
