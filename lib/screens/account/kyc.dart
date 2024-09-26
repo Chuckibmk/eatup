@@ -30,18 +30,26 @@ class _KYCState extends State<KYC> {
   final cnfn = FocusNode();
 
   ///Define Controller
-  TextEditingController LoC = TextEditingController();
-  TextEditingController LoS = TextEditingController();
-  TextEditingController LoCT = TextEditingController();
+  TextEditingController loc = TextEditingController();
+  TextEditingController los = TextEditingController();
+  TextEditingController loct = TextEditingController();
 
   ImagePicker picker = ImagePicker();
-  var _image;
+  File? _image;
+  File? _image2;
 
-  void pickImage() async {
+  void pickImage(int imgno) async {
     var xfile = await picker.pickImage(source: ImageSource.gallery);
-    _image = File(xfile!.path);
-    print(_image);
-    setState(() {});
+
+    setState(() {
+      if (imgno == 1) {
+        _image = File(xfile!.path);
+        print(_image);
+      } else if (imgno == 2) {
+        _image2 = File(xfile!.path);
+        print(_image2);
+      }
+    });
   }
 
   @override
@@ -284,40 +292,45 @@ class _KYCState extends State<KYC> {
                       thickness: 3.0,
                       color: Color(0xff57636c),
                     ),
-                    Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: 31.0,
-                      decoration: const BoxDecoration(color: Colors.white),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 1.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Icon(
-                                Icons.add,
-                                color: Color(0xFFE10E0E),
-                                size: 12.0,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 1.0),
-                              child: Text(
-                                'Upload Image',
-                                style: GoogleFonts.readexPro(
-                                  textStyle:
-                                      Theme.of(context).textTheme.bodyMedium,
-                                  fontSize: 14,
-                                  color: const Color(0xFFE10E0E),
-                                  letterSpacing: 0.0,
+                    GestureDetector(
+                      onTap: () {
+                        pickImage(1);
+                      },
+                      child: Container(
+                        width: MediaQuery.sizeOf(context).width * 1.0,
+                        height: 31.0,
+                        decoration: const BoxDecoration(color: Colors.white),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 1.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: Icon(
+                                  Icons.add,
+                                  color: Color(0xFFE10E0E),
+                                  size: 12.0,
                                 ),
                               ),
-                            ),
-                          ],
+                              Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 1.0),
+                                child: Text(
+                                  'Upload Image',
+                                  style: GoogleFonts.readexPro(
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 14,
+                                    color: const Color(0xFFE10E0E),
+                                    letterSpacing: 0.0,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -346,7 +359,7 @@ class _KYCState extends State<KYC> {
                           0.0, 0.0, 0.0, 15.0),
                       child: GestureDetector(
                         onTap: () {
-                          pickImage();
+                          pickImage(2);
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -399,13 +412,10 @@ class _KYCState extends State<KYC> {
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 15.0),
-                        child:
-
-                            ///Widget initialize
-                            CountryStateCityPicker(
-                          country: LoC,
-                          state: LoS,
-                          city: LoCT,
+                        child: CountryStateCityPicker(
+                          country: loc,
+                          state: los,
+                          city: loct,
                           dialogColor: Colors.grey.shade200,
                           textFieldDecoration: InputDecoration(
                             border: OutlineInputBorder(

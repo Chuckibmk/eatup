@@ -179,7 +179,7 @@ class _SettingsState extends State<Settings> {
                                     alignment:
                                         const AlignmentDirectional(-1.0, 0.0),
                                     child: Text(
-                                      'Help',
+                                      'Help Centre',
                                       style: GoogleFonts.readexPro(
                                         fontSize: 16,
                                         letterSpacing: 0.0,
