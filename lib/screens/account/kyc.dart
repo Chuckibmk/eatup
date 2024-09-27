@@ -17,11 +17,11 @@ class _KYCState extends State<KYC> {
 
   final _formKey = GlobalKey<FormState>();
 
-  String ct = '';
-  String cn = '';
-  String? country = '';
-  String? state = '';
-  String? city = '';
+  String? ct;
+  String? cn;
+  String? country;
+  String? state;
+  String? city;
 
   final cardtype = TextEditingController();
   final ctfn = FocusNode();
@@ -341,18 +341,18 @@ class _KYCState extends State<KYC> {
                                       0.0, 0.0, 0.0, 1.0),
                                   child: _image != null
                                       ? Text(
-                                          'Upload Image',
+                                          imgname!,
                                           style: GoogleFonts.readexPro(
                                             textStyle: Theme.of(context)
                                                 .textTheme
                                                 .bodyMedium,
                                             fontSize: 14,
-                                            color: const Color(0xFFE10E0E),
+                                            color: Colors.black,
                                             letterSpacing: 0.0,
                                           ),
                                         )
                                       : Text(
-                                          imgname!,
+                                          'Upload Image',
                                           style: GoogleFonts.readexPro(
                                             textStyle: Theme.of(context)
                                                 .textTheme
@@ -409,18 +409,18 @@ class _KYCState extends State<KYC> {
                               ),
                               _image2 != null
                                   ? Text(
-                                      'Upload Image',
+                                      imgname2!,
                                       style: GoogleFonts.readexPro(
                                         textStyle: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,
                                         fontSize: 14,
-                                        color: const Color(0xFFE10E0E),
+                                        color: Colors.black,
                                         letterSpacing: 0.0,
                                       ),
                                     )
                                   : Text(
-                                      imgname2!,
+                                      'Upload Image',
                                       style: GoogleFonts.readexPro(
                                         textStyle: Theme.of(context)
                                             .textTheme
@@ -463,7 +463,7 @@ class _KYCState extends State<KYC> {
                             country: loc,
                             state: los,
                             city: loct,
-                            dialogColor: Colors.grey.shade200,
+                            dialogColor: Colors.white,
                             textFieldDecoration: InputDecoration(
                               border: OutlineInputBorder(
                                 borderSide: const BorderSide(
@@ -473,7 +473,7 @@ class _KYCState extends State<KYC> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                               // fillColor: Colors.blueGrey.shade100,
-                              // filled: true,
+                              // filled: false,
                               suffixIcon: const Icon(
                                 Icons.arrow_drop_down,
                                 color: Color(0xff57636c),
@@ -511,6 +511,13 @@ class _KYCState extends State<KYC> {
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
+                                print(ct);
+                                print(cn);
+                                print(loc.text);
+                                print(los.text);
+                                print(loct.text);
+                                print(imgname);
+                                print(imgname2);
                                 // upload to firebase
                               }
                             },
