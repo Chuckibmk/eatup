@@ -1,6 +1,11 @@
 import 'dart:io';
 
+import 'package:eatup/routes/route_names.dart';
+import 'package:eatup/widgets/firebase_services.dart';
+import 'package:eatup/widgets/widg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:country_state_city_pro/country_state_city_pro.dart';
 import 'package:image_picker/image_picker.dart';
@@ -19,9 +24,6 @@ class _KYCState extends State<KYC> {
 
   String? ct;
   String? cn;
-  String? country;
-  String? state;
-  String? city;
 
   final cardtype = TextEditingController();
   final ctfn = FocusNode();
@@ -30,9 +32,9 @@ class _KYCState extends State<KYC> {
   final cnfn = FocusNode();
 
   ///Define Controller
-  TextEditingController loc = TextEditingController();
-  TextEditingController los = TextEditingController();
-  TextEditingController loct = TextEditingController();
+  TextEditingController country = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController city = TextEditingController();
 
   ImagePicker picker = ImagePicker();
   File? _image;
@@ -53,6 +55,53 @@ class _KYCState extends State<KYC> {
         imgname2 = xfile.name;
       }
     });
+  }
+
+  final firebaseAuth = FirebaseService().firebaseAuth;
+  final firebaseFirestore = FirebaseService().firebaseFirestore;
+
+  bool _progress = false;
+
+  Future<void> updateKYC(String? idT, String? idN, String ct, String st,
+      String cit, var img, var img2) async {
+    setState(() {
+      _progress = true;
+    });
+    try {
+      User? user = firebaseAuth.currentUser;
+      if (user != null) {
+        firebaseFirestore.collection('users').doc(user.uid).update({
+          'idType': idT,
+          'idNumber': idN,
+          'Country': ct,
+          'State': st,
+          'City': cit,
+          'ID_img': img,
+          'UserImg': img2
+        }).then((_) {
+          print('KYC Updated.');
+        }).catchError((error) {
+          print('KYC Failed: $error');
+        });
+        if (mounted) {
+          showSuccessToast(
+              context: context, message: 'KYC Uploaded! ${user.email}');
+        }
+        Get.toNamed(home);
+      } else {
+        if (mounted) {
+          showSuccessToast(context: context, message: 'Other Issues');
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        showSuccessToast(context: context, message: e.toString());
+      }
+    } finally {
+      setState(() {
+        _progress = false;
+      });
+    }
   }
 
   @override
@@ -460,9 +509,9 @@ class _KYCState extends State<KYC> {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 15.0),
                           child: CountryStateCityPicker(
-                            country: loc,
-                            state: los,
-                            city: loct,
+                            country: country,
+                            state: state,
+                            city: city,
                             dialogColor: Colors.white,
                             textFieldDecoration: InputDecoration(
                               border: OutlineInputBorder(
@@ -502,22 +551,24 @@ class _KYCState extends State<KYC> {
                                           cardno.text != '' &&
                                           _image != null &&
                                           _image2 != null &&
-                                          loc.text != '' &&
-                                          los.text != '' &&
-                                          loct.text != ''
+                                          country.text != '' &&
+                                          state.text != '' &&
+                                          city.text != ''
                                       ? const Color(0xFFE10E0E)
                                       : Colors.grey),
                             ),
                             onPressed: () async {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-                                print(ct);
-                                print(cn);
-                                print(loc.text);
-                                print(los.text);
-                                print(loct.text);
-                                print(imgname);
-                                print(imgname2);
+                                updateKYC(ct, cn, country.text, state.text,
+                                    city.text, _image, _image2);
+                                // print(ct);
+                                // print(cn);
+                                // print(country.text);
+                                // print(state.text);
+                                // print(city.text);
+                                // print(imgname);
+                                // print(imgname2);
                                 // upload to firebase
                               }
                             },
@@ -569,6 +620,10 @@ class _KYCState extends State<KYC> {
                           ),
                         ),
                       ),
+                      if (_progress)
+                        const LinearProgressIndicator(
+                          color: Color(0xFFE10E0E),
+                        ),
                     ],
                   ),
                 ),

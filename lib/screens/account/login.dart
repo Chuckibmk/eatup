@@ -78,7 +78,6 @@ class _LoginState extends State<Login> {
         _progress = false;
       });
     }
-    ;
   }
 
 // google sign in
