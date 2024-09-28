@@ -4,11 +4,14 @@ import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/widgets/firebase_services.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:country_state_city_pro/country_state_city_pro.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
+import 'package:path/path.dart' as p;
 
 class KYC extends StatefulWidget {
   const KYC({super.key});
@@ -63,21 +66,28 @@ class _KYCState extends State<KYC> {
   bool _progress = false;
 
   Future<void> updateKYC(String? idT, String? idN, String ct, String st,
-      String cit, var img, var img2) async {
+      String cit, File img, File img2) async {
     setState(() {
       _progress = true;
     });
     try {
       User? user = firebaseAuth.currentUser;
       if (user != null) {
+        print(1);
+        String fileEX = p.extension(img.path);
+        String fileEX2 = p.extension(img2.path);
+        String imgUrl =
+            await uploadIMG(img, user.uid, const Uuid().v4(), fileEX);
+        String imgUrl2 =
+            await uploadIMG(img2, user.uid, const Uuid().v4(), fileEX2);
         firebaseFirestore.collection('users').doc(user.uid).update({
           'idType': idT,
           'idNumber': idN,
           'Country': ct,
           'State': st,
           'City': cit,
-          'ID_img': img,
-          'UserImg': img2
+          'ID_img': imgUrl,
+          'UserImg': imgUrl2
         }).then((_) {
           print('KYC Updated.');
         }).catchError((error) {
@@ -101,6 +111,23 @@ class _KYCState extends State<KYC> {
       setState(() {
         _progress = false;
       });
+    }
+  }
+
+  Future<String> uploadIMG(
+      File image, String uID, String fileType, String pth) async {
+    try {
+      print(2);
+      Reference storageReference =
+          FirebaseStorage.instance.ref().child('users/$uID/$fileType$pth');
+      print(3);
+      UploadTask uploadTask = storageReference.putFile(image);
+      print(4);
+      TaskSnapshot taskSnapshot = await uploadTask;
+      String downloadURL = await taskSnapshot.ref.getDownloadURL();
+      return downloadURL;
+    } catch (e) {
+      throw Exception('Error uploading image: $e');
     }
   }
 
@@ -561,7 +588,7 @@ class _KYCState extends State<KYC> {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
                                 updateKYC(ct, cn, country.text, state.text,
-                                    city.text, _image, _image2);
+                                    city.text, _image!, _image2!);
                                 // print(ct);
                                 // print(cn);
                                 // print(country.text);
