@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/widgets/firebase_services.dart';
 import 'package:eatup/widgets/widg.dart';
@@ -86,20 +87,24 @@ class _KYCState extends State<KYC> {
           'State': st,
           'City': cit,
           'ID_img': imgUrl,
-          'UserImg': imgUrl2
+          'UserImg': imgUrl2,
+          'lastKycUpload': FieldValue.serverTimestamp()
         }).then((_) {
           print('KYC Updated.');
+          if (mounted) {
+            showSuccessToast(
+                context: context, message: 'KYC Uploaded! ${user.email}');
+          }
+          Get.toNamed(home);
         }).catchError((error) {
           print('KYC Failed: $error');
+          if (mounted) {
+            showSuccessToast(context: context, message: 'KYC Failed $error');
+          }
         });
-        if (mounted) {
-          showSuccessToast(
-              context: context, message: 'KYC Uploaded! ${user.email}');
-        }
-        Get.toNamed(home);
       } else {
         if (mounted) {
-          showSuccessToast(context: context, message: 'Other Issues');
+          showSuccessToast(context: context, message: 'Sign In to Request KYC');
         }
       }
     } on FirebaseAuthException catch (e) {

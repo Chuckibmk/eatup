@@ -1,5 +1,6 @@
 import 'package:eatup/routes/route.dart';
 import 'package:eatup/routes/route_names.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,6 +9,12 @@ import 'package:firebase_core/firebase_core.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  // Activate Firebase App Check
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.playIntegrity, // For Android
+    // iosProvider: IOSProvider.deviceCheck, // For iOS
+  );
 
   runApp(const MyApp());
 }
