@@ -73,7 +73,6 @@ class _KYCState extends State<KYC> {
     try {
       User? user = firebaseAuth.currentUser;
       if (user != null) {
-        print(1);
         String fileEX = p.extension(img.path);
         String fileEX2 = p.extension(img2.path);
         String imgUrl =
@@ -117,12 +116,10 @@ class _KYCState extends State<KYC> {
   Future<String> uploadIMG(
       File image, String uID, String fileType, String pth) async {
     try {
-      print(2);
       Reference storageReference =
           FirebaseStorage.instance.ref().child('users/$uID/$fileType$pth');
-      print(3);
+
       UploadTask uploadTask = storageReference.putFile(image);
-      print(4);
       TaskSnapshot taskSnapshot = await uploadTask;
       String downloadURL = await taskSnapshot.ref.getDownloadURL();
       return downloadURL;
