@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/routes/route_names.dart';
-import 'package:eatup/widgets/firebase_services.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -61,8 +60,8 @@ class _KYCState extends State<KYC> {
     });
   }
 
-  final firebaseAuth = FirebaseService().firebaseAuth;
-  final firebaseFirestore = FirebaseService().firebaseFirestore;
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseFirestore = FirebaseFirestore.instance;
 
   bool _progress = false;
 

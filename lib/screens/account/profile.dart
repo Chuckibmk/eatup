@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,8 +15,42 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseFirestore = FirebaseFirestore.instance;
+
+  User? user;
+
+  String? displayN;
+  String? email;
+  File? img;
+
+  @override
+  void initState() {
+    user = firebaseAuth.currentUser;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (user != null) {
+      try {
+        final usr = firebaseFirestore.collection("users").doc(user?.uid);
+        usr.get().then(
+          (DocumentSnapshot doc) {
+            final data = doc.data() as Map<String, dynamic>;
+            setState(() {
+              displayN = data['name'];
+            });
+
+            // ...
+          },
+          onError: (e) => print("Error getting document: $e"),
+        );
+      } catch (e) {
+        print("Error trying : $e");
+      }
+    }
     return Scaffold(
       key: scaffoldKey,
       // backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

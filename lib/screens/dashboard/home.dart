@@ -7,7 +7,6 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:eatup/widgets/widg.dart';
-import 'package:eatup/widgets/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,8 +22,8 @@ class _HomePageState extends State<HomePage> {
   final fcus = FocusNode();
   final pcont = PageController(initialPage: 0);
 
-  final firebaseAuth = FirebaseService().firebaseAuth;
-  final firebaseFirestore = FirebaseService().firebaseFirestore;
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseFirestore = FirebaseFirestore.instance;
 
   User? user;
 

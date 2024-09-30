@@ -7,7 +7,6 @@ import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:eatup/widgets/widg.dart';
-import 'package:eatup/widgets/firebase_services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -33,8 +32,8 @@ class _LoginState extends State<Login> {
 
   late bool passwordVisibility = false;
 
-  final firebaseAuth = FirebaseService().firebaseAuth;
-  final firebaseFirestore = FirebaseService().firebaseFirestore;
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseFirestore = FirebaseFirestore.instance;
 
   bool _progress = false;
 
