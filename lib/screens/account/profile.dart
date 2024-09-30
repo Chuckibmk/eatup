@@ -1,10 +1,13 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:strings/strings.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -23,7 +26,7 @@ class _ProfileState extends State<Profile> {
 
   String? displayN;
   String? email;
-  File? img;
+  String? img;
 
   @override
   void initState() {
@@ -41,6 +44,8 @@ class _ProfileState extends State<Profile> {
             final data = doc.data() as Map<String, dynamic>;
             setState(() {
               displayN = data['name'];
+              email = user?.email;
+              img = data['UserImg'];
             });
 
             // ...
@@ -117,21 +122,43 @@ class _ProfileState extends State<Profile> {
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
-                              child: Container(
-                                width: MediaQuery.sizeOf(context).width * 0.2,
-                                height: MediaQuery.sizeOf(context).width * 0.2,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.asset(
-                                  'assets/images/account_circle_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png',
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
+                            img != null && img!.isNotEmpty
+                                ? Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.2,
+                                      height: MediaQuery.sizeOf(context).width *
+                                          0.2,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(img!),
+                                        ),
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  )
+                                : Align(
+                                    alignment:
+                                        const AlignmentDirectional(-1.0, 0.0),
+                                    child: Container(
+                                      width: MediaQuery.sizeOf(context).width *
+                                          0.2,
+                                      height: MediaQuery.sizeOf(context).width *
+                                          0.2,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.asset(
+                                        'assets/images/account_circle_24dp_E8EAED_FILL0_wght400_GRAD0_opsz24.png',
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
                             Align(
                               alignment: const AlignmentDirectional(1.0, 0.0),
                               child: Padding(
@@ -142,7 +169,7 @@ class _ProfileState extends State<Profile> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Tobenna',
+                                      displayN!,
                                       style: GoogleFonts.readexPro(
                                         fontSize: 14,
                                         letterSpacing: 0.0,
@@ -150,7 +177,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     Text(
-                                      'Bsar@gmail.com',
+                                      email!,
                                       style: GoogleFonts.readexPro(
                                         fontSize: 14,
                                         letterSpacing: 0.0,
@@ -162,7 +189,7 @@ class _ProfileState extends State<Profile> {
                                           CrossAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'ID: urvb-iwbfi-9283....',
+                                          'ID: ${user!.uid}'.abbreviate(20),
                                           style: GoogleFonts.readexPro(
                                             fontSize: 14,
                                             letterSpacing: 0.0,
@@ -189,7 +216,13 @@ class _ProfileState extends State<Profile> {
                                                           0.06)),
                                             ),
                                             onPressed: () async {
-                                              // Navigator.pop(context);
+                                              Clipboard.setData(ClipboardData(
+                                                  text: user!.uid));
+
+                                              showSuccessToast(
+                                                  context: context,
+                                                  message:
+                                                      'Copied Successfully');
                                             },
                                             icon: const Icon(
                                               Icons.content_copy,
