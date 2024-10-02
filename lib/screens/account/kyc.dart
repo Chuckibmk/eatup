@@ -590,13 +590,6 @@ class _KYCState extends State<KYC> {
                                 _formKey.currentState!.save();
                                 updateKYC(ct, cn, country.text, state.text,
                                     city.text, _image!, _image2!);
-                                // print(ct);
-                                // print(cn);
-                                // print(country.text);
-                                // print(state.text);
-                                // print(city.text);
-                                // print(imgname);
-                                // print(imgname2);
                                 // upload to firebase
                               }
                             },

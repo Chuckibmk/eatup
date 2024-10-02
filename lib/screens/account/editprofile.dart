@@ -352,50 +352,46 @@ class _EditprofileState extends State<Editprofile> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 15.0),
-                                  child: FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.dropDownValueController1 ??=
-                                            FormFieldController<String>(null),
-                                    options: ['Option 1'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.dropDownValue1 = val),
+                                  child: SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
                                     height: 56.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
+                                    child: DropdownButtonFormField<String>(
+                                      items: [],
+                                      // value: country,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          // country = value;
+                                        });
+                                      },
+                                      hint: const Text('-Select-'),
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Color(0xff57636c),
+                                        size: 24.0,
+                                      ),
+                                      elevation: 2,
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xffe0e3e7),
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                    hintText: '-Select-',
-                                    icon: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
+                                      ),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16.0, 4.0, 16.0, 4.0),
                                     ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                    labelText: '',
-                                    labelTextStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
                                   ),
                                 ),
                               ),
@@ -429,52 +425,46 @@ class _EditprofileState extends State<Editprofile> {
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
                                               0.0, 0.0, 0.0, 15.0),
-                                      child: FlutterFlowDropDown<String>(
-                                        controller: _model
-                                                .dropDownValueController2 ??=
-                                            FormFieldController<String>(null),
-                                        options: ['Option 1'],
-                                        onChanged: (val) => safeSetState(
-                                            () => _model.dropDownValue2 = val),
+                                      child: SizedBox(
                                         width:
                                             MediaQuery.sizeOf(context).width *
                                                 0.25,
                                         height: 50.0,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
+                                        child: DropdownButtonFormField<String>(
+                                          items: [],
+                                          // value: country,
+                                          onChanged: (value) {
+                                            // setState(() {
+                                            //   country = value;
+                                            // });
+                                          },
+                                          hint: const Text('+1'),
+                                          icon: const Icon(
+                                            Icons.arrow_drop_down,
+                                            color: Color(0xff57636c),
+                                            size: 24.0,
+                                          ),
+                                          elevation: 2,
+                                          style: GoogleFonts.readexPro(
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                            fontSize: 14,
+                                            letterSpacing: 0.0,
+                                          ),
+                                          decoration: InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                color: Color(0xffe0e3e7),
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                        hintText: '+1',
-                                        icon: Icon(
-                                          Icons.arrow_drop_down,
-                                          color: FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                          size: 24.0,
+                                          ),
+                                          padding: const EdgeInsetsDirectional
+                                              .fromSTEB(16.0, 4.0, 16.0, 4.0),
                                         ),
-                                        fillColor: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
-                                        elevation: 2.0,
-                                        borderColor:
-                                            FlutterFlowTheme.of(context)
-                                                .alternate,
-                                        borderWidth: 2.0,
-                                        borderRadius: 8.0,
-                                        margin: const EdgeInsetsDirectional
-                                            .fromSTEB(16.0, 4.0, 16.0, 4.0),
-                                        hidesUnderline: true,
-                                        isOverButton: true,
-                                        isSearchable: false,
-                                        isMultiSelect: false,
-                                        labelText: '',
-                                        labelTextStyle:
-                                            FlutterFlowTheme.of(context)
-                                                .labelMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
                                       ),
                                     ),
                                   ),
@@ -496,20 +486,18 @@ class _EditprofileState extends State<Editprofile> {
                                             autofocus: true,
                                             obscureText: false,
                                             decoration: InputDecoration(
-                                              labelStyle:
-                                                  FlutterFlowTheme.of(context)
-                                                      .labelMedium
-                                                      .override(
-                                                        fontFamily:
-                                                            'Readex Pro',
-                                                        letterSpacing: 0.0,
-                                                      ),
+                                              labelStyle: GoogleFonts.readexPro(
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .labelMedium,
+                                                fontSize: 14,
+                                                letterSpacing: 0.0,
+                                                // fontWeight: FontWeight.bold,
+                                              ),
                                               alignLabelWithHint: false,
                                               enabledBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .alternate,
+                                                  color: Colors.grey,
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
@@ -517,9 +505,7 @@ class _EditprofileState extends State<Editprofile> {
                                               ),
                                               focusedBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
+                                                  color: Colors.green,
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
@@ -527,9 +513,7 @@ class _EditprofileState extends State<Editprofile> {
                                               ),
                                               errorBorder: OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
+                                                  color: Colors.red,
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
@@ -538,24 +522,24 @@ class _EditprofileState extends State<Editprofile> {
                                               focusedErrorBorder:
                                                   OutlineInputBorder(
                                                 borderSide: BorderSide(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .error,
+                                                  color: Colors.red,
                                                   width: 2.0,
                                                 ),
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                               ),
                                             ),
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  letterSpacing: 0.0,
-                                                ),
-                                            validator: _model
-                                                .textController3Validator
-                                                .asValidator(context),
+                                            style: GoogleFonts.readexPro(
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
+                                              fontSize: 14,
+                                              letterSpacing: 0.0,
+                                              // fontWeight: FontWeight.bold,
+                                            ),
+                                            // validator: _model
+                                            //     .textController3Validator
+                                            //     .asValidator(context),
                                           ),
                                         ),
                                       ),
@@ -572,12 +556,14 @@ class _EditprofileState extends State<Editprofile> {
                                   child: Text(
                                     'Address',
                                     textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
+                                    style: GoogleFonts.readexPro(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      fontSize: 14,
+                                      letterSpacing: 0.0,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -591,22 +577,23 @@ class _EditprofileState extends State<Editprofile> {
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
                                     child: TextFormField(
-                                      controller: _model.textController4,
-                                      focusNode: _model.textFieldFocusNode4,
+                                      // controller: _model.textController4,
+                                      // focusNode: _model.textFieldFocusNode4,
                                       autofocus: true,
                                       obscureText: false,
                                       decoration: InputDecoration(
-                                        labelStyle: FlutterFlowTheme.of(context)
-                                            .labelMedium
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              letterSpacing: 0.0,
-                                            ),
+                                        labelStyle: GoogleFonts.readexPro(
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelMedium,
+                                          fontSize: 14,
+                                          letterSpacing: 0.0,
+                                          // fontWeight: FontWeight.bold,
+                                        ),
                                         alignLabelWithHint: false,
                                         enabledBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
+                                            color: Colors.grey,
                                             width: 2.0,
                                           ),
                                           borderRadius:
@@ -614,8 +601,7 @@ class _EditprofileState extends State<Editprofile> {
                                         ),
                                         focusedBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primary,
+                                            color: Colors.green,
                                             width: 2.0,
                                           ),
                                           borderRadius:
@@ -623,8 +609,7 @@ class _EditprofileState extends State<Editprofile> {
                                         ),
                                         errorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
+                                            color: Colors.red,
                                             width: 2.0,
                                           ),
                                           borderRadius:
@@ -632,22 +617,23 @@ class _EditprofileState extends State<Editprofile> {
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
                                           borderSide: BorderSide(
-                                            color: FlutterFlowTheme.of(context)
-                                                .error,
+                                            color: Colors.red,
                                             width: 2.0,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
                                       ),
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
-                                          ),
-                                      validator: _model.textController4Validator
-                                          .asValidator(context),
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                        // fontWeight: FontWeight.bold,
+                                      ),
+                                      // validator: _model.textController4Validator
+                                      //     .asValidator(context),
                                     ),
                                   ),
                                 ),
@@ -661,12 +647,14 @@ class _EditprofileState extends State<Editprofile> {
                                   child: Text(
                                     'Country',
                                     textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
+                                    style: GoogleFonts.readexPro(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      fontSize: 14,
+                                      letterSpacing: 0.0,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -676,50 +664,46 @@ class _EditprofileState extends State<Editprofile> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 15.0),
-                                  child: FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.dropDownValueController3 ??=
-                                            FormFieldController<String>(null),
-                                    options: ['Option 1'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.dropDownValue3 = val),
+                                  child: SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 56.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
+                                    height: 50.0,
+                                    child: DropdownButtonFormField<String>(
+                                      items: [],
+                                      // value: country,
+                                      onChanged: (value) {
+                                        // setState(() {
+                                        //   country = value;
+                                        // });
+                                      },
+                                      hint: const Text('-Select-'),
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Color(0xff57636c),
+                                        size: 24.0,
+                                      ),
+                                      elevation: 2,
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xffe0e3e7),
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                    hintText: '-Select-',
-                                    icon: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
+                                      ),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16.0, 4.0, 16.0, 4.0),
                                     ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                    labelText: '',
-                                    labelTextStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
                                   ),
                                 ),
                               ),
@@ -732,12 +716,14 @@ class _EditprofileState extends State<Editprofile> {
                                   child: Text(
                                     'State',
                                     textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
+                                    style: GoogleFonts.readexPro(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      fontSize: 14,
+                                      letterSpacing: 0.0,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -747,50 +733,45 @@ class _EditprofileState extends State<Editprofile> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 15.0),
-                                  child: FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.dropDownValueController4 ??=
-                                            FormFieldController<String>(null),
-                                    options: ['Option 1'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.dropDownValue4 = val),
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 56.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
+                                  child: SizedBox(
+                                    width: MediaQuery.sizeOf(context).width * 1,
+                                    height: 50.0,
+                                    child: DropdownButtonFormField<String>(
+                                      items: [],
+                                      // value: country,
+                                      onChanged: (value) {
+                                        // setState(() {
+                                        //   country = value;
+                                        // });
+                                      },
+                                      hint: const Text('+1'),
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Color(0xff57636c),
+                                        size: 24.0,
+                                      ),
+                                      elevation: 2,
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xffe0e3e7),
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                    hintText: '-Select-',
-                                    icon: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
+                                      ),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16.0, 4.0, 16.0, 4.0),
                                     ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                    labelText: '',
-                                    labelTextStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
                                   ),
                                 ),
                               ),
@@ -803,12 +784,14 @@ class _EditprofileState extends State<Editprofile> {
                                   child: Text(
                                     'City',
                                     textAlign: TextAlign.start,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
+                                    style: GoogleFonts.readexPro(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      fontSize: 14,
+                                      letterSpacing: 0.0,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -818,111 +801,95 @@ class _EditprofileState extends State<Editprofile> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 15.0),
-                                  child: FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.dropDownValueController5 ??=
-                                            FormFieldController<String>(null),
-                                    options: ['Option 1'],
-                                    onChanged: (val) => safeSetState(
-                                        () => _model.dropDownValue5 = val),
+                                  child: SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 56.0,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
+                                    height: 50.0,
+                                    child: DropdownButtonFormField<String>(
+                                      items: [],
+                                      // value: country,
+                                      onChanged: (value) {
+                                        // setState(() {
+                                        //   country = value;
+                                        // });
+                                      },
+                                      hint: const Text('+1'),
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Color(0xff57636c),
+                                        size: 24.0,
+                                      ),
+                                      elevation: 2,
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                      ),
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xffe0e3e7),
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                    hintText: '-Select-',
-                                    icon: Icon(
-                                      Icons.arrow_drop_down,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
+                                      ),
+                                      padding:
+                                          const EdgeInsetsDirectional.fromSTEB(
+                                              16.0, 4.0, 16.0, 4.0),
                                     ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                    labelText: '',
-                                    labelTextStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          letterSpacing: 0.0,
-                                        ),
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsetsDirectional.fromSTEB(
                                     0.0, 30.0, 0.0, 20.0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    GoRouter.of(context).prepareAuthEvent();
-
-                                    final user =
-                                        await authManager.signInWithEmail(
-                                      context,
-                                      _model.emailAddressTextController.text,
-                                      _model.passwordTextController.text,
-                                    );
-                                    if (user == null) {
-                                      return;
-                                    }
-
-                                    context.goNamedAuth(
-                                        'null', context.mounted);
-                                  },
-                                  text: 'Save Changes',
-                                  options: FFButtonOptions(
-                                    width: double.infinity,
-                                    height: 60.0,
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 0.0),
-                                    iconPadding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 0.0, 0.0),
-                                    color: valueOrDefault<Color>(
-                                      (/* NOT RECOMMENDED */ _model
-                                                      .emailAddressTextController
-                                                      .text ==
-                                                  'true') &&
-                                              (/* NOT RECOMMENDED */ _model
-                                                      .passwordTextController
-                                                      .text ==
-                                                  'true')
-                                          ? const Color(0xFFE10E0E)
-                                          : FlutterFlowTheme.of(context)
-                                              .secondaryText,
-                                      FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                    ),
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
+                                child: SizedBox(
+                                  width: 370.0,
+                                  height: 60.0,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      shape: WidgetStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
                                         ),
-                                    elevation: 3.0,
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
+                                      ),
+                                      elevation:
+                                          const WidgetStatePropertyAll(3.0),
+                                      backgroundColor:
+                                          const WidgetStatePropertyAll(
+                                              // cardtype.text != '' &&
+                                              //         cardno.text != '' &&
+                                              //         _image != null &&
+                                              //         _image2 != null &&
+                                              //         country.text != '' &&
+                                              //         state.text != '' &&
+                                              1 != 0
+                                                  ? const Color(0xFFE10E0E)
+                                                  : Colors.grey),
                                     ),
-                                    borderRadius: BorderRadius.circular(12.0),
+                                    onPressed: () async {
+                                      // if (_formKey.currentState!.validate()) {
+                                      //   _formKey.currentState!.save();
+                                      //   updateKYC(ct, cn, country.text, state.text,
+                                      //       city.text, _image!, _image2!);
+                                      //   // upload to firebase
+                                      // }
+                                    },
+                                    child: Text(
+                                      'Submit',
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -945,20 +912,25 @@ class _EditprofileState extends State<Editprofile> {
                                         ),
                                         TextSpan(
                                           text: ' Terms of service.',
-                                          style: FlutterFlowTheme.of(context)
-                                              .labelSmall
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color: const Color(0xFFE10E0E),
-                                                letterSpacing: 0.0,
+                                          style: GoogleFonts.readexPro(
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .labelSmall,
+                                              fontSize: 14,
+                                              letterSpacing: 0.0,
+                                              color: Color(0xFFe10e0e)
+                                              // fontWeight: FontWeight.bold,
                                               ),
                                         )
                                       ],
-                                      style: FlutterFlowTheme.of(context)
-                                          .labelSmall
-                                          .override(
-                                            fontFamily: 'Readex Pro',
-                                            letterSpacing: 0.0,
+                                      style: GoogleFonts.readexPro(
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .labelSmall,
+                                          fontSize: 14,
+                                          letterSpacing: 0.0,
+                                          color: Color(0xFFe10e0e)
+                                          // fontWeight: FontWeight.bold,
                                           ),
                                     ),
                                     textAlign: TextAlign.center,
