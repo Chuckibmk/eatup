@@ -1,5 +1,7 @@
+import 'package:country_state_city_pro/country_state_city_pro.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class Editprofile extends StatefulWidget {
   const Editprofile({super.key});
@@ -9,6 +11,11 @@ class Editprofile extends StatefulWidget {
 }
 
 class _EditprofileState extends State<Editprofile> {
+  ///Define Controller
+  TextEditingController country = TextEditingController();
+  TextEditingController state = TextEditingController();
+  TextEditingController city = TextEditingController();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -63,7 +70,7 @@ class _EditprofileState extends State<Editprofile> {
             children: [
               Container(
                 width: MediaQuery.sizeOf(context).width * 1.0,
-                height: MediaQuery.sizeOf(context).height * 1.0,
+                // height: MediaQuery.sizeOf(context).height * 1.0,
                 decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
@@ -122,7 +129,7 @@ class _EditprofileState extends State<Editprofile> {
                                     },
                                     icon: const Icon(
                                       Icons.upload,
-                                      color: Color(0xFFE10E0E),
+                                      color: Colors.white,
                                       size: 24,
                                     ),
                                   ),
@@ -170,13 +177,13 @@ class _EditprofileState extends State<Editprofile> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 15.0),
-                                  child: Container(
+                                  child: SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
                                     child: TextFormField(
                                       // controller: _model.textController1,
                                       // focusNode: _model.textFieldFocusNode1,
-                                      autofocus: true,
+                                      autofocus: false,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelStyle: GoogleFonts.readexPro(
@@ -189,15 +196,15 @@ class _EditprofileState extends State<Editprofile> {
                                         ),
                                         alignLabelWithHint: false,
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
-                                            color: Color(0XFFe0e3e7),
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
                                             width: 2.0,
                                           ),
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.green,
                                             width: 2.0,
                                           ),
@@ -205,7 +212,7 @@ class _EditprofileState extends State<Editprofile> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.orange,
                                             width: 2.0,
                                           ),
@@ -213,7 +220,7 @@ class _EditprofileState extends State<Editprofile> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -261,13 +268,13 @@ class _EditprofileState extends State<Editprofile> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 15.0),
-                                  child: Container(
+                                  child: SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
                                     child: TextFormField(
                                       // controller: _model.textController2,
                                       // focusNode: _model.textFieldFocusNode2,
-                                      autofocus: true,
+                                      autofocus: false,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelStyle: GoogleFonts.readexPro(
@@ -280,7 +287,7 @@ class _EditprofileState extends State<Editprofile> {
                                         ),
                                         alignLabelWithHint: false,
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.grey,
                                             width: 2.0,
                                           ),
@@ -288,7 +295,7 @@ class _EditprofileState extends State<Editprofile> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.green,
                                             width: 2.0,
                                           ),
@@ -296,7 +303,7 @@ class _EditprofileState extends State<Editprofile> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.orange,
                                             width: 2.0,
                                           ),
@@ -304,7 +311,7 @@ class _EditprofileState extends State<Editprofile> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -355,7 +362,6 @@ class _EditprofileState extends State<Editprofile> {
                                   child: SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 56.0,
                                     child: DropdownButtonFormField<String>(
                                       items: [],
                                       // value: country,
@@ -390,7 +396,7 @@ class _EditprofileState extends State<Editprofile> {
                                       ),
                                       padding:
                                           const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 4.0, 16.0, 4.0),
+                                              0.0, 4.0, 0.0, 4.0),
                                     ),
                                   ),
                                 ),
@@ -415,137 +421,32 @@ class _EditprofileState extends State<Editprofile> {
                                   ),
                                 ),
                               ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Align(
-                                    alignment:
-                                        const AlignmentDirectional(-1.0, 0.0),
-                                    child: Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 15.0),
-                                      child: SizedBox(
-                                        width:
-                                            MediaQuery.sizeOf(context).width *
-                                                0.25,
-                                        height: 50.0,
-                                        child: DropdownButtonFormField<String>(
-                                          items: [],
-                                          // value: country,
-                                          onChanged: (value) {
-                                            // setState(() {
-                                            //   country = value;
-                                            // });
-                                          },
-                                          hint: const Text('+1'),
-                                          icon: const Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Color(0xff57636c),
-                                            size: 24.0,
+                              Align(
+                                alignment: const Alignment(-1.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 0.0, 0.0, 15.0),
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.sizeOf(context).width * 1.0,
+                                    child: IntlPhoneField(
+                                      decoration: InputDecoration(
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color(0xffe0e3e7),
+                                            width: 2.0,
                                           ),
-                                          elevation: 2,
-                                          style: GoogleFonts.readexPro(
-                                            textStyle: Theme.of(context)
-                                                .textTheme
-                                                .bodyMedium,
-                                            fontSize: 14,
-                                            letterSpacing: 0.0,
-                                          ),
-                                          decoration: InputDecoration(
-                                            border: OutlineInputBorder(
-                                              borderSide: const BorderSide(
-                                                color: Color(0xffe0e3e7),
-                                                width: 2.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                            ),
-                                          ),
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(16.0, 4.0, 16.0, 4.0),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
+                                      initialCountryCode: 'US',
+                                      onChanged: (phone) {
+                                        print(phone.completeNumber);
+                                      },
                                     ),
                                   ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment:
-                                          const AlignmentDirectional(-1.0, 0.0),
-                                      child: Padding(
-                                        padding: const EdgeInsetsDirectional
-                                            .fromSTEB(0.0, 0.0, 0.0, 15.0),
-                                        child: Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width *
-                                                  0.75,
-                                          child: TextFormField(
-                                            // controller: _model.textController3,
-                                            // focusNode:
-                                            //     _model.textFieldFocusNode3,
-                                            autofocus: true,
-                                            obscureText: false,
-                                            decoration: InputDecoration(
-                                              labelStyle: GoogleFonts.readexPro(
-                                                textStyle: Theme.of(context)
-                                                    .textTheme
-                                                    .labelMedium,
-                                                fontSize: 14,
-                                                letterSpacing: 0.0,
-                                                // fontWeight: FontWeight.bold,
-                                              ),
-                                              alignLabelWithHint: false,
-                                              enabledBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.grey,
-                                                  width: 2.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.green,
-                                                  width: 2.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              errorBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.red,
-                                                  width: 2.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              focusedErrorBorder:
-                                                  OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                  color: Colors.red,
-                                                  width: 2.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                            ),
-                                            style: GoogleFonts.readexPro(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
-                                              fontSize: 14,
-                                              letterSpacing: 0.0,
-                                              // fontWeight: FontWeight.bold,
-                                            ),
-                                            // validator: _model
-                                            //     .textController3Validator
-                                            //     .asValidator(context),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
                               Align(
                                 alignment:
@@ -573,13 +474,13 @@ class _EditprofileState extends State<Editprofile> {
                                 child: Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 15.0),
-                                  child: Container(
+                                  child: SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
                                     child: TextFormField(
                                       // controller: _model.textController4,
                                       // focusNode: _model.textFieldFocusNode4,
-                                      autofocus: true,
+                                      autofocus: false,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelStyle: GoogleFonts.readexPro(
@@ -592,7 +493,7 @@ class _EditprofileState extends State<Editprofile> {
                                         ),
                                         alignLabelWithHint: false,
                                         enabledBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.grey,
                                             width: 2.0,
                                           ),
@@ -600,7 +501,7 @@ class _EditprofileState extends State<Editprofile> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         focusedBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.green,
                                             width: 2.0,
                                           ),
@@ -608,7 +509,7 @@ class _EditprofileState extends State<Editprofile> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         errorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -616,7 +517,7 @@ class _EditprofileState extends State<Editprofile> {
                                               BorderRadius.circular(8.0),
                                         ),
                                         focusedErrorBorder: OutlineInputBorder(
-                                          borderSide: BorderSide(
+                                          borderSide: const BorderSide(
                                             color: Colors.red,
                                             width: 2.0,
                                           ),
@@ -667,30 +568,13 @@ class _EditprofileState extends State<Editprofile> {
                                   child: SizedBox(
                                     width:
                                         MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 50.0,
-                                    child: DropdownButtonFormField<String>(
-                                      items: [],
-                                      // value: country,
-                                      onChanged: (value) {
-                                        // setState(() {
-                                        //   country = value;
-                                        // });
-                                      },
-                                      hint: const Text('-Select-'),
-                                      icon: const Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Color(0xff57636c),
-                                        size: 24.0,
-                                      ),
-                                      elevation: 2,
-                                      style: GoogleFonts.readexPro(
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                        fontSize: 14,
-                                        letterSpacing: 0.0,
-                                      ),
-                                      decoration: InputDecoration(
+                                    // height: 50.0,
+                                    child: CountryStateCityPicker(
+                                      country: country,
+                                      state: state,
+                                      city: city,
+                                      dialogColor: Colors.white,
+                                      textFieldDecoration: InputDecoration(
                                         border: OutlineInputBorder(
                                           borderSide: const BorderSide(
                                             color: Color(0xffe0e3e7),
@@ -699,147 +583,14 @@ class _EditprofileState extends State<Editprofile> {
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                         ),
-                                      ),
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 4.0, 16.0, 4.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment:
-                                    const AlignmentDirectional(-1.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 20.0, 0.0, 4.0),
-                                  child: Text(
-                                    'State',
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.readexPro(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      fontSize: 14,
-                                      letterSpacing: 0.0,
-                                      // fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment:
-                                    const AlignmentDirectional(-1.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 15.0),
-                                  child: SizedBox(
-                                    width: MediaQuery.sizeOf(context).width * 1,
-                                    height: 50.0,
-                                    child: DropdownButtonFormField<String>(
-                                      items: [],
-                                      // value: country,
-                                      onChanged: (value) {
-                                        // setState(() {
-                                        //   country = value;
-                                        // });
-                                      },
-                                      hint: const Text('+1'),
-                                      icon: const Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Color(0xff57636c),
-                                        size: 24.0,
-                                      ),
-                                      elevation: 2,
-                                      style: GoogleFonts.readexPro(
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                        fontSize: 14,
-                                        letterSpacing: 0.0,
-                                      ),
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xffe0e3e7),
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
+                                        // fillColor: Colors.blueGrey.shade100,
+                                        // filled: false,
+                                        suffixIcon: const Icon(
+                                          Icons.arrow_drop_down,
+                                          color: Color(0xff57636c),
+                                          size: 24.0,
                                         ),
                                       ),
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 4.0, 16.0, 4.0),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment:
-                                    const AlignmentDirectional(-1.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 20.0, 0.0, 4.0),
-                                  child: Text(
-                                    'City',
-                                    textAlign: TextAlign.start,
-                                    style: GoogleFonts.readexPro(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      fontSize: 14,
-                                      letterSpacing: 0.0,
-                                      // fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Align(
-                                alignment:
-                                    const AlignmentDirectional(-1.0, 0.0),
-                                child: Padding(
-                                  padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 15.0),
-                                  child: SizedBox(
-                                    width:
-                                        MediaQuery.sizeOf(context).width * 1.0,
-                                    height: 50.0,
-                                    child: DropdownButtonFormField<String>(
-                                      items: [],
-                                      // value: country,
-                                      onChanged: (value) {
-                                        // setState(() {
-                                        //   country = value;
-                                        // });
-                                      },
-                                      hint: const Text('+1'),
-                                      icon: const Icon(
-                                        Icons.arrow_drop_down,
-                                        color: Color(0xff57636c),
-                                        size: 24.0,
-                                      ),
-                                      elevation: 2,
-                                      style: GoogleFonts.readexPro(
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium,
-                                        fontSize: 14,
-                                        letterSpacing: 0.0,
-                                      ),
-                                      decoration: InputDecoration(
-                                        border: OutlineInputBorder(
-                                          borderSide: const BorderSide(
-                                            color: Color(0xffe0e3e7),
-                                            width: 2.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                      ),
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              16.0, 4.0, 16.0, 4.0),
                                     ),
                                   ),
                                 ),
@@ -918,7 +669,7 @@ class _EditprofileState extends State<Editprofile> {
                                                   .labelSmall,
                                               fontSize: 14,
                                               letterSpacing: 0.0,
-                                              color: Color(0xFFe10e0e)
+                                              color: const Color(0xFFe10e0e)
                                               // fontWeight: FontWeight.bold,
                                               ),
                                         )
@@ -929,7 +680,7 @@ class _EditprofileState extends State<Editprofile> {
                                               .labelSmall,
                                           fontSize: 14,
                                           letterSpacing: 0.0,
-                                          color: Color(0xFFe10e0e)
+                                          color: const Color(0xFFe10e0e)
                                           // fontWeight: FontWeight.bold,
                                           ),
                                     ),
