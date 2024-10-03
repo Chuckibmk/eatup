@@ -1,3 +1,4 @@
+import 'package:eatup/screens/account/editprofile.dart';
 import 'package:eatup/screens/account/kyc.dart';
 import 'package:eatup/screens/account/login.dart';
 import 'package:eatup/screens/account/notifications.dart';
@@ -77,6 +78,11 @@ List<GetPage> getPage = [
   GetPage(
     name: settings,
     page: () => const Settings(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: edit,
+    page: () => const Editprofile(),
     transition: Transition.cupertino,
   ),
 ];

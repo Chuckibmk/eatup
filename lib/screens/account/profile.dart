@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:strings/strings.dart';
 
@@ -235,14 +237,19 @@ class _ProfileState extends State<Profile> {
                                 ),
                               ),
                             ),
-                            Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
-                              child: Text(
-                                'Edit',
-                                style: GoogleFonts.readexPro(
-                                  fontSize: 14,
-                                  color: const Color(0xFFE10E0E),
-                                  letterSpacing: 0.0,
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed(edit);
+                              },
+                              child: Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Text(
+                                  'Edit',
+                                  style: GoogleFonts.readexPro(
+                                    fontSize: 14,
+                                    color: const Color(0xFFE10E0E),
+                                    letterSpacing: 0.0,
+                                  ),
                                 ),
                               ),
                             ),
