@@ -79,7 +79,12 @@ class _KYCState extends State<KYC> {
             await uploadIMG(img, user.uid, const Uuid().v4(), fileEX);
         String imgUrl2 =
             await uploadIMG(img2, user.uid, const Uuid().v4(), fileEX2);
-        firebaseFirestore.collection('users').doc(user.uid).update({
+        firebaseFirestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('userInfo')
+            .doc('kyc')
+            .set({
           'idType': idT,
           'idNumber': idN,
           'Country': ct,
@@ -88,7 +93,7 @@ class _KYCState extends State<KYC> {
           'ID_img': imgUrl,
           'UserImg': imgUrl2,
           'lastKycUpload': FieldValue.serverTimestamp()
-        }).then((_) {
+        }, SetOptions(merge: true)).then((_) {
           print('KYC Updated.');
           if (mounted) {
             showSuccessToast(
