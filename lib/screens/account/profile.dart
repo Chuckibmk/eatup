@@ -43,9 +43,9 @@ class _ProfileState extends State<Profile> {
           (DocumentSnapshot doc) {
             final data = doc.data() as Map<String, dynamic>;
             setState(() {
-              displayN = data['name'];
+              displayN = data['fname'] + " " + data['lname'];
               email = user?.email;
-              img = data['UserImg'];
+              img = data['DP'];
             });
 
             // ...
@@ -169,7 +169,7 @@ class _ProfileState extends State<Profile> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      displayN!,
+                                      displayN ?? 'Username',
                                       style: GoogleFonts.readexPro(
                                         fontSize: 14,
                                         letterSpacing: 0.0,
@@ -177,7 +177,7 @@ class _ProfileState extends State<Profile> {
                                       ),
                                     ),
                                     Text(
-                                      email!,
+                                      email ?? 'Email',
                                       style: GoogleFonts.readexPro(
                                         fontSize: 14,
                                         letterSpacing: 0.0,
