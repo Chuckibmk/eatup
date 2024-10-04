@@ -290,6 +290,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                   onPressed: () async {
                                     // Navigator.pop(context);
+                                    Get.toNamed(adadd);
                                   },
                                   icon: const FaIcon(
                                     FontAwesomeIcons.locationDot,

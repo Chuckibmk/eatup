@@ -1,3 +1,4 @@
+import 'package:eatup/screens/account/adAdress.dart';
 import 'package:eatup/screens/account/editprofile.dart';
 import 'package:eatup/screens/account/kyc.dart';
 import 'package:eatup/screens/account/login.dart';
@@ -83,6 +84,11 @@ List<GetPage> getPage = [
   GetPage(
     name: edit,
     page: () => const Editprofile(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: adadd,
+    page: () => const AdAdd(),
     transition: Transition.cupertino,
   ),
 ];

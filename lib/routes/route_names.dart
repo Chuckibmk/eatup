@@ -14,3 +14,4 @@ String payments = '/payments';
 String profile = '/profile';
 String settings = '/settings';
 String edit = '/editprofile';
+String adadd = '/adadd';

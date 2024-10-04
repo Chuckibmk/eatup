@@ -1,5 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_state_city_pro/country_state_city_pro.dart';
+import 'package:eatup/routes/route_names.dart';
+import 'package:eatup/widgets/widg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
@@ -44,7 +49,74 @@ class _AdAddState extends State<AdAdd> {
 
   List<String> items = ["-Select-", "Estate", "Town", "City", "Village"];
 
+  final firebaseAuth = FirebaseAuth.instance;
+  final firebaseFirestore = FirebaseFirestore.instance;
+
   bool _progress = false;
+
+  Future<void> AdAdres(
+    String? rname,
+    String? street,
+    String details,
+    String? no,
+    String zip,
+    String hood,
+    String contry,
+    String state,
+    String city,
+  ) async {
+    setState(() {
+      _progress = true;
+    });
+    try {
+      User? user = firebaseAuth.currentUser;
+      if (user != null) {
+        firebaseFirestore
+            .collection('users')
+            .doc(user.uid)
+            .collection('userInfo')
+            .doc('address')
+            .set({
+          'RecipientName': rname,
+          'street': street,
+          'details': details,
+          'PhoneNumber': no,
+          'ZIP': zip,
+          'area': hood,
+          'Country': contry,
+          'State': state,
+          'City': city,
+          'lastAddress': FieldValue.serverTimestamp()
+        }, SetOptions(merge: true)).then((_) {
+          print('Profile Updated.');
+          if (mounted) {
+            showSuccessToast(
+                context: context, message: 'Profile Updated! ${user.email}');
+          }
+          Get.toNamed(home);
+        }).catchError((error) {
+          print('Profile Failed: $error');
+          if (mounted) {
+            showSuccessToast(context: context, message: 'Update Failed $error');
+          }
+        });
+      } else {
+        if (mounted) {
+          showSuccessToast(
+              context: context, message: 'Sign In to Update Profile');
+        }
+      }
+    } on FirebaseAuthException catch (e) {
+      if (mounted) {
+        showSuccessToast(context: context, message: e.toString());
+      }
+    } finally {
+      setState(() {
+        _progress = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -762,21 +834,17 @@ class _AdAddState extends State<AdAdd> {
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
-                                          // print(fn);
-                                          // print(ln);
-                                          // print(gd);
-                                          // print(ad);
-                                          // updateProfile(
-                                          //     fn,
-                                          //     ln,
-                                          //     gd,
-                                          //     ad,
-                                          //     country.text,
-                                          //     state.text,
-                                          //     city.text,
-                                          //     _image!);
-                                          //   updateKYC(ct, cn, country.text, state.text,
-                                          //       city.text, !, _image2!);
+                                          AdAdres(
+                                            rn,
+                                            stret,
+                                            dt!,
+                                            no,
+                                            zp!,
+                                            gd,
+                                            country.text,
+                                            state.text,
+                                            city.text,
+                                          );
                                           //   // upload to firebase
                                         }
                                       },
