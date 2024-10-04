@@ -410,23 +410,23 @@ class _CartState extends State<Cart> {
                   children: [
                     Expanded(
                       child: Align(
-                        alignment: AlignmentDirectional(0.0, 0.0),
+                        alignment: const AlignmentDirectional(0.0, 0.0),
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
                               110.0, 110.0, 110.0, 110.0),
                           child: Card(
                             clipBehavior: Clip.antiAliasWithSaveLayer,
-                            color: Color(0XFFe0e3e7),
+                            color: const Color(0XFFe0e3e7),
                             elevation: 0.0,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(14.0),
                             ),
-                            child: Opacity(
+                            child: const Opacity(
                               opacity: 0.5,
                               child: Align(
                                 alignment: AlignmentDirectional(0.0, 0.0),
                                 child: FaIcon(
-                                  FontAwesomeIcons.shoppingBasket,
+                                  FontAwesomeIcons.basketShopping,
                                   color: Color(0xFF57636c),
                                   size: 100.0,
                                 ),
@@ -452,19 +452,11 @@ class _CartState extends State<Cart> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Align(
-                      alignment: AlignmentDirectional(0.0, 0.0),
+                      alignment: const AlignmentDirectional(0.0, 0.0),
                       child: SizedBox(
                         width: 326.0,
                         height: 67.0,
                         child: ElevatedButton(
-                          child: Text(
-                            'Go to home',
-                            style: GoogleFonts.readexPro(
-                              color: Colors.white,
-                              letterSpacing: 0.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                          ),
                           onPressed: () {
                             print('Button pressed ...');
                           },
@@ -473,7 +465,7 @@ class _CartState extends State<Cart> {
                             //     30.0, 0.0, 30.0, 0.0),
 
                             backgroundColor:
-                                WidgetStatePropertyAll(Color(0xFFE10E0E)),
+                                const WidgetStatePropertyAll(Color(0xFFE10E0E)),
                             elevation: const WidgetStatePropertyAll(3.0),
                             shape: WidgetStatePropertyAll(
                               RoundedRectangleBorder(
@@ -483,6 +475,14 @@ class _CartState extends State<Cart> {
                                 ),
                                 borderRadius: BorderRadius.circular(12.0),
                               ),
+                            ),
+                          ),
+                          child: Text(
+                            'Go to home',
+                            style: GoogleFonts.readexPro(
+                              color: Colors.white,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.normal,
                             ),
                           ),
                         ),
