@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:uuid/uuid.dart';
 
 class AdAdd extends StatefulWidget {
   const AdAdd({super.key});
@@ -70,13 +71,17 @@ class _AdAddState extends State<AdAdd> {
     });
     try {
       User? user = firebaseAuth.currentUser;
+      var uqid = const Uuid().v4();
       if (user != null) {
         firebaseFirestore
             .collection('users')
             .doc(user.uid)
             .collection('userInfo')
             .doc('address')
+            .collection(uqid)
+            .doc(uqid)
             .set({
+          'uniqueID': uqid,
           'RecipientName': rname,
           'street': street,
           'details': details,
@@ -87,11 +92,11 @@ class _AdAddState extends State<AdAdd> {
           'State': state,
           'City': city,
           'lastAddress': FieldValue.serverTimestamp()
-        }, SetOptions(merge: true)).then((_) {
+        }).then((_) {
           print('Address Updated.');
           if (mounted) {
             showSuccessToast(
-                context: context, message: 'Profile Updated! ${user.email}');
+                context: context, message: 'Address Updated! ${user.email}');
           }
           Get.toNamed(home);
         }).catchError((error) {
@@ -103,7 +108,7 @@ class _AdAddState extends State<AdAdd> {
       } else {
         if (mounted) {
           showSuccessToast(
-              context: context, message: 'Sign In to Update Profile');
+              context: context, message: 'Sign In to Update Address');
         }
       }
     } on FirebaseAuthException catch (e) {
