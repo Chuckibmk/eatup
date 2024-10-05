@@ -88,7 +88,7 @@ class _AdAddState extends State<AdAdd> {
           'City': city,
           'lastAddress': FieldValue.serverTimestamp()
         }, SetOptions(merge: true)).then((_) {
-          print('Profile Updated.');
+          print('Address Updated.');
           if (mounted) {
             showSuccessToast(
                 context: context, message: 'Profile Updated! ${user.email}');
