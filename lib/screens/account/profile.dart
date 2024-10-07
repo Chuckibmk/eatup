@@ -639,6 +639,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                   onPressed: () async {
                                     // Navigator.pop(context);
+                                    del();
                                   },
                                   icon: const Icon(
                                     Icons.delete_forever,
@@ -699,5 +700,274 @@ class _ProfileState extends State<Profile> {
         ),
       ),
     );
+  }
+
+  Widget del() {
+    return Dialog(
+        child: // Generated code for this Column Widget...
+            Column(
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
+          child: Text(
+            'Delete your Eatup Account?',
+            style: GoogleFonts.readexPro(
+              textStyle: Theme.of(context).textTheme.labelMedium,
+              fontSize: 14.0,
+              letterSpacing: 0.0,
+            ),
+          ),
+        ),
+        Container(
+          width: 327.0,
+          height: 90.0,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(0.0),
+            border: Border.all(
+              color: Color(0xFFDF8612),
+              width: 2.0,
+            ),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(),
+                child: FaIcon(
+                  FontAwesomeIcons.triangleExclamation,
+                  color: Color(0xFFDF8612),
+                  size: 24.0,
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(),
+                child: Text(
+                  'You can\'t undo this action, your data will be removed permanently',
+                  textAlign: TextAlign.center,
+                  style: GoogleFonts.readexPro(
+                      textStyle: Theme.of(context).textTheme.bodyMedium,
+                      fontSize: 14.0,
+                      letterSpacing: 0.0,
+                      color: Color(0xFFDF8612)),
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          width: 315.0,
+          height: 100.0,
+          decoration: BoxDecoration(
+            color: Colors.white,
+          ),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+            child: Text(
+              'Your account bsar@gmail.com, any existing businesses, business employees and saved products will be deleted permanently',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.readexPro(
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                fontSize: 14.0,
+                letterSpacing: 0.0,
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: AlignmentDirectional(-1.0, 0.0),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 4.0),
+            child: Text(
+              'First Name',
+              textAlign: TextAlign.start,
+              style: GoogleFonts.readexPro(
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                fontSize: 14.0,
+                letterSpacing: 0.0,
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: AlignmentDirectional(-1.0, 0.0),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 15.0),
+            child: Container(
+              width: MediaQuery.sizeOf(context).width * 1.0,
+              child: TextFormField(
+                // controller: _model.textController,
+                // focusNode: _model.textFieldFocusNode,
+                autofocus: false,
+                obscureText: false,
+                decoration: InputDecoration(
+                  labelStyle: GoogleFonts.readexPro(
+                    textStyle: Theme.of(context).textTheme.labelMedium,
+                    fontSize: 14.0,
+                    letterSpacing: 0.0,
+                  ),
+                  alignLabelWithHint: false,
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.grey,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.green,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: Colors.red,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                ),
+                style: GoogleFonts.readexPro(
+                  textStyle: Theme.of(context).textTheme.bodyMedium,
+                  fontSize: 14.0,
+                  letterSpacing: 0.0,
+                ),
+                // validator: _model.textControllerValidator.asValidator(context),
+              ),
+            ),
+          ),
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
+                child: SizedBox(
+                  width: 370.0,
+                  height: 60.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      elevation: const WidgetStatePropertyAll(3.0),
+                      backgroundColor: WidgetStatePropertyAll(
+                          // rname.text != '' &&
+                          //         stradd.text != '' &&
+                          //         details.text != '' &&
+                          //         number.text != '' &&
+                          //         zip.text != '' &&
+                          //         gender.text != '-Select-' &&
+                          //         country.text != '' &&
+                          //         state.text != '' &&
+                          //         city.text != ''
+                          //     ? const Color(0xFFE10E0E)
+                          //     :
+                          Colors.grey),
+                    ),
+                    onPressed: () async {
+                      // if (_formKey.currentState!.validate()) {
+                      //   _formKey.currentState!.save();
+                      //   AdAdres(
+                      //     rn,
+                      //     stret,
+                      //     dt!,
+                      //     no,
+                      //     zp!,
+                      //     gd,
+                      //     country.text,
+                      //     state.text,
+                      //     city.text,
+                      //   );
+                      //   // upload to firebase
+                      // }
+                    },
+                    child: Text(
+                      'Submit',
+                      style: GoogleFonts.readexPro(
+                        textStyle: Theme.of(context).textTheme.titleSmall,
+                        color: Colors.white,
+                        letterSpacing: 0.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 20.0),
+                child: SizedBox(
+                  width: 370.0,
+                  height: 60.0,
+                  child: ElevatedButton(
+                    style: ButtonStyle(
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12.0),
+                        ),
+                      ),
+                      elevation: const WidgetStatePropertyAll(3.0),
+                      backgroundColor: WidgetStatePropertyAll(
+                          // rname.text != '' &&
+                          //         stradd.text != '' &&
+                          //         details.text != '' &&
+                          //         number.text != '' &&
+                          //         zip.text != '' &&
+                          //         gender.text != '-Select-' &&
+                          //         country.text != '' &&
+                          //         state.text != '' &&
+                          //         city.text != ''
+                          //     ? const Color(0xFFE10E0E)
+                          //     :
+                          Colors.grey),
+                    ),
+                    onPressed: () async {
+                      // if (_formKey.currentState!.validate()) {
+                      //   _formKey.currentState!.save();
+                      //   AdAdres(
+                      //     rn,
+                      //     stret,
+                      //     dt!,
+                      //     no,
+                      //     zp!,
+                      //     gd,
+                      //     country.text,
+                      //     state.text,
+                      //     city.text,
+                      //   );
+                      //   //   // upload to firebase
+                      // }
+                    },
+                    child: Text(
+                      'Submit',
+                      style: GoogleFonts.readexPro(
+                        textStyle: Theme.of(context).textTheme.titleSmall,
+                        color: Colors.white,
+                        letterSpacing: 0.0,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    ));
   }
 }
