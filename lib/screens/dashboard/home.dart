@@ -1,10 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,6 +57,27 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void checkInternetC() async {
+    final connection = InternetConnection.createInstance(
+      customCheckOptions: [
+        InternetCheckOption(
+          uri: Uri.parse('https://example.com'),
+          responseStatusFn: (response) {
+            if (response.statusCode >= 200 && response.statusCode < 300) {
+              // Successful response
+              print('true');
+              return true;
+            } else {
+              // Unsuccessful response
+              print('Connection unsuccessful: ${response.statusCode}');
+              return false;
+            }
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   void initState() {
     user = firebaseAuth.currentUser;
@@ -64,6 +87,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    checkInternetC();
     if (user != null) {
       try {
         final usr = firebaseFirestore.collection("users").doc(user?.uid);
