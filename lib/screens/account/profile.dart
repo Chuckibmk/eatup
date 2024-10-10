@@ -28,34 +28,38 @@ class _ProfileState extends State<Profile> {
   String? email;
   String? img;
 
+  void fetchUserData() {
+    try {
+      final usr = firebaseFirestore.collection("users").doc(user?.uid);
+      usr.get().then(
+        (DocumentSnapshot doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          setState(() {
+            displayN = data['fname'] + " " + data['lname'];
+            email = user?.email;
+            img = data['DP'];
+          });
+
+          // ...
+        },
+        onError: (e) => print("Error getting document: $e"),
+      );
+    } catch (e) {
+      print("Error trying : $e");
+    }
+  }
+
   @override
   void initState() {
     user = firebaseAuth.currentUser;
     super.initState();
+    if (user != null) {
+      fetchUserData();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    if (user != null) {
-      try {
-        final usr = firebaseFirestore.collection("users").doc(user?.uid);
-        usr.get().then(
-          (DocumentSnapshot doc) {
-            final data = doc.data() as Map<String, dynamic>;
-            setState(() {
-              displayN = data['fname'] + " " + data['lname'];
-              email = user?.email;
-              img = data['DP'];
-            });
-
-            // ...
-          },
-          onError: (e) => print("Error getting document: $e"),
-        );
-      } catch (e) {
-        print("Error trying : $e");
-      }
-    }
     return Scaffold(
       key: scaffoldKey,
       // backgroundColor: FlutterFlowTheme.of(context).primaryBackground,

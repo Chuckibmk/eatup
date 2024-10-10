@@ -57,58 +57,72 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  late final StreamSubscription? listener;
+  late final AppLifecycleListener _listener;
+
   void checkInternetC() async {
-    final connection = InternetConnection.createInstance(
-      customCheckOptions: [
-        InternetCheckOption(
-          uri: Uri.parse('https://example.com'),
-          responseStatusFn: (response) {
-            if (response.statusCode >= 200 && response.statusCode < 300) {
-              // Successful response
-              print('true');
-              return true;
-            } else {
-              // Unsuccessful response
-              print('Connection unsuccessful: ${response.statusCode}');
-              return false;
-            }
-          },
-        ),
-      ],
+    listener =
+        InternetConnection().onStatusChange.listen((InternetStatus status) {
+      switch (status) {
+        case InternetStatus.connected:
+          print('Connected');
+          // The internet is now connected
+          break;
+        case InternetStatus.disconnected:
+          print('no internet');
+          if (mounted) {
+            showErrorToast(context: context, message: 'Network is Unavailable');
+          }
+          // The internet is now disconnected
+          break;
+      }
+    });
+    _listener = AppLifecycleListener(
+      onResume: listener!.resume,
+      onHide: listener!.pause,
+      onPause: listener!.pause,
     );
+  }
+
+  void fetchDn() {
+    try {
+      final usr = firebaseFirestore.collection("users").doc(user?.uid);
+      usr.get().then(
+        (DocumentSnapshot doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          setState(() {
+            displayN = data['name'];
+          });
+
+          // ...
+        },
+        onError: (e) => print("Error getting document: $e"),
+      );
+    } catch (e) {
+      print("Error trying : $e");
+    }
   }
 
   @override
   void initState() {
     user = firebaseAuth.currentUser;
+    checkInternetC();
     super.initState();
+    if (user != null) {
+      fetchDn();
+    }
     // Get the current user when the widget is initialized
   }
 
   @override
+  void dispose() {
+    listener!.cancel();
+    _listener.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    checkInternetC();
-    if (user != null) {
-      try {
-        final usr = firebaseFirestore.collection("users").doc(user?.uid);
-        usr.get().then(
-          (DocumentSnapshot doc) {
-            final data = doc.data() as Map<String, dynamic>;
-            setState(() {
-              displayN = data['name'];
-            });
-
-            // ...
-          },
-          onError: (e) => print("Error getting document: $e"),
-        );
-      } catch (e) {
-        print("Error trying : $e");
-      }
-    }
-
-    // print(user);
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
