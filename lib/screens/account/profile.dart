@@ -19,6 +19,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+  final _formKey = GlobalKey<FormState>();
+
   final firebaseAuth = FirebaseAuth.instance;
   final firebaseFirestore = FirebaseFirestore.instance;
 
@@ -27,6 +29,16 @@ class _ProfileState extends State<Profile> {
   String? displayN;
   String? email;
   String? img;
+
+  String? dl;
+
+  final delacc = TextEditingController();
+  final dlfn = FocusNode();
+
+  String? ps;
+
+  final passw = TextEditingController();
+  final psfn = FocusNode();
 
   void fetchUserData() {
     try {
@@ -46,6 +58,50 @@ class _ProfileState extends State<Profile> {
       );
     } catch (e) {
       print("Error trying : $e");
+    }
+  }
+
+  void deleteAccount(String email, String passw) async {
+    // try {
+    User? user = FirebaseAuth.instance.currentUser;
+    //   final user?.delete();
+    // } catch (e) {
+    //   print("Error trying : $e");
+    // }
+    if (user != null) {
+      try {
+        // Re-authenticate the user
+
+        AuthCredential credential = EmailAuthProvider.credential(
+          email: email,
+          // email: user.email!,
+          password: passw, // You need to get this from the user
+        );
+
+        await user.reauthenticateWithCredential(credential);
+
+        // Delete the user
+        await user.delete();
+
+        // Show confirmation or navigate to another screen
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("User account deleted successfully")),
+        );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'requires-recent-login') {
+          // Prompt the user to re-authenticate
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+                content:
+                    Text("Please re-authenticate to delete your account.")),
+          );
+        } else {
+          // Handle other errors
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text("Error deleting account: ${e.message}")),
+          );
+        }
+      }
     }
   }
 
@@ -722,262 +778,299 @@ class _ProfileState extends State<Profile> {
               ),
               // color: Colors.white,
               width: MediaQuery.sizeOf(context).width * 1.0,
-              height: MediaQuery.sizeOf(context).height * 0.55,
+              // height: MediaQuery.sizeOf(context).height * 0.80,
+              height: MediaQuery.sizeOf(context).height * 0.80,
               child: Container(
                 padding: const EdgeInsets.all(20),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 20.0, 0.0, 20.0),
-                      child: Text(
-                        'Delete your Eatup Account?',
-                        style: GoogleFonts.readexPro(
-                          textStyle: Theme.of(context).textTheme.labelMedium,
-                          fontSize: 14.0,
-                          letterSpacing: 0.0,
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 327.0,
-                      height: 70.0,
-                      padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(0.0),
-                        border: Border.all(
-                          color: const Color(0xFFDF8612),
-                          width: 2.0,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(),
-                            child: const FaIcon(
-                              FontAwesomeIcons.triangleExclamation,
-                              color: Color(0xFFDF8612),
-                              size: 24.0,
-                            ),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 20.0),
+                        child: Text(
+                          'Delete your Eatup Account?',
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.labelMedium,
+                            fontSize: 14.0,
+                            letterSpacing: 0.0,
                           ),
-                          SizedBox(
-                            width: 286.0,
-                            child: Container(
+                        ),
+                      ),
+                      Container(
+                        width: 327.0,
+                        height: 70.0,
+                        padding: const EdgeInsets.all(5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(0.0),
+                          border: Border.all(
+                            color: const Color(0xFFDF8612),
+                            width: 2.0,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
                               decoration: const BoxDecoration(),
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 10.0, 0.0, 0.0),
-                              child: Text(
-                                'You can\'t undo this action, your data will be removed permanently',
-                                textAlign: TextAlign.center,
-                                style: GoogleFonts.readexPro(
-                                    textStyle:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                    fontSize: 14.0,
-                                    letterSpacing: 0.0,
-                                    color: const Color(0xFFDF8612)),
+                              child: const FaIcon(
+                                FontAwesomeIcons.triangleExclamation,
+                                color: Color(0xFFDF8612),
+                                size: 24.0,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 315.0,
-                      height: 100.0,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 10.0, 0.0, 0.0),
-                        child: Text(
-                          'Your account ${email ?? 'Email'}, any existing businesses, business employees and saved products will be deleted permanently',
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            fontSize: 14.0,
-                            letterSpacing: 0.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 4.0),
-                        child: Text(
-                          'Enter your Email to confirm',
-                          textAlign: TextAlign.start,
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            fontSize: 14.0,
-                            letterSpacing: 0.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 15.0),
-                        child: Container(
-                          width: MediaQuery.sizeOf(context).width * 1.0,
-                          child: TextFormField(
-                            // controller: _model.textController,
-                            // focusNode: _model.textFieldFocusNode,
-                            autofocus: false,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelStyle: GoogleFonts.readexPro(
-                                textStyle:
-                                    Theme.of(context).textTheme.labelMedium,
-                                fontSize: 14.0,
-                                letterSpacing: 0.0,
-                              ),
-                              alignLabelWithHint: false,
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.grey,
-                                  width: 2.0,
+                            SizedBox(
+                              width: 286.0,
+                              child: Container(
+                                decoration: const BoxDecoration(),
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 10.0, 0.0, 0.0),
+                                child: Text(
+                                  'You can\'t undo this action, your data will be removed permanently',
+                                  textAlign: TextAlign.center,
+                                  style: GoogleFonts.readexPro(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      fontSize: 14.0,
+                                      letterSpacing: 0.0,
+                                      color: const Color(0xFFDF8612)),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.green,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.red,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                  color: Colors.red,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 315.0,
+                        height: 100.0,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 10.0, 0.0, 0.0),
+                          child: Text(
+                            'Your account ${email ?? 'Email'}, any existing businesses, business employees and saved products will be deleted permanently',
+                            textAlign: TextAlign.center,
                             style: GoogleFonts.readexPro(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               fontSize: 14.0,
                               letterSpacing: 0.0,
                             ),
-                            // validator: _model.textControllerValidator.asValidator(context),
                           ),
                         ),
                       ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      // mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Expanded(
-                          child: Container(
-                            width: 50.0,
-                            // height: 40.0,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  25.0, 20.0, 25.0, 20.0),
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  shape: WidgetStatePropertyAll(
-                                    RoundedRectangleBorder(
-                                      side: const BorderSide(
-                                        color: Color(0xFFE10E0E),
-                                      ),
-                                      borderRadius: BorderRadius.circular(12.0),
-                                    ),
-                                  ),
-                                  elevation: const WidgetStatePropertyAll(3.0),
-                                  backgroundColor: const WidgetStatePropertyAll(
-                                      Colors.white),
-                                ),
-                                onPressed: () async {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  'Back',
-                                  style: GoogleFonts.readexPro(
-                                    textStyle:
-                                        Theme.of(context).textTheme.titleSmall,
-                                    color: const Color(0xFFE10E0E),
-                                    letterSpacing: 0.0,
-                                  ),
-                                ),
-                              ),
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 4.0),
+                          child: Text(
+                            'Enter your Email to confirm',
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.readexPro(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontSize: 14.0,
+                              letterSpacing: 0.0,
                             ),
                           ),
                         ),
-                        Expanded(
+                      ),
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 15.0),
                           child: Container(
-                            width: 50.0,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  25.0, 20.0, 25.0, 20.0),
-                              child: SizedBox(
-                                width: 150.0,
-                                height: 40.0,
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            child: TextFormField(
+                              controller: delacc,
+                              focusNode: dlfn,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelStyle: GoogleFonts.readexPro(
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelMedium,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.0,
+                                ),
+                                alignLabelWithHint: false,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.red,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.red,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                fontSize: 14.0,
+                                letterSpacing: 0.0,
+                              ),
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return "Fill in Email";
+                                }
+                                return null;
+                              },
+                              onSaved: (nval) {
+                                dl = nval!;
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 4.0),
+                          child: Text(
+                            'Enter your Password',
+                            textAlign: TextAlign.start,
+                            style: GoogleFonts.readexPro(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              fontSize: 14.0,
+                              letterSpacing: 0.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 15.0),
+                          child: Container(
+                            width: MediaQuery.sizeOf(context).width * 1.0,
+                            child: TextFormField(
+                              controller: passw,
+                              focusNode: psfn,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelStyle: GoogleFonts.readexPro(
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelMedium,
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.0,
+                                ),
+                                alignLabelWithHint: false,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.red,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.red,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                fontSize: 14.0,
+                                letterSpacing: 0.0,
+                              ),
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return "Fill in Paasword";
+                                }
+                                return null;
+                              },
+                              onSaved: (nval) {
+                                ps = nval!;
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        // mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              width: 50.0,
+                              // height: 40.0,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    25.0, 20.0, 25.0, 20.0),
                                 child: ElevatedButton(
                                   style: ButtonStyle(
                                     shape: WidgetStatePropertyAll(
                                       RoundedRectangleBorder(
+                                        side: const BorderSide(
+                                          color: Color(0xFFE10E0E),
+                                        ),
                                         borderRadius:
                                             BorderRadius.circular(12.0),
                                       ),
                                     ),
                                     elevation:
                                         const WidgetStatePropertyAll(3.0),
-                                    backgroundColor: const WidgetStatePropertyAll(
-                                        // rname.text != '' &&
-                                        //         stradd.text != '' &&
-                                        //         details.text != '' &&
-                                        //         number.text != '' &&
-                                        //         zip.text != '' &&
-                                        //         gender.text != '-Select-' &&
-                                        //         country.text != '' &&
-                                        //         state.text != '' &&
-                                        //         city.text != ''
-                                        //     ? const Color(0xFFE10E0E)
-                                        //     :
-                                        Colors.grey),
+                                    backgroundColor:
+                                        const WidgetStatePropertyAll(
+                                            Colors.white),
                                   ),
                                   onPressed: () async {
-                                    // if (_formKey.currentState!.validate()) {
-                                    //   _formKey.currentState!.save();
-                                    //   AdAdres(
-                                    //     rn,
-                                    //     stret,
-                                    //     dt!,
-                                    //     no,
-                                    //     zp!,
-                                    //     gd,
-                                    //     country.text,
-                                    //     state.text,
-                                    //     city.text,
-                                    //   );
-                                    //   //   // upload to firebase
-                                    // }
+                                    Navigator.of(context).pop();
                                   },
                                   child: Text(
-                                    'Delete',
+                                    'Back',
                                     style: GoogleFonts.readexPro(
                                       textStyle: Theme.of(context)
                                           .textTheme
                                           .titleSmall,
-                                      color: Colors.white,
+                                      color: const Color(0xFFE10E0E),
                                       letterSpacing: 0.0,
                                     ),
                                   ),
@@ -985,10 +1078,56 @@ class _ProfileState extends State<Profile> {
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                          Expanded(
+                            child: Container(
+                              width: 50.0,
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    25.0, 20.0, 25.0, 20.0),
+                                child: SizedBox(
+                                  width: 150.0,
+                                  height: 40.0,
+                                  child: ElevatedButton(
+                                    style: ButtonStyle(
+                                      shape: WidgetStatePropertyAll(
+                                        RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                      ),
+                                      elevation:
+                                          const WidgetStatePropertyAll(3.0),
+                                      backgroundColor: WidgetStatePropertyAll(
+                                          delacc.text != '' && passw.text != ''
+                                              ? const Color(0xFFE10E0E)
+                                              : Colors.grey),
+                                    ),
+                                    onPressed: () async {
+                                      if (_formKey.currentState!.validate()) {
+                                        _formKey.currentState!.save();
+                                        deleteAccount(dl!, ps!);
+                                        //   //   // del account from firebase
+                                      }
+                                    },
+                                    child: Text(
+                                      'Delete',
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                        color: Colors.white,
+                                        letterSpacing: 0.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
