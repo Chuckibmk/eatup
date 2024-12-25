@@ -46,8 +46,24 @@ class _LoginState extends State<Login> {
       UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password)
           .timeout(const Duration(seconds: 10));
-      //     if (userCredential.user.isEmailVerified) return userCredential.user.uid;
-      // return null;
+      if (userCredential.user!.emailVerified != true) {
+        try {
+          await userCredential.user!.sendEmailVerification();
+          if (mounted) {
+            showErrorToast(
+                context: context,
+                message: 'Email not Verified, Verification link sent');
+          }
+        } catch (e) {
+          if (mounted) {
+            showErrorToast(
+                context: context,
+                message:
+                    'An error occured while trying to send email verification');
+          }
+        }
+        return;
+      }
       // Update Firestore with last login timestamp
       if (userCredential.user != null) {
         firebaseFirestore

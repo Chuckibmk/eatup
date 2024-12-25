@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -299,39 +300,39 @@ class _ResetPState extends State<ResetP> {
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0.0, 10.0, 0.0, 30.0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            Get.toNamed(login);
-                                          },
-                                          child: RichText(
-                                            textScaler: MediaQuery.of(context)
-                                                .textScaler,
-                                            text: TextSpan(
-                                              children: [
-                                                const TextSpan(
-                                                  text: 'Remember Password?',
-                                                  style: TextStyle(),
-                                                ),
-                                                TextSpan(
-                                                  text: 'Sign In',
-                                                  style: GoogleFonts.readexPro(
-                                                    letterSpacing: 0.0,
-                                                    textStyle: Theme.of(context)
-                                                        .textTheme
-                                                        .bodyMedium,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
-                                                    color:
-                                                        const Color(0xFFE10E0E),
-                                                  ),
-                                                ),
-                                              ],
-                                              style: GoogleFonts.readexPro(
-                                                letterSpacing: 0.0,
-                                                textStyle: Theme.of(context)
-                                                    .textTheme
-                                                    .bodyMedium,
+                                        child: RichText(
+                                          textScaler:
+                                              MediaQuery.of(context).textScaler,
+                                          text: TextSpan(
+                                            children: [
+                                              const TextSpan(
+                                                text: 'Remember Password?',
+                                                style: TextStyle(),
                                               ),
+                                              TextSpan(
+                                                recognizer:
+                                                    TapGestureRecognizer()
+                                                      ..onTap = () {
+                                                        Get.toNamed(login);
+                                                      },
+                                                text: 'Sign In',
+                                                style: GoogleFonts.readexPro(
+                                                  letterSpacing: 0.0,
+                                                  textStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium,
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.bold,
+                                                  color:
+                                                      const Color(0xFFE10E0E),
+                                                ),
+                                              ),
+                                            ],
+                                            style: GoogleFonts.readexPro(
+                                              letterSpacing: 0.0,
+                                              textStyle: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyMedium,
                                             ),
                                           ),
                                         ),
