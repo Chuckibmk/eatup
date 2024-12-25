@@ -93,6 +93,13 @@ class _RegisterState extends State<Register> {
           showWarningToast(context: context, message: 'Other Issues');
         }
       }
+      //   try {
+      //     await userCredential.user.sendEmailVerification();
+      //     return userCredential.user.uid;
+      //  } catch (e) {
+      //     print("An error occured while trying to send email        verification");
+      //     print(e.message);
+      //  }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
         showErrorToast(context: context, message: e.toString());

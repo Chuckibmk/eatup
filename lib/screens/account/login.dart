@@ -46,6 +46,8 @@ class _LoginState extends State<Login> {
       UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password)
           .timeout(const Duration(seconds: 10));
+      //     if (userCredential.user.isEmailVerified) return userCredential.user.uid;
+      // return null;
       // Update Firestore with last login timestamp
       if (userCredential.user != null) {
         firebaseFirestore
@@ -486,30 +488,35 @@ class _LoginState extends State<Login> {
                                       child: Padding(
                                         padding: const EdgeInsetsDirectional
                                             .fromSTEB(0.0, 0.0, 0.0, 30.0),
-                                        child: RichText(
-                                          textScaler:
-                                              MediaQuery.of(context).textScaler,
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: 'Forgot your password',
-                                                style: GoogleFonts.readexPro(
-                                                  letterSpacing: 0.0,
-                                                  textStyle: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium,
-                                                  fontSize: 12,
-                                                  fontWeight: FontWeight.bold,
-                                                  color:
-                                                      const Color(0xFFE10E0E),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(resetp);
+                                          },
+                                          child: RichText(
+                                            textScaler: MediaQuery.of(context)
+                                                .textScaler,
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: 'Forgot your password',
+                                                  style: GoogleFonts.readexPro(
+                                                    letterSpacing: 0.0,
+                                                    textStyle: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium,
+                                                    fontSize: 12,
+                                                    fontWeight: FontWeight.bold,
+                                                    color:
+                                                        const Color(0xFFE10E0E),
+                                                  ),
                                                 ),
+                                              ],
+                                              style: GoogleFonts.readexPro(
+                                                letterSpacing: 0.0,
+                                                textStyle: Theme.of(context)
+                                                    .textTheme
+                                                    .bodyMedium,
                                               ),
-                                            ],
-                                            style: GoogleFonts.readexPro(
-                                              letterSpacing: 0.0,
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium,
                                             ),
                                           ),
                                         ),

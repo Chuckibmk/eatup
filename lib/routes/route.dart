@@ -2,6 +2,7 @@ import 'package:eatup/screens/account/adAdress.dart';
 import 'package:eatup/screens/account/editprofile.dart';
 import 'package:eatup/screens/account/kyc.dart';
 import 'package:eatup/screens/account/login.dart';
+import 'package:eatup/screens/account/forgotpassword.dart';
 import 'package:eatup/screens/account/notifications.dart';
 import 'package:eatup/screens/account/payments.dart';
 import 'package:eatup/screens/account/profile.dart';
@@ -39,6 +40,11 @@ List<GetPage> getPage = [
   GetPage(
     name: login,
     page: () => const Login(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: resetp,
+    page: () => const ResetP(),
     transition: Transition.cupertino,
   ),
   GetPage(
