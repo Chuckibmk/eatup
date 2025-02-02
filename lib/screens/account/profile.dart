@@ -640,7 +640,8 @@ class _ProfileState extends State<Profile> {
                                         const Size.square(30.0)),
                                   ),
                                   onPressed: () async {
-                                    // Navigator.pop(context);
+                                    // showForgotDialog(context);
+                                    Get.toNamed(changep);
                                   },
                                   icon: const Icon(
                                     Icons.vpn_key,
@@ -698,7 +699,6 @@ class _ProfileState extends State<Profile> {
                                         const Size.square(30.0)),
                                   ),
                                   onPressed: () async {
-                                    // Navigator.pop(context);
                                     showDeleteDialog(context);
                                   },
                                   icon: const Icon(
@@ -762,7 +762,6 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  // Widget del() {
   void showDeleteDialog(BuildContext context) {
     showDialog(
         context: context,

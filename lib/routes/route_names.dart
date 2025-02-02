@@ -16,3 +16,4 @@ String profile = '/profile';
 String settings = '/settings';
 String edit = '/editprofile';
 String adadd = '/adadd';
+String changep = '/changep';
