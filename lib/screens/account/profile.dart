@@ -350,7 +350,7 @@ class _ProfileState extends State<Profile> {
                                   ),
                                   onPressed: () async {
                                     // Navigator.pop(context);
-                                    Get.toNamed(adadd);
+                                    Get.toNamed(address);
                                   },
                                   icon: const FaIcon(
                                     FontAwesomeIcons.locationDot,
