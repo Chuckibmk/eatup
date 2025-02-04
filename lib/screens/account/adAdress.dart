@@ -93,6 +93,14 @@ class _AdAddState extends State<AdAdd> {
           'City': city,
           'lastAddress': FieldValue.serverTimestamp()
         }).then((_) {
+          firebaseFirestore
+              .collection('users')
+              .doc(user.uid)
+              .collection('userInfo')
+              .doc('address')
+              .set({
+            'uqidList': FieldValue.arrayUnion([uqid])
+          }, SetOptions(merge: true));
           print('Address Updated.');
           if (mounted) {
             showSuccessToast(

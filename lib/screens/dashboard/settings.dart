@@ -13,6 +13,17 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  List<List<dynamic>> setngs = [
+    [
+      'Privacy Policy',
+      'Learn how we manage your data',
+      null,
+    ],
+    ['Help Centre', 'Contact support', help],
+    ['FAQs', 'Learn more', null]
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,190 +102,93 @@ class _SettingsState extends State<Settings> {
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: 71.0,
-                      decoration: const BoxDecoration(color: Colors.white),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: MediaQuery.sizeOf(context).width * 0.68,
-                            height: MediaQuery.sizeOf(context).height * 1.0,
-                            decoration: const BoxDecoration(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(-1.0, 0.0),
-                                  child: Text(
-                                    'Privacy Policy',
-                                    style: GoogleFonts.readexPro(
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16,
-                                    ),
+                  ListView.builder(
+                      shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemCount: setngs.length,
+                      itemBuilder: (context, index) {
+                        var st = setngs[index];
+                        return Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(st[2]);
+                                },
+                                child: Container(
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  height: 71.0,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width:
+                                            MediaQuery.sizeOf(context).width *
+                                                0.68,
+                                        height:
+                                            MediaQuery.sizeOf(context).height *
+                                                1.0,
+                                        decoration: const BoxDecoration(),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      -1.0, 0.0),
+                                              child: Text(
+                                                st[0],
+                                                // '',
+                                                style: GoogleFonts.readexPro(
+                                                  fontSize: 16,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      -1.0, 0.0),
+                                              child: Text(
+                                                st[1],
+                                                // '',
+                                                style: GoogleFonts.readexPro(
+                                                  fontSize: 12,
+                                                  letterSpacing: 0.0,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.arrow_forward_ios_sharp,
+                                        color: Color(0xFFE10E0E),
+                                        size: 24.0,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(-1.0, 0.0),
-                                  child: Text(
-                                    'Learn how we manage your data',
-                                    style: GoogleFonts.readexPro(
-                                      letterSpacing: 0.0,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Icon(
-                            Icons.arrow_forward_ios_sharp,
-                            color: Color(0xFFE10E0E),
-                            size: 24.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(
-                    thickness: 1.0,
-                    color: Color(0XFF57636c),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        Get.toNamed(help);
-                      },
-                      child: Container(
-                        width: MediaQuery.sizeOf(context).width * 1.0,
-                        height: 71.0,
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: MediaQuery.sizeOf(context).width * 0.68,
-                              height: MediaQuery.sizeOf(context).height * 1.0,
-                              decoration: const BoxDecoration(),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  Align(
-                                    alignment:
-                                        const AlignmentDirectional(-1.0, 0.0),
-                                    child: Text(
-                                      'Help Centre',
-                                      style: GoogleFonts.readexPro(
-                                        fontSize: 16,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment:
-                                        const AlignmentDirectional(-1.0, 0.0),
-                                    child: Text(
-                                      'Contact support',
-                                      style: GoogleFonts.readexPro(
-                                        fontSize: 12,
-                                        letterSpacing: 0.0,
-                                      ),
-                                    ),
-                                  ),
-                                ],
                               ),
-                            ),
-                            const Icon(
-                              Icons.arrow_forward_ios_sharp,
-                              color: Color(0xFFE10E0E),
-                              size: 24.0,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Divider(
-                    thickness: 1.0,
-                    color: Color(0XFF57636c),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Container(
-                      width: MediaQuery.sizeOf(context).width * 1.0,
-                      height: 71.0,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            width: MediaQuery.sizeOf(context).width * 0.68,
-                            height: MediaQuery.sizeOf(context).height * 1.0,
-                            decoration: const BoxDecoration(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(-1.0, 0.0),
-                                  child: Text(
-                                    'FAQs',
-                                    style: GoogleFonts.readexPro(
-                                      fontSize: 16,
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(-1.0, 0.0),
-                                  child: Text(
-                                    'Learn more',
-                                    style: GoogleFonts.readexPro(
-                                      fontSize: 12,
-                                      letterSpacing: 0.0,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                              const Divider(
+                                thickness: 1.0,
+                                color: Color(0XFF57636c),
+                              ),
+                            ],
                           ),
-                          const Icon(
-                            Icons.arrow_forward_ios_sharp,
-                            color: Color(0xFFE10E0E),
-                            size: 24.0,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const Divider(
-                    thickness: 1.0,
-                    color: Color(0XFF57636c),
-                  ),
+                        );
+                      }),
                   Align(
                     alignment: const AlignmentDirectional(0.0, 1.0),
                     child: Padding(
