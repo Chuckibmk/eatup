@@ -55,6 +55,8 @@ class _AdAddState extends State<AdAdd> {
 
   bool _progress = false;
 
+  User? user;
+
   Future<void> AdAdres(
     String? rname,
     String? street,
@@ -128,6 +130,55 @@ class _AdAddState extends State<AdAdd> {
         _progress = false;
       });
     }
+  }
+
+  List<Map<String, dynamic>> addresses = [];
+
+  void fetchAddress(String uqid) async {
+    try {
+      final addressRef = firebaseFirestore
+          .collection("users")
+          .doc(user!.uid)
+          .collection('userInfo')
+          .doc('address')
+          .collection(uqid)
+          .doc(uqid);
+      addressRef.get().then(
+        (DocumentSnapshot doc) {
+          final data = doc.data() as Map<String, dynamic>;
+          setState(() {
+            rname.text = data['RecipientName'];
+            stradd.text = data['street'];
+            details.text = data['details'];
+            number.text = data['PhoneNumber'];
+            zip.text = data['ZIP'];
+            country.text = data['Argentina'];
+            state.text = data['State'];
+            city.text = data['City'];
+          });
+
+          // ...
+        },
+        onError: (e) => print("Error getting document: $e"),
+      );
+    } catch (e) {
+      print("Error fetching address: $e");
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    user = firebaseAuth.currentUser;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      var data = Get.arguments;
+      if (data != null && data['AdUID'] != null) {
+        fetchAddress(data['AdUID']); // Ensures `uqid` is not null
+      } else {
+        print("Error: AdUID is missing or null");
+      }
+    });
   }
 
   @override
@@ -847,6 +898,7 @@ class _AdAddState extends State<AdAdd> {
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
+                                          // if()
                                           AdAdres(
                                             rn,
                                             stret,

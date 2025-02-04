@@ -232,7 +232,9 @@ class _AddressState extends State<Address> {
                                         children: [
                                           GestureDetector(
                                             onTap: () {
-                                              // Get.toNamed(st[2]);
+                                              Get.toNamed(adadd, arguments: {
+                                                "AdUID": ad['uniqueID']
+                                              });
                                             },
                                             child: Container(
                                               width: MediaQuery.sizeOf(context)
@@ -340,8 +342,9 @@ class _AddressState extends State<Address> {
                                       ),
                                       elevation:
                                           const WidgetStatePropertyAll(3.0),
-                                      backgroundColor: WidgetStatePropertyAll(
-                                          const Color(0xFFE10E0E)),
+                                      backgroundColor:
+                                          const WidgetStatePropertyAll(
+                                              Color(0xFFE10E0E)),
                                     ),
                                     onPressed: () async {
                                       Get.toNamed(adadd);
