@@ -59,9 +59,9 @@ class _AdAddState extends State<AdAdd> {
   Future<void> saveAddress(
     String? rname,
     String? street,
-    String details,
+    String? details,
     String? no,
-    String zip,
+    String? zip,
     String hood,
     String contry,
     String state,
@@ -85,18 +85,29 @@ class _AdAddState extends State<AdAdd> {
           .collection(uqid);
 
       final Map<String, dynamic> addressData = {
-        'uniqueID': uqid,
-        'RecipientName': rname,
-        'street': street,
-        'details': details,
-        'PhoneNumber': no,
-        'ZIP': zip,
-        'area': hood,
-        'Country': country,
-        'State': state,
-        'City': city,
+        // 'uniqueID': uqid,
+        // 'RecipientName': rname,
+        // 'street': street,
+        // 'details': details,
+        // 'PhoneNumber': no,
+        // 'ZIP': zip,
+        // 'area': hood,
+        // 'Country': country,
+        // 'State': state,
+        // 'City': city,
+
+        'RecipientName': rname ?? "",
+        'street': street ?? "",
+        'details': details ?? "",
+        'PhoneNumber': no ?? "",
+        'ZIP': zip ?? "",
+        'area': hood.toString(),
+        'Country': contry.toString(),
+        'State': state.toString(),
+        'City': city.toString(),
         'lastAddressUpdate': FieldValue.serverTimestamp(),
       };
+      print("🔥 Address data before Firestore write: $addressData");
 
       // Save address data (merge to avoid overwriting existing fields)
       await addressCollection
@@ -132,7 +143,6 @@ class _AdAddState extends State<AdAdd> {
         showErrorToast(context: context, message: e.toString());
       }
     } catch (e) {
-      print('Address update failed: $e');
       if (mounted) {
         showErrorToast(context: context, message: 'Address update failed: $e');
       }
@@ -626,9 +636,9 @@ class _AdAddState extends State<AdAdd> {
                                           ),
                                         ),
                                         initialCountryCode: 'US',
-                                        onChanged: (phone) {
-                                          print(phone.completeNumber);
-                                        },
+                                        // onChanged: (phone) {
+                                        //   print(phone.completeNumber);
+                                        // },
                                         validator: (val) {
                                           if (val?.completeNumber != null) {
                                             return 'Fill in Phone Number';
@@ -920,9 +930,9 @@ class _AdAddState extends State<AdAdd> {
                                           saveAddress(
                                               rn,
                                               stret,
-                                              dt!,
+                                              dt,
                                               no,
-                                              zp!,
+                                              zp,
                                               sa,
                                               country.text,
                                               state.text,
