@@ -58,18 +58,18 @@ class _ChangePState extends State<ChangeP> {
           Get.toNamed(home);
         }).catchError((error) {
           if (mounted) {
-            showSuccessToast(context: context, message: 'Update Failed $error');
+            showErrorToast(context: context, message: 'Update Failed $error');
           }
         });
       } else {
         if (mounted) {
-          showSuccessToast(
+          showInfoToast(
               context: context, message: 'Sign In to Update Password');
         }
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
-        showSuccessToast(context: context, message: e.toString());
+        showErrorToast(context: context, message: e.toString());
       }
     } finally {
       setState(() {

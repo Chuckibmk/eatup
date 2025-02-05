@@ -78,7 +78,7 @@ void showWarningToast({
         child: child,
       );
     },
-    icon: const Icon(Icons.check),
+    icon: const Icon(Icons.warning),
     showIcon: true, // show or hide the icon
     primaryColor: Colors.orange,
     backgroundColor: Colors.white,
@@ -129,7 +129,7 @@ void showErrorToast({
         child: child,
       );
     },
-    icon: const Icon(Icons.check),
+    icon: const Icon(Icons.error),
     showIcon: true, // show or hide the icon
     primaryColor: Colors.red,
     backgroundColor: Colors.white,
@@ -180,7 +180,7 @@ void showInfoToast({
         child: child,
       );
     },
-    icon: const Icon(Icons.check),
+    icon: const Icon(Icons.info),
     showIcon: true, // show or hide the icon
     primaryColor: Colors.blue,
     backgroundColor: Colors.white,

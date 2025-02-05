@@ -44,10 +44,7 @@ class _AdAddState extends State<AdAdd> {
   final zip = TextEditingController();
   final zpfn = FocusNode();
 
-  var gd = "-Select-";
-  final gender = TextEditingController();
-  final gdfn = FocusNode();
-
+  var sa = "-Select-";
   List<String> items = ["-Select-", "Estate", "Town", "City", "Village"];
 
   final firebaseAuth = FirebaseAuth.instance;
@@ -73,8 +70,7 @@ class _AdAddState extends State<AdAdd> {
   ) async {
     if (user == null) {
       if (mounted) {
-        showSuccessToast(
-            context: context, message: 'Sign in to update address');
+        showInfoToast(context: context, message: 'Sign in to update address');
       }
       return;
     }
@@ -131,13 +127,14 @@ class _AdAddState extends State<AdAdd> {
         Get.toNamed(address);
       }
     } on FirebaseAuthException catch (e) {
+      print('Address update failed: $e');
       if (mounted) {
-        showSuccessToast(context: context, message: e.toString());
+        showErrorToast(context: context, message: e.toString());
       }
     } catch (e) {
+      print('Address update failed: $e');
       if (mounted) {
-        showSuccessToast(
-            context: context, message: 'Address update failed: $e');
+        showErrorToast(context: context, message: 'Address update failed: $e');
       }
     } finally {
       setState(() {
@@ -176,10 +173,10 @@ class _AdAddState extends State<AdAdd> {
         details.text = data['details'] ?? '';
         number.text = data['PhoneNumber'] ?? '';
         zip.text = data['ZIP'] ?? '';
-        country.text =
-            data['Country'] ?? ''; // Fixed key from 'Argentina' to 'Country'
+        country.text = data['Country'] ?? '';
         state.text = data['State'] ?? '';
         city.text = data['City'] ?? '';
+        sa = data['area'] ?? '';
         adid = data['uniqueID'] ?? '';
       });
     } catch (e) {
@@ -845,10 +842,10 @@ class _AdAddState extends State<AdAdd> {
                                             child: Text(items),
                                           );
                                         }).toList(),
-                                        value: gd,
+                                        value: sa,
                                         onChanged: (value) {
                                           setState(() {
-                                            gd = value!;
+                                            sa = value!;
                                           });
                                         },
                                         hint: const Text('-Select-'),
@@ -909,7 +906,7 @@ class _AdAddState extends State<AdAdd> {
                                                     details.text != '' &&
                                                     number.text != '' &&
                                                     zip.text != '' &&
-                                                    gender.text != '-Select-' &&
+                                                    sa != '-Select-' &&
                                                     country.text != '' &&
                                                     state.text != '' &&
                                                     city.text != ''
@@ -926,7 +923,7 @@ class _AdAddState extends State<AdAdd> {
                                               dt!,
                                               no,
                                               zp!,
-                                              gd,
+                                              sa,
                                               country.text,
                                               state.text,
                                               city.text,
@@ -935,7 +932,7 @@ class _AdAddState extends State<AdAdd> {
                                         }
                                       },
                                       child: Text(
-                                        'Submit',
+                                        adid == null ? 'Submit' : 'Update',
                                         style: GoogleFonts.readexPro(
                                           textStyle: Theme.of(context)
                                               .textTheme

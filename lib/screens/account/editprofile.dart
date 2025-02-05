@@ -102,18 +102,17 @@ class _EditprofileState extends State<Editprofile> {
         }).catchError((error) {
           print('Profile Failed: $error');
           if (mounted) {
-            showSuccessToast(context: context, message: 'Update Failed $error');
+            showErrorToast(context: context, message: 'Update Failed $error');
           }
         });
       } else {
         if (mounted) {
-          showSuccessToast(
-              context: context, message: 'Sign In to Update Profile');
+          showInfoToast(context: context, message: 'Sign In to Update Profile');
         }
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
-        showSuccessToast(context: context, message: e.toString());
+        showErrorToast(context: context, message: e.toString());
       }
     } finally {
       setState(() {

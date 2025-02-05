@@ -86,13 +86,12 @@ class _RegisterState extends State<Register> {
         try {
           await userCredential.user!.sendEmailVerification();
           if (mounted) {
-            showSuccessToast(
-                context: context, message: 'Verify Email to signin');
+            showInfoToast(context: context, message: 'Verify Email to signin');
           }
           Get.toNamed(login);
         } catch (e) {
           if (mounted) {
-            showSuccessToast(
+            showErrorToast(
                 context: context,
                 message:
                     'An error occured while trying to send email verification: ${e}');

@@ -82,7 +82,7 @@ class _LoginState extends State<Login> {
         Get.toNamed(home);
       } else {
         if (mounted) {
-          showSuccessToast(context: context, message: 'Other Issues');
+          showInfoToast(context: context, message: 'Other Issues');
         }
       }
     } on FirebaseAuthException catch (e) {

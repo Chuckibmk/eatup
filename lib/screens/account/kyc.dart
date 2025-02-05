@@ -103,17 +103,17 @@ class _KYCState extends State<KYC> {
         }).catchError((error) {
           print('KYC Failed: $error');
           if (mounted) {
-            showSuccessToast(context: context, message: 'KYC Failed $error');
+            showErrorToast(context: context, message: 'KYC Failed $error');
           }
         });
       } else {
         if (mounted) {
-          showSuccessToast(context: context, message: 'Sign In to Request KYC');
+          showInfoToast(context: context, message: 'Sign In to Request KYC');
         }
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
-        showSuccessToast(context: context, message: e.toString());
+        showErrorToast(context: context, message: e.toString());
       }
     } finally {
       setState(() {
