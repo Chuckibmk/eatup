@@ -57,7 +57,9 @@ class _AdAddState extends State<AdAdd> {
 
   User? user;
 
-  Future<void> AdAdres(
+  String? adid;
+
+  Future<void> saveAddress(
     String? rname,
     String? street,
     String details,
@@ -67,63 +69,75 @@ class _AdAddState extends State<AdAdd> {
     String contry,
     String state,
     String city,
+    String? adid,
   ) async {
-    setState(() {
-      _progress = true;
-    });
+    if (user == null) {
+      if (mounted) {
+        showSuccessToast(
+            context: context, message: 'Sign in to update address');
+      }
+      return;
+    }
+    setState(() => _progress = true);
     try {
-      User? user = firebaseAuth.currentUser;
-      var uqid = const Uuid().v4();
-      if (user != null) {
-        firebaseFirestore
+      final String uqid = adid ?? const Uuid().v4();
+      final CollectionReference addressCollection = firebaseFirestore
+          .collection('users')
+          .doc(user!.uid)
+          .collection('userInfo')
+          .doc('address')
+          .collection(uqid);
+
+      final Map<String, dynamic> addressData = {
+        'uniqueID': uqid,
+        'RecipientName': rname,
+        'street': street,
+        'details': details,
+        'PhoneNumber': no,
+        'ZIP': zip,
+        'area': hood,
+        'Country': country,
+        'State': state,
+        'City': city,
+        'lastAddressUpdate': FieldValue.serverTimestamp(),
+      };
+
+      // Save address data (merge to avoid overwriting existing fields)
+      await addressCollection
+          .doc(uqid)
+          .set(addressData, SetOptions(merge: true));
+
+      // If it's a new address, add the ID to the user's address list
+      if (adid == null) {
+        await firebaseFirestore
             .collection('users')
-            .doc(user.uid)
+            .doc(user!.uid)
             .collection('userInfo')
             .doc('address')
-            .collection(uqid)
-            .doc(uqid)
             .set({
-          'uniqueID': uqid,
-          'RecipientName': rname,
-          'street': street,
-          'details': details,
-          'PhoneNumber': no,
-          'ZIP': zip,
-          'area': hood,
-          'Country': contry,
-          'State': state,
-          'City': city,
-          'lastAddress': FieldValue.serverTimestamp()
-        }).then((_) {
-          firebaseFirestore
-              .collection('users')
-              .doc(user.uid)
-              .collection('userInfo')
-              .doc('address')
-              .set({
-            'uqidList': FieldValue.arrayUnion([uqid])
-          }, SetOptions(merge: true));
-          print('Address Updated.');
-          if (mounted) {
-            showSuccessToast(
-                context: context, message: 'Address Updated! ${user.email}');
-          }
-          Get.toNamed(home);
-        }).catchError((error) {
-          print('Profile Failed: $error');
-          if (mounted) {
-            showSuccessToast(context: context, message: 'Update Failed $error');
-          }
-        });
+          'uqidList': FieldValue.arrayUnion([uqid])
+        }, SetOptions(merge: true));
+
+        if (mounted) {
+          showSuccessToast(
+              context: context, message: 'New Address Added! ${user?.email}');
+        }
+        Get.toNamed(address);
       } else {
         if (mounted) {
           showSuccessToast(
-              context: context, message: 'Sign In to Update Address');
+              context: context, message: 'Address Updated! ${user?.email}');
         }
+        Get.toNamed(address);
       }
     } on FirebaseAuthException catch (e) {
       if (mounted) {
         showSuccessToast(context: context, message: e.toString());
+      }
+    } catch (e) {
+      if (mounted) {
+        showSuccessToast(
+            context: context, message: 'Address update failed: $e');
       }
     } finally {
       setState(() {
@@ -132,35 +146,42 @@ class _AdAddState extends State<AdAdd> {
     }
   }
 
-  List<Map<String, dynamic>> addresses = [];
-
-  void fetchAddress(String uqid) async {
+  Future<void> fetchAddress(String uqid) async {
     try {
-      final addressRef = firebaseFirestore
+      final docRef = firebaseFirestore
           .collection("users")
-          .doc(user!.uid)
+          .doc(user?.uid)
           .collection('userInfo')
           .doc('address')
           .collection(uqid)
           .doc(uqid);
-      addressRef.get().then(
-        (DocumentSnapshot doc) {
-          final data = doc.data() as Map<String, dynamic>;
-          setState(() {
-            rname.text = data['RecipientName'];
-            stradd.text = data['street'];
-            details.text = data['details'];
-            number.text = data['PhoneNumber'];
-            zip.text = data['ZIP'];
-            country.text = data['Argentina'];
-            state.text = data['State'];
-            city.text = data['City'];
-          });
 
-          // ...
-        },
-        onError: (e) => print("Error getting document: $e"),
-      );
+      final DocumentSnapshot doc = await docRef.get();
+
+      if (!doc.exists) {
+        print("No address found for ID: $uqid");
+        return;
+      }
+
+      final data = doc.data() as Map<String, dynamic>?;
+
+      if (data == null) {
+        print("Address data is null");
+        return;
+      }
+
+      setState(() {
+        rname.text = data['RecipientName'] ?? '';
+        stradd.text = data['street'] ?? '';
+        details.text = data['details'] ?? '';
+        number.text = data['PhoneNumber'] ?? '';
+        zip.text = data['ZIP'] ?? '';
+        country.text =
+            data['Country'] ?? ''; // Fixed key from 'Argentina' to 'Country'
+        state.text = data['State'] ?? '';
+        city.text = data['City'] ?? '';
+        adid = data['uniqueID'] ?? '';
+      });
     } catch (e) {
       print("Error fetching address: $e");
     }
@@ -898,18 +919,18 @@ class _AdAddState extends State<AdAdd> {
                                       onPressed: () async {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
-                                          // if()
-                                          AdAdres(
-                                            rn,
-                                            stret,
-                                            dt!,
-                                            no,
-                                            zp!,
-                                            gd,
-                                            country.text,
-                                            state.text,
-                                            city.text,
-                                          );
+
+                                          saveAddress(
+                                              rn,
+                                              stret,
+                                              dt!,
+                                              no,
+                                              zp!,
+                                              gd,
+                                              country.text,
+                                              state.text,
+                                              city.text,
+                                              adid);
                                           //   // upload to firebase
                                         }
                                       },
