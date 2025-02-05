@@ -104,7 +104,7 @@ class _SettingsState extends State<Settings> {
                 children: [
                   ListView.builder(
                       shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: setngs.length,
                       itemBuilder: (context, index) {
                         var st = setngs[index];
