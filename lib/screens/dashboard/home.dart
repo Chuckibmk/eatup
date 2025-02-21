@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/routes/route_names.dart';
@@ -9,6 +10,7 @@ import 'package:internet_connection_checker_plus/internet_connection_checker_plu
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -29,6 +31,37 @@ class _HomePageState extends State<HomePage> {
   User? user;
 
   String displayN = '';
+
+  Future<void> fetchData() async {
+    const String apiKey = "1234567"; // Replace with your actual API key
+    // const String jwtToken = "12345678";
+    const String url =
+        "https://eatup.globalchainlimited.com/data/api.php?endpoint=sections"; // Replace with your actual API URL
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-API-KEY': apiKey, // Include API key in the headers
+        },
+        // headers: {
+        //   'Content-Type': 'application/json',
+        //   'Authorization':
+        //       'Bearer $jwtToken', // Send JWT token in Authorization header
+        // },
+      );
+
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+        print("Data received: $data"); // Use the data as needed
+      } else {
+        print("Error: ${response.statusCode} - ${response.body}");
+      }
+    } catch (e) {
+      print('Network Error: $e');
+    }
+  }
 
   Future<void> logout() async {
     try {
@@ -106,6 +139,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     user = firebaseAuth.currentUser;
     checkInternetC();
+    fetchData();
     super.initState();
     if (user != null) {
       fetchDn();
