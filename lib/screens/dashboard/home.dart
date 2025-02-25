@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/routes/route_names.dart';
@@ -11,6 +12,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -32,34 +35,50 @@ class _HomePageState extends State<HomePage> {
 
   String displayN = '';
 
-  Future<void> fetchData() async {
-    const String apiKey = "1234567"; // Replace with your actual API key
-    // const String jwtToken = "12345678";
-    const String url =
-        "https://eatup.globalchainlimited.com/data/api.php?endpoint=sections"; // Replace with your actual API URL
+  late Future<List<Shop>> futureShops;
+
+  Future<List<Shop>> fetchData() async {
+    String jwtToken = dotenv.env['jwtToken'] ?? 'No API Key Found';
+    String apiKey = dotenv.env['API_KEY'] ?? 'No API Key Found';
+    String url = dotenv.env['urlShops'] ?? 'No API Key Found';
 
     try {
       final response = await http.get(
         Uri.parse(url),
         headers: {
           'Content-Type': 'application/json',
-          'X-API-KEY': apiKey, // Include API key in the headers
+          "X-API-KEY": apiKey, // 🔑 Add API Key in headers
+          'Authorization': 'Bearer $jwtToken',
         },
-        // headers: {
-        //   'Content-Type': 'application/json',
-        //   'Authorization':
-        //       'Bearer $jwtToken', // Send JWT token in Authorization header
-        // },
       );
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        print("Data received: $data"); // Use the data as needed
+        print("Data received: $data");
+
+        List<dynamic> shopsJson = data['data'];
+        return shopsJson.map((json) => Shop.fromJson(json)).toList();
+        // if (data['data'] != null) {
+        //   setState(() {
+        //     sections = (data['data'] as List)
+        //         .map((section) => Section.fromJson(section))
+        //         .toList();
+        //   });
+        // }
+        // Use the data as needed
       } else {
         print("Error: ${response.statusCode} - ${response.body}");
+        return [];
       }
+    } on SocketException {
+      print('Network Error: SocketException');
+      return [];
+    } on HttpException {
+      print('Network Error: HttpException');
+      return [];
     } catch (e) {
-      print('Network Error: $e');
+      print('Unknown Error: $e');
+      return [];
     }
   }
 
@@ -137,14 +156,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    user = firebaseAuth.currentUser;
-    checkInternetC();
-    fetchData();
     super.initState();
+    checkInternetC();
+    user = firebaseAuth.currentUser;
     if (user != null) {
       fetchDn();
     }
     // Get the current user when the widget is initialized
+    futureShops = fetchData();
   }
 
   @override
@@ -698,16 +717,21 @@ class _HomePageState extends State<HomePage> {
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 20.0, 0.0),
-                          child: RichText(
-                            textScaler: MediaQuery.of(context).textScaler,
-                            text: TextSpan(
-                              text: 'See All',
-                              style: GoogleFonts.readexPro(
-                                textStyle:
-                                    Theme.of(context).textTheme.bodyMedium,
-                                color: const Color(0xFFE10E0E),
-                                letterSpacing: 0.0,
-                                fontWeight: FontWeight.bold,
+                          child: GestureDetector(
+                            onTap: () {
+                              fetchData();
+                            },
+                            child: RichText(
+                              textScaler: MediaQuery.of(context).textScaler,
+                              text: TextSpan(
+                                text: 'See All',
+                                style: GoogleFonts.readexPro(
+                                  textStyle:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                  color: const Color(0xFFE10E0E),
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ),
@@ -716,88 +740,121 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ],
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Get.toNamed(product);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: 340.0,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4.0,
-                          color: Color(0x43FFFFFF),
-                          offset: Offset(0.0, 2.0),
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(18.0),
-                      child: Card(
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        color: Colors.white,
-                        elevation: 4.0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: Image.network(
-                                'https://picsum.photos/seed/137/600',
-                                width: 394.0,
-                                height: 197.0,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Align(
-                              alignment: const AlignmentDirectional(-1.0, 0.0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                  12.0,
-                                  0.0,
-                                  0.0,
-                                  0.0,
-                                ),
-                                child: Text(
-                                  'Mr Biggs',
-                                  style: GoogleFonts.lora(
-                                    textStyle:
-                                        Theme.of(context).textTheme.titleLarge,
-                                    fontSize: 30,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
+                // listview begin
+                FutureBuilder<List<Shop>>(
+                    future: futureShops,
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                        return Center(child: Text('No shops available'));
+                      } else {
+                        final shops = snapshot.data!;
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: shops.length,
+                            itemBuilder: (context, index) {
+                              var sh = shops[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(product);
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 340.0,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 4.0,
+                                        color: Color(0x43FFFFFF),
+                                        offset: Offset(0.0, 2.0),
+                                      )
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(18.0),
+                                    child: Card(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      color: Colors.white,
+                                      elevation: 4.0,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            child: Image.network(
+                                              'https://eatup.globalchainlimited.com/uploads/${sh.name}/${sh.image}',
+                                              width: 394.0,
+                                              height: 197.0,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                const AlignmentDirectional(
+                                                    -1.0, 0.0),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                12.0,
+                                                0.0,
+                                                0.0,
+                                                0.0,
+                                              ),
+                                              child: Text(
+                                                sh.name,
+                                                style: GoogleFonts.lora(
+                                                  textStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .titleLarge,
+                                                  fontSize: 30,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment:
+                                                const Alignment(-1.0, 0.0),
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                      12.0, 0.0, 0.0, 0.0),
+                                              child: Text(
+                                                sh.subtitle,
+                                                style: GoogleFonts.readexPro(
+                                                  textStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w500,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                            Align(
-                              alignment: const Alignment(-1.0, 0.0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'African | Rice | Soups | Pasta',
-                                  style: GoogleFonts.readexPro(
-                                    textStyle:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                )
+                              );
+                            });
+                      }
+                    })
               ],
             ),
           ),

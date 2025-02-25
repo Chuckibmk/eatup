@@ -35,6 +35,10 @@ android/key.properties
 upload-keystore.jks
 android/app/google-services.json
 
+
+.env
+
+
 # Symbolication related
 app.*.symbols
 

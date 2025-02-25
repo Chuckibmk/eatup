@@ -205,3 +205,108 @@ void showInfoToast({
     ),
   );
 }
+
+class Section {
+  final String id;
+  final String name;
+  final String subtitle;
+  final String image;
+  final String uqid;
+
+  Section({
+    required this.id,
+    required this.name,
+    required this.subtitle,
+    required this.image,
+    required this.uqid,
+  });
+
+  factory Section.fromJson(Map<String, dynamic> json) {
+    return Section(
+      id: json['id'],
+      name: json['name'],
+      subtitle: json['subtitle'],
+      image: json['image'],
+      uqid: json['uqid'],
+    );
+  }
+}
+
+class Item {
+  final String id;
+  final String name;
+  final String details;
+  final String price;
+  final String image;
+  final String category;
+  final String shop;
+  final String tabs;
+  final String sku;
+  final String stock;
+  final String uqid;
+
+  Item({
+    required this.id,
+    required this.name,
+    required this.details,
+    required this.image,
+    required this.uqid,
+    required this.price,
+    required this.category,
+    required this.shop,
+    required this.tabs,
+    required this.sku,
+    required this.stock,
+  });
+
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
+      id: json['id'],
+      name: json['name'],
+      image: json['image'],
+      uqid: json['uqid'],
+      details: json['details'],
+      price: json['price'],
+      category: json['category'],
+      shop: json['shop'],
+      tabs: json['tabs'],
+      stock: json['stock'],
+      sku: json['sku'],
+    );
+  }
+}
+
+class Shop {
+  final String id;
+  final String name;
+  final String subtitle;
+  final String desc;
+  final String tabs;
+  final String image;
+  final String section;
+  final String uqid;
+
+  Shop({
+    required this.id,
+    required this.name,
+    required this.subtitle,
+    required this.image,
+    required this.uqid,
+    required this.desc,
+    required this.tabs,
+    required this.section,
+  });
+
+  factory Shop.fromJson(Map<String, dynamic> json) {
+    return Shop(
+      id: json['id'],
+      name: json['name'],
+      subtitle: json['subtitle'],
+      image: json['image'],
+      uqid: json['uqid'],
+      desc: json['description'],
+      tabs: json['tabs'],
+      section: json['section'],
+    );
+  }
+}

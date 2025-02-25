@@ -4,6 +4,7 @@ import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 // import 'firebase_options.dart';
 
 void main() async {
@@ -15,6 +16,8 @@ void main() async {
     androidProvider: AndroidProvider.playIntegrity, // For Android
     // iosProvider: IOSProvider.deviceCheck, // For iOS
   );
+
+  await dotenv.load(); // Load the .env file
 
   runApp(const MyApp());
 }
