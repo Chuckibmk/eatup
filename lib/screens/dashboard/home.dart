@@ -7,13 +7,13 @@ import 'package:eatup/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -108,33 +108,6 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  late final StreamSubscription? listener;
-  late final AppLifecycleListener _listener;
-
-  void checkInternetC() async {
-    listener =
-        InternetConnection().onStatusChange.listen((InternetStatus status) {
-      switch (status) {
-        case InternetStatus.connected:
-          print('Connected');
-          // The internet is now connected
-          break;
-        case InternetStatus.disconnected:
-          print('no internet');
-          if (mounted) {
-            showErrorToast(context: context, message: 'Network is Unavailable');
-          }
-          // The internet is now disconnected
-          break;
-      }
-    });
-    _listener = AppLifecycleListener(
-      onResume: listener!.resume,
-      onHide: listener!.pause,
-      onPause: listener!.pause,
-    );
-  }
-
   void fetchDn() {
     try {
       final usr = firebaseFirestore.collection("users").doc(user?.uid);
@@ -157,20 +130,12 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    checkInternetC();
     user = firebaseAuth.currentUser;
     if (user != null) {
       fetchDn();
     }
     // Get the current user when the widget is initialized
     futureShops = fetchData();
-  }
-
-  @override
-  void dispose() {
-    listener!.cancel();
-    _listener.dispose();
-    super.dispose();
   }
 
   List<List<dynamic>> menu = [
@@ -189,6 +154,12 @@ class _HomePageState extends State<HomePage> {
   ];
 
   List<List<dynamic>> filteredMenu = [];
+
+  List<String> carousel = [
+    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw1fHxyZXN0YXVyYW50fGVufDB8fHx8MTcyMzI5MTU1OXww&ixlib=rb-4.0.3&q=80&w=1080',
+    'https://images.unsplash.com/photo-1447078806655-40579c2520d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw3fHxmb29kfGVufDB8fHx8MTcyMzI4ODM5MXww&ixlib=rb-4.0.3&q=80&w=1080',
+    'https://images.unsplash.com/photo-1622192309746-ef474257518d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw2fHxpbnZpdGV8ZW58MHx8fHwxNzIzMjkxNjYzfDA&ixlib=rb-4.0.3&q=80&w=1080',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -599,48 +570,31 @@ class _HomePageState extends State<HomePage> {
                         Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 40.0),
-                          child: PageView(
-                            controller: pcont,
-                            scrollDirection: Axis.horizontal,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                    'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw1fHxyZXN0YXVyYW50fGVufDB8fHx8MTcyMzI5MTU1OXww&ixlib=rb-4.0.3&q=80&w=1080',
-                                    width: 300.0,
-                                    height: 200.0,
-                                    fit: BoxFit.cover,
+                          child: PageView.builder(
+                              controller: pcont,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: carousel.length,
+                              itemBuilder: (context, index) {
+                                var cr = carousel[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: cr,
+                                      // 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw1fHxyZXN0YXVyYW50fGVufDB8fHx8MTcyMzI5MTU1OXww&ixlib=rb-4.0.3&q=80&w=1080',
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(), // Shows while loading
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons
+                                              .error), // Shows if loading fails
+                                      width: 300.0,
+                                      height: 200.0,
+                                      fit: BoxFit.cover, // Adjust image scaling
+                                    ),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                    'https://images.unsplash.com/photo-1622192309746-ef474257518d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw2fHxpbnZpdGV8ZW58MHx8fHwxNzIzMjkxNjYzfDA&ixlib=rb-4.0.3&q=80&w=1080',
-                                    width: 300.0,
-                                    height: 200.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: Image.network(
-                                    'https://images.unsplash.com/photo-1447078806655-40579c2520d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw3fHxmb29kfGVufDB8fHx8MTcyMzI4ODM5MXww&ixlib=rb-4.0.3&q=80&w=1080',
-                                    width: 300.0,
-                                    height: 200.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                                );
+                              }),
                         ),
                         Align(
                           alignment: const AlignmentDirectional(0.0, 1.0),
@@ -793,11 +747,19 @@ class _HomePageState extends State<HomePage> {
                                           ClipRRect(
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
-                                            child: Image.network(
-                                              'https://eatup.globalchainlimited.com/uploads/${sh.name}/${sh.image}',
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  'https://eatup.globalchainlimited.com/uploads/${sh.name}/${sh.image}',
+                                              placeholder: (context, url) =>
+                                                  const CircularProgressIndicator(), // Shows while loading
+                                              errorWidget: (context, url,
+                                                      error) =>
+                                                  const Icon(Icons
+                                                      .error), // Shows if loading fails
                                               width: 394.0,
                                               height: 197.0,
-                                              fit: BoxFit.cover,
+                                              fit: BoxFit
+                                                  .cover, // Adjust image scaling
                                             ),
                                           ),
                                           Align(

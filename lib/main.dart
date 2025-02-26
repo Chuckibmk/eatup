@@ -17,7 +17,7 @@ void main() async {
     // iosProvider: IOSProvider.deviceCheck, // For iOS
   );
 
-  await dotenv.load(); // Load the .env file
+  await dotenv.load(fileName: ".env"); // Load the .env file
 
   runApp(const MyApp());
 }
