@@ -277,7 +277,7 @@ class Item {
 }
 
 class Shop {
-  final String id;
+  // final String id;
   final String name;
   final String subtitle;
   final String desc;
@@ -287,7 +287,7 @@ class Shop {
   final String uqid;
 
   Shop({
-    required this.id,
+    // required this.id,
     required this.name,
     required this.subtitle,
     required this.image,
@@ -299,7 +299,7 @@ class Shop {
 
   factory Shop.fromJson(Map<String, dynamic> json) {
     return Shop(
-      id: json['id'],
+      // id: json['id'],
       name: json['name'],
       subtitle: json['subtitle'],
       image: json['image'],

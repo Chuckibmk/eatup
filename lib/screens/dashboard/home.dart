@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:eatup/db/db.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -35,6 +36,28 @@ class _HomePageState extends State<HomePage> {
 
   String displayN = '';
 
+  void saveShopsToDB(Map<String, dynamic> apiResponse) async {
+    if (apiResponse.containsKey('data')) {
+      List<dynamic> shops = apiResponse['data'];
+      List<Map<String, dynamic>> formattedShops = shops.map((shop) {
+        return {
+          'id': shop['id'],
+          'name': shop['name'],
+          'subtitle': shop['subtitle'],
+          'description': shop['description'],
+          'tabs': jsonEncode(shop['tabs']),
+          'image': shop['image'],
+          'section': shop['section'],
+          'uqid': shop['uqid'],
+          'date': DateTime.now().millisecondsSinceEpoch
+        };
+      }).toList();
+
+      final db = DatabaseHelper();
+      await db.inserShops(formattedShops);
+    }
+  }
+
   late Future<List<Shop>> futureShops;
 
   Future<List<Shop>> fetchData() async {
@@ -54,18 +77,11 @@ class _HomePageState extends State<HomePage> {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
+        saveShopsToDB(data);
         print("Data received: $data");
 
         List<dynamic> shopsJson = data['data'];
         return shopsJson.map((json) => Shop.fromJson(json)).toList();
-        // if (data['data'] != null) {
-        //   setState(() {
-        //     sections = (data['data'] as List)
-        //         .map((section) => Section.fromJson(section))
-        //         .toList();
-        //   });
-        // }
-        // Use the data as needed
       } else {
         print("Error: ${response.statusCode} - ${response.body}");
         return [];
@@ -80,6 +96,14 @@ class _HomePageState extends State<HomePage> {
       print('Unknown Error: $e');
       return [];
     }
+  }
+
+  Future<List<Shop>> fetchShopsFromDB() async {
+    final dbHelper = DatabaseHelper();
+    List<Map<String, dynamic>> shops = await dbHelper.getShops();
+    // return shops;
+    return shops.map((json) => Shop.fromJson(json)).toList();
+    // print('Saved Shops: $shops');
   }
 
   Future<void> logout() async {
@@ -135,7 +159,8 @@ class _HomePageState extends State<HomePage> {
       fetchDn();
     }
     // Get the current user when the widget is initialized
-    futureShops = fetchData();
+    // futureShops = fetchData();
+    futureShops = fetchShopsFromDB();
   }
 
   List<List<dynamic>> menu = [
@@ -673,7 +698,8 @@ class _HomePageState extends State<HomePage> {
                               0.0, 0.0, 20.0, 0.0),
                           child: GestureDetector(
                             onTap: () {
-                              fetchData();
+                              // fetchData();
+                              fetchShopsFromDB();
                             },
                             child: RichText(
                               textScaler: MediaQuery.of(context).textScaler,
