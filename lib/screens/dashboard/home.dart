@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/db/db.dart';
@@ -36,24 +37,72 @@ class _HomePageState extends State<HomePage> {
 
   String displayN = '';
 
+  Future<Uint8List?> downloadImage(String url, {int retries = 3}) async {
+    for (int i = 0; i < retries; i++) {
+      try {
+        final response =
+            await http.get(Uri.parse(url)).timeout(Duration(seconds: 10));
+        if (response.statusCode == 200) {
+          return response.bodyBytes;
+        }
+      } catch (e) {
+        print('Retry ${i + 1}: Error downloading image: $e');
+      }
+      await Future.delayed(Duration(seconds: 2)); // Wait before retrying
+    }
+    return null; // Return null if all retries fail
+  }
+
   void saveShopsToDB(Map<String, dynamic> apiResponse) async {
     if (apiResponse.containsKey('data')) {
+      final db = DatabaseHelper();
       List<dynamic> shops = apiResponse['data'];
-      List<Map<String, dynamic>> formattedShops = shops.map((shop) {
-        return {
+      List<Map<String, dynamic>> formattedShops = [];
+
+      for (var shop in shops) {
+        //construct the image url
+        String imageUrl =
+            'https://eatup.globalchainlimited.com/uploads/${shop['name']}/${shop['image']}';
+
+        // Uint8List? imageBytes;
+        Uint8List? imageBytes = await downloadImage(imageUrl); // Retry download
+
+        // ✅ **Check if the image already exists in the database**
+        // Map<String, dynamic>? existingShop = await db.getShopById(shop['id']);
+
+        // if (existingShop != null && existingShop['image'] != null) {
+        //   print('Image already exists for shop: ${shop['name']}');
+        //   imageBytes = existingShop['image']; // Use existing image
+        // } else {
+        //   // 🔄 **Download the image only if it doesn't exist**
+        //   imageBytes = await downloadImage(imageUrl);
+        // }
+
+        // download and convert the image to bytes
+        // try {
+        //   final response = await http.get(Uri.parse(imageUrl));
+        //   if (response.statusCode == 200) {
+        //     imageBytes = response.bodyBytes; // convert to uint8list
+        //   }
+        // } catch (e) {
+        //   print('Error downloading image: $e');
+        // }
+
+        formattedShops.add({
           'id': shop['id'],
           'name': shop['name'],
           'subtitle': shop['subtitle'],
           'description': shop['description'],
-          'tabs': jsonEncode(shop['tabs']),
-          'image': shop['image'],
+          'tabs': shop['tabs'] != null
+              ? jsonEncode(shop['tabs'])
+              : '[]', // Handle null case
+          'image': imageBytes, //store as Blob
           'section': shop['section'],
           'uqid': shop['uqid'],
           'date': DateTime.now().millisecondsSinceEpoch
-        };
-      }).toList();
+        });
+      }
 
-      final db = DatabaseHelper();
       await db.inserShops(formattedShops);
     }
   }
@@ -101,9 +150,8 @@ class _HomePageState extends State<HomePage> {
   Future<List<Shop>> fetchShopsFromDB() async {
     final dbHelper = DatabaseHelper();
     List<Map<String, dynamic>> shops = await dbHelper.getShops();
-    // return shops;
+
     return shops.map((json) => Shop.fromJson(json)).toList();
-    // print('Saved Shops: $shops');
   }
 
   Future<void> logout() async {
@@ -698,8 +746,8 @@ class _HomePageState extends State<HomePage> {
                               0.0, 0.0, 20.0, 0.0),
                           child: GestureDetector(
                             onTap: () {
-                              // fetchData();
-                              fetchShopsFromDB();
+                              fetchData();
+                              // fetchShopsFromDB();
                             },
                             child: RichText(
                               textScaler: MediaQuery.of(context).textScaler,
@@ -722,127 +770,105 @@ class _HomePageState extends State<HomePage> {
                 ),
                 // listview begin
                 FutureBuilder<List<Shop>>(
-                    future: futureShops,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
-                      } else if (snapshot.hasError) {
-                        return Center(child: Text('Error: ${snapshot.error}'));
-                      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                        return Center(child: Text('No shops available'));
-                      } else {
-                        final shops = snapshot.data!;
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: shops.length,
-                            itemBuilder: (context, index) {
-                              var sh = shops[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(product);
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 340.0,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                        blurRadius: 4.0,
-                                        color: Color(0x43FFFFFF),
-                                        offset: Offset(0.0, 2.0),
-                                      )
+                  future: futureShops,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasError) {
+                      return Center(child: Text('Error: ${snapshot.error}'));
+                    } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                      return const Center(child: Text('No shops available'));
+                    }
+
+                    final shops = snapshot.data!;
+                    return ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: shops.length,
+                      separatorBuilder: (_, __) =>
+                          const SizedBox(height: 10), // Space between items
+                      itemBuilder: (context, index) {
+                        var sh = shops[index];
+
+                        return GestureDetector(
+                          onTap: () {
+                            Get.toNamed(product);
+                          },
+                          child: Card(
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            color: Colors.white,
+                            elevation: 4.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20.0),
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // 🖼 Image
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.vertical(
+                                      top: Radius.circular(20.0)),
+                                  child:
+                                      sh.image != null && sh.image!.isNotEmpty
+                                          ? Image.memory(
+                                              sh.image!,
+                                              width: double.infinity,
+                                              height: 200,
+                                              fit: BoxFit
+                                                  .cover, // Ensure image scales properly
+                                            )
+                                          : const SizedBox(
+                                              height: 200,
+                                              child: Center(
+                                                  child: Icon(
+                                                      Icons.image_not_supported,
+                                                      size: 80)),
+                                            ),
+                                ),
+
+                                // 📄 Text Content
+                                Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      // 🏪 Shop Name
+                                      Text(
+                                        sh.name,
+                                        style: GoogleFonts.lora(
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .titleLarge,
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+
+                                      // 📌 Subtitle
+                                      Text(
+                                        sh.subtitle,
+                                        style: GoogleFonts.readexPro(
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.grey[700],
+                                        ),
+                                      ),
                                     ],
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(18.0),
-                                    child: Card(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      color: Colors.white,
-                                      elevation: 4.0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            child: CachedNetworkImage(
-                                              imageUrl:
-                                                  'https://eatup.globalchainlimited.com/uploads/${sh.name}/${sh.image}',
-                                              placeholder: (context, url) =>
-                                                  const CircularProgressIndicator(), // Shows while loading
-                                              errorWidget: (context, url,
-                                                      error) =>
-                                                  const Icon(Icons
-                                                      .error), // Shows if loading fails
-                                              width: 394.0,
-                                              height: 197.0,
-                                              fit: BoxFit
-                                                  .cover, // Adjust image scaling
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                const AlignmentDirectional(
-                                                    -1.0, 0.0),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                12.0,
-                                                0.0,
-                                                0.0,
-                                                0.0,
-                                              ),
-                                              child: Text(
-                                                sh.name,
-                                                style: GoogleFonts.lora(
-                                                  textStyle: Theme.of(context)
-                                                      .textTheme
-                                                      .titleLarge,
-                                                  fontSize: 30,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                const Alignment(-1.0, 0.0),
-                                            child: Padding(
-                                              padding:
-                                                  const EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                      12.0, 0.0, 0.0, 0.0),
-                                              child: Text(
-                                                sh.subtitle,
-                                                style: GoogleFonts.readexPro(
-                                                  textStyle: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyMedium,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w500,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
                                 ),
-                              );
-                            });
-                      }
-                    })
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                )
               ],
             ),
           ),

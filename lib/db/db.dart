@@ -31,7 +31,7 @@ class DatabaseHelper {
             subtitle TEXT,
             description TEXT,
             tabs TEXT,
-            image TEXT,
+            image BLOB,
             section TEXT,
             uqid TEXT,
             date INTEGER
@@ -55,5 +55,17 @@ class DatabaseHelper {
   Future<List<Map<String, dynamic>>> getShops() async {
     final db = await database;
     return db.query('shops');
+  }
+
+  Future<Map<String, dynamic>?> getShopById(int id) async {
+    final db = await database; // Get database instance
+    List<Map<String, dynamic>> result =
+        await db.query('shops', where: 'id = ?', whereArgs: [id]);
+
+    if (result.isNotEmpty) {
+      return result.first; // Return shop data if found
+    } else {
+      return null; // Return null if shop is not found
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:toastification/toastification.dart';
 import 'package:flutter/material.dart';
 
@@ -207,14 +209,14 @@ void showInfoToast({
 }
 
 class Section {
-  final String id;
+  // final String id;
   final String name;
   final String subtitle;
-  final String image;
+  final Uint8List? image;
   final String uqid;
 
   Section({
-    required this.id,
+    // required this.id,
     required this.name,
     required this.subtitle,
     required this.image,
@@ -223,21 +225,23 @@ class Section {
 
   factory Section.fromJson(Map<String, dynamic> json) {
     return Section(
-      id: json['id'],
+      // id: json['id'],
       name: json['name'],
       subtitle: json['subtitle'],
-      image: json['image'],
+      image: json['image'] != null && json['image'] is Uint8List
+          ? json['image']
+          : Uint8List(0), //handle null or incorrect format
       uqid: json['uqid'],
     );
   }
 }
 
 class Item {
-  final String id;
+  // final String id;
   final String name;
   final String details;
   final String price;
-  final String image;
+  final Uint8List? image;
   final String category;
   final String shop;
   final String tabs;
@@ -246,7 +250,7 @@ class Item {
   final String uqid;
 
   Item({
-    required this.id,
+    // required this.id,
     required this.name,
     required this.details,
     required this.image,
@@ -261,9 +265,11 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
-      id: json['id'],
+      // id: json['id'],
       name: json['name'],
-      image: json['image'],
+      image: json['image'] != null && json['image'] is Uint8List
+          ? json['image']
+          : Uint8List(0), //handle null or incorrect format
       uqid: json['uqid'],
       details: json['details'],
       price: json['price'],
@@ -282,7 +288,7 @@ class Shop {
   final String subtitle;
   final String desc;
   final String tabs;
-  final String image;
+  final Uint8List? image;
   final String section;
   final String uqid;
 
@@ -302,7 +308,9 @@ class Shop {
       // id: json['id'],
       name: json['name'],
       subtitle: json['subtitle'],
-      image: json['image'],
+      image: json['image'] != null && json['image'] is Uint8List
+          ? json['image']
+          : Uint8List(0), //handle null or incorrect format
       uqid: json['uqid'],
       desc: json['description'],
       tabs: json['tabs'],
