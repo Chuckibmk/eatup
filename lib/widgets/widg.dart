@@ -209,14 +209,14 @@ void showInfoToast({
 }
 
 class Section {
-  // final String id;
+  final int id;
   final String name;
   final String subtitle;
   final Uint8List? image;
   final String uqid;
 
   Section({
-    // required this.id,
+    required this.id,
     required this.name,
     required this.subtitle,
     required this.image,
@@ -225,7 +225,9 @@ class Section {
 
   factory Section.fromJson(Map<String, dynamic> json) {
     return Section(
-      // id: json['id'],
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id'].toString()) ?? 0, // Ensure int
       name: json['name'],
       subtitle: json['subtitle'],
       image: json['image'] != null && json['image'] is Uint8List
@@ -237,7 +239,7 @@ class Section {
 }
 
 class Item {
-  // final String id;
+  final int id;
   final String name;
   final String details;
   final String price;
@@ -250,7 +252,7 @@ class Item {
   final String uqid;
 
   Item({
-    // required this.id,
+    required this.id,
     required this.name,
     required this.details,
     required this.image,
@@ -265,7 +267,9 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) {
     return Item(
-      // id: json['id'],
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id'].toString()) ?? 0, // Ensure int
       name: json['name'],
       image: json['image'] != null && json['image'] is Uint8List
           ? json['image']
@@ -283,7 +287,7 @@ class Item {
 }
 
 class Shop {
-  // final String id;
+  final int id;
   final String name;
   final String subtitle;
   final String desc;
@@ -293,7 +297,7 @@ class Shop {
   final String uqid;
 
   Shop({
-    // required this.id,
+    required this.id,
     required this.name,
     required this.subtitle,
     required this.image,
@@ -305,7 +309,9 @@ class Shop {
 
   factory Shop.fromJson(Map<String, dynamic> json) {
     return Shop(
-      // id: json['id'],
+      id: json['id'] is int
+          ? json['id']
+          : int.tryParse(json['id'].toString()) ?? 0, // Ensure int
       name: json['name'],
       subtitle: json['subtitle'],
       image: json['image'] != null && json['image'] is Uint8List

@@ -17,6 +17,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -53,6 +55,20 @@ class _HomePageState extends State<HomePage> {
     return null; // Return null if all retries fail
   }
 
+  Future<Uint8List?> compressImage(Uint8List imageBytes) async {
+    try {
+      return await FlutterImageCompress.compressWithList(
+        imageBytes,
+        minWidth: 800, // Resize to max 800px width
+        minHeight: 800, // Resize to max 800px height
+        quality: 50, // Reduce quality to 50%
+      );
+    } catch (e) {
+      print('Error compressing image: $e');
+      return null; // Return null if compression fails
+    }
+  }
+
   void saveShopsToDB(Map<String, dynamic> apiResponse) async {
     if (apiResponse.containsKey('data')) {
       final db = DatabaseHelper();
@@ -64,19 +80,26 @@ class _HomePageState extends State<HomePage> {
         String imageUrl =
             'https://eatup.globalchainlimited.com/uploads/${shop['name']}/${shop['image']}';
 
-        // Uint8List? imageBytes;
-        Uint8List? imageBytes = await downloadImage(imageUrl); // Retry download
+        Uint8List? imageBytes;
+        // Uint8List? imageBytes = await downloadImage(imageUrl); // Retry download
 
         // ✅ **Check if the image already exists in the database**
-        // Map<String, dynamic>? existingShop = await db.getShopById(shop['id']);
+        Map<String, dynamic>? existingShop = await db.getShopById(
+            shop['id'] is int
+                ? shop['id']
+                : int.tryParse(shop['id'].toString()));
 
-        // if (existingShop != null && existingShop['image'] != null) {
-        //   print('Image already exists for shop: ${shop['name']}');
-        //   imageBytes = existingShop['image']; // Use existing image
-        // } else {
-        //   // 🔄 **Download the image only if it doesn't exist**
-        //   imageBytes = await downloadImage(imageUrl);
-        // }
+        if (existingShop != null && existingShop['image'] != null) {
+          print('Image already exists for shop: ${shop['name']}');
+          imageBytes = existingShop['image']; // Use existing image
+        } else {
+          //   // 🔄 **Download the image only if it doesn't exist**
+          imageBytes = await downloadImage(imageUrl);
+          if (imageBytes != null) {
+            imageBytes =
+                await compressImage(imageBytes); // Compress before storing
+          }
+        }
 
         // download and convert the image to bytes
         // try {
@@ -89,7 +112,9 @@ class _HomePageState extends State<HomePage> {
         // }
 
         formattedShops.add({
-          'id': shop['id'],
+          'id': shop['id'] is int
+              ? shop['id']
+              : int.tryParse(shop['id'].toString()), // Ensure int
           'name': shop['name'],
           'subtitle': shop['subtitle'],
           'description': shop['description'],
