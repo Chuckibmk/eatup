@@ -3,6 +3,14 @@ import 'dart:typed_data';
 import 'package:toastification/toastification.dart';
 import 'package:flutter/material.dart';
 
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:eatup/db/db.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+
 // Define a reusable toast function
 void showSuccessToast({
   required BuildContext context,
@@ -323,4 +331,240 @@ class Shop {
       section: json['section'],
     );
   }
+}
+
+Future<Uint8List?> downloadImage(String url, {int retries = 3}) async {
+  for (int i = 0; i < retries; i++) {
+    try {
+      final response =
+          await http.get(Uri.parse(url)).timeout(Duration(seconds: 10));
+      if (response.statusCode == 200) {
+        return response.bodyBytes;
+      }
+    } catch (e) {
+      print('Retry ${i + 1}: Error downloading image: $e');
+    }
+    await Future.delayed(Duration(seconds: 2)); // Wait before retrying
+  }
+  return null; // Return null if all retries fail
+}
+
+Future<Uint8List?> compressImage(Uint8List imageBytes) async {
+  try {
+    return await FlutterImageCompress.compressWithList(
+      imageBytes,
+      minWidth: 800, // Resize to max 800px width
+      minHeight: 800, // Resize to max 800px height
+      quality: 50, // Reduce quality to 50%
+    );
+  } catch (e) {
+    print('Error compressing image: $e');
+    return null; // Return null if compression fails
+  }
+}
+
+void saveShopsToDB(Map<String, dynamic> apiResponse) async {
+  if (apiResponse.containsKey('data')) {
+    final db = DatabaseHelper();
+    List<dynamic> shops = apiResponse['data'];
+    List<Map<String, dynamic>> formattedShops = [];
+
+    for (var shop in shops) {
+      //construct the image url
+      String imageUrl =
+          'https://eatup.globalchainlimited.com/uploads/${shop['name']}/${shop['image']}';
+
+      Uint8List? imageBytes;
+      // Uint8List? imageBytes = await downloadImage(imageUrl); // Retry download
+
+      // ✅ **Check if the image already exists in the database**
+      Map<String, dynamic>? existingShop = await db.getShopById(
+          shop['id'] is int ? shop['id'] : int.tryParse(shop['id'].toString()));
+
+      if (existingShop != null && existingShop['image'] != null) {
+        print('Image already exists for shop: ${shop['name']}');
+        imageBytes = existingShop['image']; // Use existing image
+      } else {
+        // 🔄 **Download the image only if it doesn't exist**
+        imageBytes = await downloadImage(imageUrl);
+        if (imageBytes != null) {
+          imageBytes =
+              await compressImage(imageBytes); // Compress before storing
+        }
+      }
+
+      formattedShops.add({
+        'id': shop['id'] is int
+            ? shop['id']
+            : int.tryParse(shop['id'].toString()), // Ensure int
+        'name': shop['name'],
+        'subtitle': shop['subtitle'],
+        'description': shop['description'],
+        'tabs': shop['tabs'] != null
+            ? jsonEncode(shop['tabs'])
+            : '[]', // Handle null case
+        'image': imageBytes, //store as Blob
+        'section': shop['section'],
+        'uqid': shop['uqid'],
+        'date': DateTime.now().millisecondsSinceEpoch
+      });
+    }
+
+    await db.inserShops(formattedShops);
+  }
+}
+
+void saveSectionToDB(Map<String, dynamic> apiResponse) async {
+  if (apiResponse.containsKey('data')) {
+    final db = DatabaseHelper();
+    List<dynamic> section = apiResponse['data'];
+    List<Map<String, dynamic>> formattedSection = [];
+
+    for (var sect in section) {
+      //construct the image url
+      String imageUrl =
+          'https://eatup.globalchainlimited.com/uploads/${sect['name']}/${sect['image']}';
+
+      Uint8List? imageBytes;
+      // Uint8List? imageBytes = await downloadImage(imageUrl); // Retry download
+
+      // ✅ **Check if the image already exists in the database**
+      Map<String, dynamic>? existingShop = await db.getGenById(
+          sect['id'] is int ? sect['id'] : int.tryParse(sect['id'].toString()),
+          'section');
+
+      if (existingShop != null && existingShop['image'] != null) {
+        print('Image already exists for shop: ${sect['name']}');
+        imageBytes = existingShop['image']; // Use existing image
+      } else {
+        // 🔄 **Download the image only if it doesn't exist**
+        imageBytes = await downloadImage(imageUrl);
+        if (imageBytes != null) {
+          imageBytes =
+              await compressImage(imageBytes); // Compress before storing
+        }
+      }
+
+      formattedSection.add({
+        'id': sect['id'] is int
+            ? sect['id']
+            : int.tryParse(sect['id'].toString()), // Ensure int
+        'name': sect['name'],
+        'subtitle': sect['subtitle'],
+        'image': imageBytes, //store as Blob
+        'uqid': sect['uqid'],
+        'date': DateTime.now().millisecondsSinceEpoch
+      });
+    }
+
+    await db.insertGen(formattedSection, 'section');
+  }
+}
+
+void saveItemToDB(Map<String, dynamic> apiResponse) async {
+  if (apiResponse.containsKey('data')) {
+    final db = DatabaseHelper();
+    List<dynamic> section = apiResponse['data'];
+    List<Map<String, dynamic>> formattedSection = [];
+
+    for (var sect in section) {
+      //construct the image url
+      String imageUrl =
+          'https://eatup.globalchainlimited.com/uploads/${sect['name']}/${sect['image']}';
+
+      Uint8List? imageBytes;
+      // Uint8List? imageBytes = await downloadImage(imageUrl); // Retry download
+
+      // ✅ **Check if the image already exists in the database**
+      Map<String, dynamic>? existingShop = await db.getGenById(
+          sect['id'] is int ? sect['id'] : int.tryParse(sect['id'].toString()),
+          'item');
+
+      if (existingShop != null && existingShop['image'] != null) {
+        print('Image already exists for shop: ${sect['name']}');
+        imageBytes = existingShop['image']; // Use existing image
+      } else {
+        // 🔄 **Download the image only if it doesn't exist**
+        imageBytes = await downloadImage(imageUrl);
+        if (imageBytes != null) {
+          imageBytes =
+              await compressImage(imageBytes); // Compress before storing
+        }
+      }
+
+      formattedSection.add({
+        'id': sect['id'] is int
+            ? sect['id']
+            : int.tryParse(sect['id'].toString()), // Ensure int
+        'name': sect['name'],
+        'details': sect['details'],
+        'price': sect['price'],
+        'image': imageBytes, //store as Blob
+        'category': sect['category'],
+        'shop': sect['shop'],
+        'tabs': sect['tabs'],
+        'sku': sect['sku'],
+        'stock': sect['stock'],
+        'uqid': sect['uqid'],
+        'date': DateTime.now().millisecondsSinceEpoch
+      });
+    }
+
+    await db.insertGen(formattedSection, 'item');
+  }
+}
+
+Future<List<Shop>> fetchData(String g) async {
+  String jwtToken = dotenv.env['jwtToken'] ?? 'No API Key Found';
+  String apiKey = dotenv.env['API_KEY'] ?? 'No API Key Found';
+  String url = dotenv.env[g] ?? 'No API Key Found';
+
+  try {
+    final response = await http.get(
+      Uri.parse(url),
+      headers: {
+        'Content-Type': 'application/json',
+        "X-API-KEY": apiKey, // 🔑 Add API Key in headers
+        'Authorization': 'Bearer $jwtToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (g == 'shops') saveShopsToDB(data);
+      if (g == 'section') saveSectionToDB(data);
+      if (g == 'item') saveItemToDB(data);
+      // saveShopsToDB(data);
+      // print("Data received: $data");
+
+      List<dynamic> shopsJson = data['data'];
+      return shopsJson.map((json) => Shop.fromJson(json)).toList();
+    } else {
+      print("Error: ${response.statusCode} - ${response.body}");
+      return [];
+    }
+  } on SocketException {
+    print('Network Error: SocketException');
+    return [];
+  } on HttpException {
+    print('Network Error: HttpException');
+    return [];
+  } catch (e) {
+    print('Unknown Error: $e');
+    return [];
+  }
+}
+
+Future<List<Shop>> fetchShopsFromDB() async {
+  final dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> shops = await dbHelper.getShops();
+
+  return shops.map((json) => Shop.fromJson(json)).toList();
+}
+
+Future<List<Shop>> fetchGenFromDB(String g) async {
+  final dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> shops = await dbHelper.getGen(g);
+
+  return shops.map((json) => Shop.fromJson(json)).toList();
 }

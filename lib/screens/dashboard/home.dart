@@ -1,10 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:eatup/db/db.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
@@ -12,12 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:http/http.dart' as http;
-
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -39,145 +30,8 @@ class _HomePageState extends State<HomePage> {
 
   String displayN = '';
 
-  Future<Uint8List?> downloadImage(String url, {int retries = 3}) async {
-    for (int i = 0; i < retries; i++) {
-      try {
-        final response =
-            await http.get(Uri.parse(url)).timeout(Duration(seconds: 10));
-        if (response.statusCode == 200) {
-          return response.bodyBytes;
-        }
-      } catch (e) {
-        print('Retry ${i + 1}: Error downloading image: $e');
-      }
-      await Future.delayed(Duration(seconds: 2)); // Wait before retrying
-    }
-    return null; // Return null if all retries fail
-  }
-
-  Future<Uint8List?> compressImage(Uint8List imageBytes) async {
-    try {
-      return await FlutterImageCompress.compressWithList(
-        imageBytes,
-        minWidth: 800, // Resize to max 800px width
-        minHeight: 800, // Resize to max 800px height
-        quality: 50, // Reduce quality to 50%
-      );
-    } catch (e) {
-      print('Error compressing image: $e');
-      return null; // Return null if compression fails
-    }
-  }
-
-  void saveShopsToDB(Map<String, dynamic> apiResponse) async {
-    if (apiResponse.containsKey('data')) {
-      final db = DatabaseHelper();
-      List<dynamic> shops = apiResponse['data'];
-      List<Map<String, dynamic>> formattedShops = [];
-
-      for (var shop in shops) {
-        //construct the image url
-        String imageUrl =
-            'https://eatup.globalchainlimited.com/uploads/${shop['name']}/${shop['image']}';
-
-        Uint8List? imageBytes;
-        // Uint8List? imageBytes = await downloadImage(imageUrl); // Retry download
-
-        // ✅ **Check if the image already exists in the database**
-        Map<String, dynamic>? existingShop = await db.getShopById(
-            shop['id'] is int
-                ? shop['id']
-                : int.tryParse(shop['id'].toString()));
-
-        if (existingShop != null && existingShop['image'] != null) {
-          print('Image already exists for shop: ${shop['name']}');
-          imageBytes = existingShop['image']; // Use existing image
-        } else {
-          //   // 🔄 **Download the image only if it doesn't exist**
-          imageBytes = await downloadImage(imageUrl);
-          if (imageBytes != null) {
-            imageBytes =
-                await compressImage(imageBytes); // Compress before storing
-          }
-        }
-
-        // download and convert the image to bytes
-        // try {
-        //   final response = await http.get(Uri.parse(imageUrl));
-        //   if (response.statusCode == 200) {
-        //     imageBytes = response.bodyBytes; // convert to uint8list
-        //   }
-        // } catch (e) {
-        //   print('Error downloading image: $e');
-        // }
-
-        formattedShops.add({
-          'id': shop['id'] is int
-              ? shop['id']
-              : int.tryParse(shop['id'].toString()), // Ensure int
-          'name': shop['name'],
-          'subtitle': shop['subtitle'],
-          'description': shop['description'],
-          'tabs': shop['tabs'] != null
-              ? jsonEncode(shop['tabs'])
-              : '[]', // Handle null case
-          'image': imageBytes, //store as Blob
-          'section': shop['section'],
-          'uqid': shop['uqid'],
-          'date': DateTime.now().millisecondsSinceEpoch
-        });
-      }
-
-      await db.inserShops(formattedShops);
-    }
-  }
-
   late Future<List<Shop>> futureShops;
-
-  Future<List<Shop>> fetchData() async {
-    String jwtToken = dotenv.env['jwtToken'] ?? 'No API Key Found';
-    String apiKey = dotenv.env['API_KEY'] ?? 'No API Key Found';
-    String url = dotenv.env['urlShops'] ?? 'No API Key Found';
-
-    try {
-      final response = await http.get(
-        Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-          "X-API-KEY": apiKey, // 🔑 Add API Key in headers
-          'Authorization': 'Bearer $jwtToken',
-        },
-      );
-
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        saveShopsToDB(data);
-        print("Data received: $data");
-
-        List<dynamic> shopsJson = data['data'];
-        return shopsJson.map((json) => Shop.fromJson(json)).toList();
-      } else {
-        print("Error: ${response.statusCode} - ${response.body}");
-        return [];
-      }
-    } on SocketException {
-      print('Network Error: SocketException');
-      return [];
-    } on HttpException {
-      print('Network Error: HttpException');
-      return [];
-    } catch (e) {
-      print('Unknown Error: $e');
-      return [];
-    }
-  }
-
-  Future<List<Shop>> fetchShopsFromDB() async {
-    final dbHelper = DatabaseHelper();
-    List<Map<String, dynamic>> shops = await dbHelper.getShops();
-
-    return shops.map((json) => Shop.fromJson(json)).toList();
-  }
+  late Future<List<Shop>> futureSection;
 
   Future<void> logout() async {
     try {
@@ -234,6 +88,7 @@ class _HomePageState extends State<HomePage> {
     // Get the current user when the widget is initialized
     // futureShops = fetchData();
     futureShops = fetchShopsFromDB();
+    futureSection = fetchGenFromDB('section');
   }
 
   List<List<dynamic>> menu = [
@@ -258,6 +113,9 @@ class _HomePageState extends State<HomePage> {
     'https://images.unsplash.com/photo-1447078806655-40579c2520d6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw3fHxmb29kfGVufDB8fHx8MTcyMzI4ODM5MXww&ixlib=rb-4.0.3&q=80&w=1080',
     'https://images.unsplash.com/photo-1622192309746-ef474257518d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw2fHxpbnZpdGV8ZW58MHx8fHwxNzIzMjkxNjYzfDA&ixlib=rb-4.0.3&q=80&w=1080',
   ];
+
+  // final _controller = PageController();
+  // int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -771,7 +629,7 @@ class _HomePageState extends State<HomePage> {
                               0.0, 0.0, 20.0, 0.0),
                           child: GestureDetector(
                             onTap: () {
-                              fetchData();
+                              // fetchData();
                               // fetchShopsFromDB();
                             },
                             child: RichText(

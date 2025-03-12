@@ -55,6 +55,9 @@ class _StartedState extends State<Started> {
   void initState() {
     super.initState();
     checkInternetC();
+    fetchData('shops');
+    fetchData('section');
+    fetchData('item');
   }
 
   @override
