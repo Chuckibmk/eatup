@@ -288,7 +288,7 @@ class Item {
       category: json['category'],
       shop: json['shop'],
       tabs: json['tabs'],
-      stock: json['stock'],
+      stock: json['stock'] != null ? json['stock'] : '0',
       sku: json['sku'],
     );
   }
@@ -378,8 +378,9 @@ void saveShopsToDB(Map<String, dynamic> apiResponse) async {
       // Uint8List? imageBytes = await downloadImage(imageUrl); // Retry download
 
       // ✅ **Check if the image already exists in the database**
-      Map<String, dynamic>? existingShop = await db.getShopById(
-          shop['id'] is int ? shop['id'] : int.tryParse(shop['id'].toString()));
+      Map<String, dynamic>? existingShop = await db.getGenById(
+          shop['id'] is int ? shop['id'] : int.tryParse(shop['id'].toString()),
+          'shops');
 
       if (existingShop != null && existingShop['image'] != null) {
         print('Image already exists for shop: ${shop['name']}');
@@ -410,7 +411,7 @@ void saveShopsToDB(Map<String, dynamic> apiResponse) async {
       });
     }
 
-    await db.inserShops(formattedShops);
+    await db.insertGen(formattedShops, 'shops');
   }
 }
 
@@ -514,7 +515,7 @@ void saveItemToDB(Map<String, dynamic> apiResponse) async {
   }
 }
 
-Future<List<Shop>> fetchData(String g) async {
+Future fetchData(String g) async {
   String jwtToken = dotenv.env['jwtToken'] ?? 'No API Key Found';
   String apiKey = dotenv.env['API_KEY'] ?? 'No API Key Found';
   String url = dotenv.env[g] ?? 'No API Key Found';
@@ -531,14 +532,23 @@ Future<List<Shop>> fetchData(String g) async {
 
     if (response.statusCode == 200) {
       final data = jsonDecode(response.body);
-      if (g == 'shops') saveShopsToDB(data);
-      if (g == 'section') saveSectionToDB(data);
-      if (g == 'item') saveItemToDB(data);
+      if (g == 'shops') {
+        saveShopsToDB(data);
+        List<dynamic> shopsJson = data['data'];
+        return shopsJson.map((json) => Shop.fromJson(json)).toList();
+      }
+      if (g == 'section') {
+        saveSectionToDB(data);
+        List<dynamic> shopsJson = data['data'];
+        return shopsJson.map((json) => Section.fromJson(json)).toList();
+      }
+      if (g == 'item') {
+        saveItemToDB(data);
+        List<dynamic> shopsJson = data['data'];
+        return shopsJson.map((json) => Item.fromJson(json)).toList();
+      }
       // saveShopsToDB(data);
       // print("Data received: $data");
-
-      List<dynamic> shopsJson = data['data'];
-      return shopsJson.map((json) => Shop.fromJson(json)).toList();
     } else {
       print("Error: ${response.statusCode} - ${response.body}");
       return [];
@@ -557,9 +567,23 @@ Future<List<Shop>> fetchData(String g) async {
 
 Future<List<Shop>> fetchShopsFromDB() async {
   final dbHelper = DatabaseHelper();
-  List<Map<String, dynamic>> shops = await dbHelper.getShops();
+  List<Map<String, dynamic>> shops = await dbHelper.getGen('shops');
 
   return shops.map((json) => Shop.fromJson(json)).toList();
+}
+
+Future<List<Item>> fetchItemFromDB() async {
+  final dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> items = await dbHelper.getGen('item');
+
+  return items.map((json) => Item.fromJson(json)).toList();
+}
+
+Future<List<Section>> fetchSectionFromDB() async {
+  final dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> items = await dbHelper.getGen('section');
+
+  return items.map((json) => Section.fromJson(json)).toList();
 }
 
 Future<List<Shop>> fetchGenFromDB(String g) async {

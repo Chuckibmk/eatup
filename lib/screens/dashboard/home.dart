@@ -31,7 +31,8 @@ class _HomePageState extends State<HomePage> {
   String displayN = '';
 
   late Future<List<Shop>> futureShops;
-  late Future<List<Shop>> futureSection;
+  late Future<List<Section>> futureSection;
+  late Future<List<Item>> futureItem;
 
   Future<void> logout() async {
     try {
@@ -88,7 +89,8 @@ class _HomePageState extends State<HomePage> {
     // Get the current user when the widget is initialized
     // futureShops = fetchData();
     futureShops = fetchShopsFromDB();
-    futureSection = fetchGenFromDB('section');
+    futureSection = fetchSectionFromDB();
+    futureItem = fetchItemFromDB();
   }
 
   List<List<dynamic>> menu = [

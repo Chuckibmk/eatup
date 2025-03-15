@@ -71,35 +71,6 @@ class DatabaseHelper {
     );
   }
 
-//shops
-  Future<void> inserShops(List<Map<String, dynamic>> shopList) async {
-    final db = await database;
-    for (var shop in shopList) {
-      await db.insert(
-        'shops',
-        shop,
-        conflictAlgorithm: ConflictAlgorithm.replace,
-      );
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> getShops() async {
-    final db = await database;
-    return db.query('shops');
-  }
-
-  Future<Map<String, dynamic>?> getShopById(int id) async {
-    final db = await database; // Get database instance
-    List<Map<String, dynamic>> result =
-        await db.query('shops', where: 'id = ?', whereArgs: [id]);
-
-    if (result.isNotEmpty) {
-      return result.first; // Return shop data if found
-    } else {
-      return null; // Return null if shop is not found
-    }
-  }
-
   //general
   Future<void> insertGen(List<Map<String, dynamic>> genList, String g) async {
     final db = await database;
