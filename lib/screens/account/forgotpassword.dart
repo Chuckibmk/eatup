@@ -31,7 +31,6 @@ class _ResetPState extends State<ResetP> {
 
   bool _progress = false;
 
-  @override
   Future<void> resetPassword(String email) async {
     setState(() {
       _progress = true;
