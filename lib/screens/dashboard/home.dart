@@ -439,185 +439,190 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         top: true,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Container(
-                width: 401.0,
-                height: 75.0,
-                decoration: const BoxDecoration(color: Colors.white),
-                child: Align(
-                  alignment: const AlignmentDirectional(0.0, 0.0),
-                  child: Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        8.0, 0.0, 8.0, 0.0),
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: TextFormField(
-                        controller: cont,
-                        focusNode: fcus,
-                        autofocus: false,
-                        obscureText: false,
-                        decoration: InputDecoration(
-                          labelText: 'What are you craving?',
-                          labelStyle: GoogleFonts.readexPro(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 0.0),
-                          hintStyle: GoogleFonts.readexPro(
-                              textStyle:
-                                  Theme.of(context).textTheme.labelMedium,
-                              letterSpacing: 0.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.grey, width: 2.0),
-                            borderRadius: BorderRadius.circular(22.0),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Color(0xFFE10E0E), width: 2.0),
-                            borderRadius: BorderRadius.circular(22.0),
-                          ),
-                          errorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.red,
-                              width: 2.0,
+        child: CustomScrollView(slivers: [
+          SliverToBoxAdapter(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Container(
+                  width: 401.0,
+                  height: 75.0,
+                  decoration: const BoxDecoration(color: Colors.white),
+                  child: Align(
+                    alignment: const AlignmentDirectional(0.0, 0.0),
+                    child: Padding(
+                      padding: const EdgeInsetsDirectional.fromSTEB(
+                          8.0, 0.0, 8.0, 0.0),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: TextFormField(
+                          controller: cont,
+                          focusNode: fcus,
+                          autofocus: false,
+                          obscureText: false,
+                          decoration: InputDecoration(
+                            labelText: 'What are you craving?',
+                            labelStyle: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.labelMedium,
+                                letterSpacing: 0.0),
+                            hintStyle: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.labelMedium,
+                                letterSpacing: 0.0),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 2.0),
+                              borderRadius: BorderRadius.circular(22.0),
                             ),
-                            borderRadius: BorderRadius.circular(22.0),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                              color: Colors.orange,
-                              width: 2.0,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Color(0xFFE10E0E), width: 2.0),
+                              borderRadius: BorderRadius.circular(22.0),
                             ),
-                            borderRadius: BorderRadius.circular(22.0),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.red,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(22.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                color: Colors.orange,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(22.0),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.search,
+                            ),
                           ),
-                          prefixIcon: const Icon(
-                            Icons.search,
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w500,
                           ),
-                        ),
-                        style: GoogleFonts.readexPro(
-                          textStyle: Theme.of(context).textTheme.bodyMedium,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 233.0,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                ),
-                child: SizedBox(
+                Container(
                   width: double.infinity,
-                  height: 500.0,
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 0.0, 0.0, 40.0),
-                        child: PageView.builder(
-                            controller: pcont,
-                            scrollDirection: Axis.horizontal,
-                            itemCount: carousel.length,
-                            itemBuilder: (context, index) {
-                              var cr = carousel[index];
-                              return Padding(
-                                padding: const EdgeInsets.all(18.0),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.0),
-                                  child: CachedNetworkImage(
-                                    imageUrl: cr,
-                                    // 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw1fHxyZXN0YXVyYW50fGVufDB8fHx8MTcyMzI5MTU1OXww&ixlib=rb-4.0.3&q=80&w=1080',
-                                    placeholder: (context, url) =>
-                                        CircularProgressIndicator(), // Shows while loading
-                                    errorWidget: (context, url, error) => Icon(
-                                        Icons.error), // Shows if loading fails
-                                    width: 300.0,
-                                    height: 200.0,
-                                    fit: BoxFit.cover, // Adjust image scaling
-                                  ),
-                                ),
-                              );
-                            }),
-                      ),
-                      Align(
-                        alignment: const AlignmentDirectional(0.0, 1.0),
-                        child: Padding(
+                  height: 233.0,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 500.0,
+                    child: Stack(
+                      children: [
+                        Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 0.0, 16.0),
-                          child: SmoothPageIndicator(
-                            controller: pcont,
-                            count: 3,
-                            axisDirection: Axis.horizontal,
-                            onDotClicked: (index) async {
-                              await pcont.animateToPage(
-                                index,
-                                duration: const Duration(milliseconds: 500),
-                                curve: Curves.ease,
-                              );
-                              setState(() {});
-                            },
-                            effect: const ExpandingDotsEffect(
-                              expansionFactor: 3.0,
-                              spacing: 8.0,
-                              radius: 16.0,
-                              dotWidth: 16.0,
-                              dotHeight: 8.0,
-                              dotColor: Color(0x5CE10E0E),
-                              activeDotColor: Color(0xFFE10E0E),
-                              paintStyle: PaintingStyle.fill,
+                              0.0, 0.0, 0.0, 40.0),
+                          child: PageView.builder(
+                              controller: pcont,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: carousel.length,
+                              itemBuilder: (context, index) {
+                                var cr = carousel[index];
+                                return Padding(
+                                  padding: const EdgeInsets.all(18.0),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: CachedNetworkImage(
+                                      imageUrl: cr,
+                                      // 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw1fHxyZXN0YXVyYW50fGVufDB8fHx8MTcyMzI5MTU1OXww&ixlib=rb-4.0.3&q=80&w=1080',
+                                      placeholder: (context, url) =>
+                                          CircularProgressIndicator(), // Shows while loading
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons
+                                              .error), // Shows if loading fails
+                                      width: 300.0,
+                                      height: 200.0,
+                                      fit: BoxFit.cover, // Adjust image scaling
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                        Align(
+                          alignment: const AlignmentDirectional(0.0, 1.0),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                16.0, 0.0, 0.0, 16.0),
+                            child: SmoothPageIndicator(
+                              controller: pcont,
+                              count: 3,
+                              axisDirection: Axis.horizontal,
+                              onDotClicked: (index) async {
+                                await pcont.animateToPage(
+                                  index,
+                                  duration: const Duration(milliseconds: 500),
+                                  curve: Curves.ease,
+                                );
+                                setState(() {});
+                              },
+                              effect: const ExpandingDotsEffect(
+                                expansionFactor: 3.0,
+                                spacing: 8.0,
+                                radius: 16.0,
+                                dotWidth: 16.0,
+                                dotHeight: 8.0,
+                                dotColor: Color(0x5CE10E0E),
+                                activeDotColor: Color(0xFFE10E0E),
+                                paintStyle: PaintingStyle.fill,
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              // page view
-              // listview begin
-              FutureBuilder<List<Section>>(
-                future: futureSection,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (snapshot.hasError) {
-                    return Center(child: Text('Error: ${snapshot.error}'));
-                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No shops available'));
-                  }
-
-                  final section = snapshot.data!;
-
-                  return SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: PageView(
-                      controller: _controller,
-                      children: [
-                        for (var sc in section)
-                          Sectionview(
-                            section: sc,
-                            futureShops: futureShops,
-                          ),
-                      ],
-                      onPageChanged: (index) {
-                        setState(() {
-                          currentIndex = index;
-                        });
-                      },
-                    ),
-                  );
-                },
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+          SliverToBoxAdapter(
+            child: // page view
+                // listview begin
+                FutureBuilder<List<Section>>(
+              future: futureSection,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return const Center(child: Text('No shops available'));
+                }
+
+                final section = snapshot.data!;
+
+                return SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: PageView(
+                    controller: _controller,
+                    children: [
+                      for (var sc in section)
+                        Sectionview(
+                          section: sc,
+                          futureShops: futureShops,
+                        ),
+                    ],
+                    onPageChanged: (index) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    },
+                  ),
+                );
+              },
+            ),
+          ),
+        ]),
       ),
       bottomNavigationBar: FutureBuilder<List<Section>>(
           future: futureSection,
