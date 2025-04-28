@@ -586,9 +586,16 @@ Future<List<Section>> fetchSectionFromDB() async {
   return items.map((json) => Section.fromJson(json)).toList();
 }
 
-Future<List<Shop>> fetchGenFromDB(String g) async {
-  final dbHelper = DatabaseHelper();
-  List<Map<String, dynamic>> shops = await dbHelper.getGen(g);
+// Future<List<Shop>> fetchGenFromDB(String g) async {
+//   final dbHelper = DatabaseHelper();
+//   List<Map<String, dynamic>> shops = await dbHelper.getGen(g);
 
-  return shops.map((json) => Shop.fromJson(json)).toList();
+//   return shops.map((json) => Shop.fromJson(json)).toList();
+// }
+
+Future<List<Shop>> fetchShopBySection(String g, String orb) async {
+  final dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> items = await dbHelper.getShopBySec(g, orb);
+
+  return items.map((json) => Shop.fromJson(json)).toList();
 }

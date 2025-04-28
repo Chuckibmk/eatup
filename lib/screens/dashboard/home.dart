@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/screens/dashboard/sectionView.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -31,6 +30,10 @@ class _HomePageState extends State<HomePage> {
   User? user;
 
   String displayN = '';
+
+  late Future<List<Shop>> futureShopsBySectionStores;
+  late Future<List<Shop>> futureShopsBySectionRest;
+  late Future<List<Shop>> futureShopsBySectionFood;
 
   late Future<List<Shop>> futureShops;
   late Future<List<Section>> futureSection;
@@ -93,6 +96,10 @@ class _HomePageState extends State<HomePage> {
     futureShops = fetchShopsFromDB();
     futureSection = fetchSectionFromDB();
     futureItem = fetchItemFromDB();
+
+    futureShopsBySectionStores = fetchShopBySection('shops', 'Stores');
+    futureShopsBySectionRest = fetchShopBySection('shops', 'Restaurants');
+    futureShopsBySectionFood = fetchShopBySection('shops', 'Food Packages');
   }
 
   List<List<dynamic>> menu = [
@@ -128,241 +135,27 @@ class _HomePageState extends State<HomePage> {
     } else {
       filteredMenu = menu.where((men) => men[3] != 'user').toList();
     }
+
+    // Get the correct future for the current section
+    Future<List<Shop>> currentFuture;
+
+    switch (currentIndex) {
+      case 0:
+        currentFuture = futureShopsBySectionStores;
+        break;
+      case 1:
+        currentFuture = futureShopsBySectionRest;
+        break;
+      case 2:
+        currentFuture = futureShopsBySectionFood;
+        break;
+      default:
+        currentFuture = futureShopsBySectionStores;
+    }
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      drawer: Drawer(
-        elevation: 16.0,
-        child: Container(
-          width: 100.0,
-          height: 100.0,
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 5.0, 0.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        if (user != null)
-                          Align(
-                            alignment: const Alignment(-1.0, -1.0),
-                            child: Text(
-                              displayN,
-                              style: GoogleFonts.readexPro(
-                                color: Colors.black87,
-                                letterSpacing: 0.0,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                textStyle:
-                                    Theme.of(context).textTheme.labelLarge,
-                              ),
-                            ),
-                          )
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.fromSTEB(
-                        0.0, 40.0, 0.0, 0.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        scaffoldKey.currentState?.closeDrawer();
-                      },
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                            alignment: const Alignment(-1.0, -1.0),
-                            child: IconButton(
-                              onPressed: () {
-                                scaffoldKey.currentState?.closeDrawer();
-                              },
-                              style: ButtonStyle(
-                                shape: WidgetStateProperty.all<
-                                    RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0),
-                                  ),
-                                ),
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  const Color(0xECF2B8B8),
-                                ),
-                              ),
-                              icon: const Icon(
-                                Icons.home_filled,
-                                color: Color(0xFFE10E0E),
-                                size: 20.0,
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: const Alignment(0.0, 0.0),
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.fromSTEB(
-                                  30.0, 0.0, 0.0, 0.0),
-                              child: Text(
-                                'Home',
-                                style: GoogleFonts.readexPro(
-                                  color: Colors.black87,
-                                  letterSpacing: 0.0,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                  textStyle:
-                                      Theme.of(context).textTheme.labelLarge,
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-
-                  // listview begin
-                  ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: filteredMenu.length,
-                      itemBuilder: (context, index) {
-                        var mn = filteredMenu[index];
-                        return Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 20.0, 0.0, 0.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              Get.toNamed(mn[0]);
-                            },
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              children: [
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(-1.0, -1.0),
-                                  child: IconButton(
-                                    onPressed: () {
-                                      Get.toNamed(mn[0]);
-                                    },
-                                    style: ButtonStyle(
-                                      shape: WidgetStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                        ),
-                                      ),
-                                      backgroundColor:
-                                          WidgetStateProperty.all<Color>(
-                                        const Color(0xECF2B8B8),
-                                      ),
-                                    ),
-                                    icon: Icon(
-                                      mn[1],
-                                      color: Color(0xFFE10E0E),
-                                      size: 20.0,
-                                    ),
-                                  ),
-                                ),
-                                Align(
-                                  alignment:
-                                      const AlignmentDirectional(0.0, 0.0),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            30.0, 0.0, 0.0, 0.0),
-                                    child: Text(
-                                      mn[2],
-                                      style: GoogleFonts.readexPro(
-                                        color: Colors.black87,
-                                        letterSpacing: 0.0,
-                                        fontSize: 15,
-                                        fontWeight: FontWeight.w400,
-                                        textStyle: Theme.of(context)
-                                            .textTheme
-                                            .labelLarge,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-
-                  //logout
-                  if (user != null)
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          0.0, 20.0, 0.0, 0.0),
-                      child: GestureDetector(
-                        onTap: () {
-                          logout();
-                          setState(() {});
-                        },
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Align(
-                              alignment: const AlignmentDirectional(-1.0, -1.0),
-                              child: IconButton(
-                                onPressed: () {
-                                  logout();
-                                },
-                                style: ButtonStyle(
-                                  shape: WidgetStateProperty.all<
-                                      RoundedRectangleBorder>(
-                                    RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5.0),
-                                    ),
-                                  ),
-                                  backgroundColor:
-                                      WidgetStateProperty.all<Color>(
-                                    const Color(0xECF2B8B8),
-                                  ),
-                                ),
-                                icon: const Icon(
-                                  Icons.logout,
-                                  color: Color(0xFFE10E0E),
-                                  size: 20.0,
-                                ),
-                              ),
-                            ),
-                            Align(
-                              alignment: const AlignmentDirectional(0.0, 0.0),
-                              child: Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    30.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Logout',
-                                  style: GoogleFonts.readexPro(
-                                    color: Colors.black87,
-                                    letterSpacing: 0.0,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w400,
-                                    textStyle:
-                                        Theme.of(context).textTheme.labelLarge,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
+      drawer: buildDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
@@ -497,7 +290,7 @@ class _HomePageState extends State<HomePage> {
             //         // ),
             //       );
             //     })
-
+// CustomScrollView vs NestedScrollView to handle dynamic data from db (but it has bottom overflow issues, so i just made the page longer till i sort it out)
             CustomScrollView(slivers: [
           SliverToBoxAdapter(
             child: searchField(),
@@ -521,7 +314,7 @@ class _HomePageState extends State<HomePage> {
 
                 final section = snapshot.data!;
 
-                return Container(
+                return SizedBox(
                   height: MediaQuery.of(context).size.height * 2,
                   child: PageView.builder(
                     controller: _controller,
@@ -529,7 +322,7 @@ class _HomePageState extends State<HomePage> {
                     itemBuilder: (context, index) {
                       return Sectionview(
                         section: section[index],
-                        futureShops: futureShops,
+                        futureShops: currentFuture,
                       );
                     },
                     onPageChanged: (index) {
@@ -574,6 +367,237 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget buildDrawer() {
+    return Drawer(
+      elevation: 16.0,
+      child: Container(
+        width: 100.0,
+        height: 100.0,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 0.0, 0.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      if (user != null)
+                        Align(
+                          alignment: const Alignment(-1.0, -1.0),
+                          child: Text(
+                            displayN,
+                            style: GoogleFonts.readexPro(
+                              color: Colors.black87,
+                              letterSpacing: 0.0,
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              textStyle: Theme.of(context).textTheme.labelLarge,
+                            ),
+                          ),
+                        )
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding:
+                      const EdgeInsetsDirectional.fromSTEB(0.0, 40.0, 0.0, 0.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      scaffoldKey.currentState?.closeDrawer();
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: const Alignment(-1.0, -1.0),
+                          child: IconButton(
+                            onPressed: () {
+                              scaffoldKey.currentState?.closeDrawer();
+                            },
+                            style: ButtonStyle(
+                              shape: WidgetStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5.0),
+                                ),
+                              ),
+                              backgroundColor: WidgetStateProperty.all<Color>(
+                                const Color(0xECF2B8B8),
+                              ),
+                            ),
+                            icon: const Icon(
+                              Icons.home_filled,
+                              color: Color(0xFFE10E0E),
+                              size: 20.0,
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: const Alignment(0.0, 0.0),
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.fromSTEB(
+                                30.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              'Home',
+                              style: GoogleFonts.readexPro(
+                                color: Colors.black87,
+                                letterSpacing: 0.0,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                textStyle:
+                                    Theme.of(context).textTheme.labelLarge,
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+
+                // listview begin
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: filteredMenu.length,
+                    itemBuilder: (context, index) {
+                      var mn = filteredMenu[index];
+                      return Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 20.0, 0.0, 0.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Get.toNamed(mn[0]);
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Align(
+                                alignment:
+                                    const AlignmentDirectional(-1.0, -1.0),
+                                child: IconButton(
+                                  onPressed: () {
+                                    Get.toNamed(mn[0]);
+                                  },
+                                  style: ButtonStyle(
+                                    shape: WidgetStateProperty.all<
+                                        RoundedRectangleBorder>(
+                                      RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(5.0),
+                                      ),
+                                    ),
+                                    backgroundColor:
+                                        WidgetStateProperty.all<Color>(
+                                      const Color(0xECF2B8B8),
+                                    ),
+                                  ),
+                                  icon: Icon(
+                                    mn[1],
+                                    color: Color(0xFFE10E0E),
+                                    size: 20.0,
+                                  ),
+                                ),
+                              ),
+                              Align(
+                                alignment: const AlignmentDirectional(0.0, 0.0),
+                                child: Padding(
+                                  padding: const EdgeInsetsDirectional.fromSTEB(
+                                      30.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    mn[2],
+                                    style: GoogleFonts.readexPro(
+                                      color: Colors.black87,
+                                      letterSpacing: 0.0,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    }),
+
+                //logout
+                if (user != null)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.fromSTEB(
+                        0.0, 20.0, 0.0, 0.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        logout();
+                        setState(() {});
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Align(
+                            alignment: const AlignmentDirectional(-1.0, -1.0),
+                            child: IconButton(
+                              onPressed: () {
+                                logout();
+                              },
+                              style: ButtonStyle(
+                                shape: WidgetStateProperty.all<
+                                    RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(5.0),
+                                  ),
+                                ),
+                                backgroundColor: WidgetStateProperty.all<Color>(
+                                  const Color(0xECF2B8B8),
+                                ),
+                              ),
+                              icon: const Icon(
+                                Icons.logout,
+                                color: Color(0xFFE10E0E),
+                                size: 20.0,
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  30.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                'Logout',
+                                style: GoogleFonts.readexPro(
+                                  color: Colors.black87,
+                                  letterSpacing: 0.0,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                  textStyle:
+                                      Theme.of(context).textTheme.labelLarge,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget searchField() {
     return Container(
       width: 401.0,
@@ -599,27 +623,27 @@ class _HomePageState extends State<HomePage> {
                     textStyle: Theme.of(context).textTheme.labelMedium,
                     letterSpacing: 0.0),
                 enabledBorder: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.grey, width: 2.0),
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderSide: const BorderSide(color: Colors.grey, width: 1.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide:
-                      const BorderSide(color: Color(0xFFE10E0E), width: 2.0),
-                  borderRadius: BorderRadius.circular(22.0),
+                      const BorderSide(color: Color(0xFFE10E0E), width: 1.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
                     color: Colors.red,
-                    width: 2.0,
+                    width: 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 focusedErrorBorder: OutlineInputBorder(
                   borderSide: const BorderSide(
                     color: Colors.orange,
-                    width: 2.0,
+                    width: 1.0,
                   ),
-                  borderRadius: BorderRadius.circular(22.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
                 prefixIcon: const Icon(
                   Icons.search,
@@ -659,7 +683,7 @@ class _HomePageState extends State<HomePage> {
                   itemBuilder: (context, index) {
                     var cr = carousel[index];
                     return Padding(
-                      padding: const EdgeInsets.all(18.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
                         child: CachedNetworkImage(
