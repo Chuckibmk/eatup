@@ -111,69 +111,72 @@ class _SectionviewState extends State<Sectionview> {
                   onTap: () {
                     Get.toNamed(product);
                   },
-                  child: Card(
-                    clipBehavior: Clip.antiAliasWithSaveLayer,
-                    color: Colors.white,
-                    elevation: 4.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // 🖼 Image
-                        ClipRRect(
-                          borderRadius: const BorderRadius.vertical(
-                              top: Radius.circular(20.0)),
-                          child: sh.image != null && sh.image!.isNotEmpty
-                              ? Image.memory(
-                                  sh.image!,
-                                  width: double.infinity,
-                                  height: 200,
-                                  fit: BoxFit
-                                      .cover, // Ensure image scales properly
-                                )
-                              : const SizedBox(
-                                  height: 200,
-                                  child: Center(
-                                      child: Icon(Icons.image_not_supported,
-                                          size: 80)),
-                                ),
-                        ),
-
-                        // 📄 Text Content
-                        Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              // 🏪 Shop Name
-                              Text(
-                                sh.name,
-                                style: GoogleFonts.lora(
-                                  textStyle:
-                                      Theme.of(context).textTheme.titleLarge,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              const SizedBox(height: 5),
-
-                              // 📌 Subtitle
-                              Text(
-                                sh.subtitle,
-                                style: GoogleFonts.readexPro(
-                                  textStyle:
-                                      Theme.of(context).textTheme.bodyMedium,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
-                                  color: Colors.grey[700],
-                                ),
-                              ),
-                            ],
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Card(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      color: Colors.white,
+                      elevation: 4.0,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // 🖼 Image
+                          ClipRRect(
+                            borderRadius: const BorderRadius.vertical(
+                                top: Radius.circular(20.0)),
+                            child: sh.image != null && sh.image!.isNotEmpty
+                                ? Image.memory(
+                                    sh.image!,
+                                    width: double.infinity,
+                                    height: 200,
+                                    fit: BoxFit
+                                        .cover, // Ensure image scales properly
+                                  )
+                                : const SizedBox(
+                                    height: 200,
+                                    child: Center(
+                                        child: Icon(Icons.image_not_supported,
+                                            size: 80)),
+                                  ),
                           ),
-                        ),
-                      ],
+
+                          // 📄 Text Content
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // 🏪 Shop Name
+                                Text(
+                                  sh.name,
+                                  style: GoogleFonts.lora(
+                                    textStyle:
+                                        Theme.of(context).textTheme.titleLarge,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+
+                                // 📌 Subtitle
+                                Text(
+                                  sh.subtitle,
+                                  style: GoogleFonts.readexPro(
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: Colors.grey[700],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

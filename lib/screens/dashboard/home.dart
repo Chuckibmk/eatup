@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/screens/dashboard/sectionView.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -439,151 +440,70 @@ class _HomePageState extends State<HomePage> {
       ),
       body: SafeArea(
         top: true,
-        child: CustomScrollView(slivers: [
+        child:
+            // FutureBuilder<List<Section>>(
+            //     future: futureSection,
+            //     builder: (context, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.waiting) {
+            //         return const Center(child: CircularProgressIndicator());
+            //       } else if (snapshot.hasError) {
+            //         return Center(child: Text('Error: ${snapshot.error}'));
+            //       } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            //         return const Center(child: Text('No shops available'));
+            //       }
+
+            //       final section = snapshot.data!;
+
+            //       return NestedScrollView(
+            //         headerSliverBuilder:
+            //             (BuildContext context, bool innerBoxIsScrolled) {
+            //           return <Widget>[
+            //             SliverOverlapAbsorber(
+            //               handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+            //                   context),
+            //               sliver: SliverList(
+            //                 delegate: SliverChildListDelegate([
+            //                   searchField(),
+            //                   buildCarousel(),
+            //                 ]),
+            //               ),
+            //             )
+            //           ];
+            //         },
+            //         body:
+            //             // LayoutBuilder(builder: (context, constraints) {
+            //             //   return
+            //             SizedBox(
+            //           height: MediaQuery.of(context).size.height * 8,
+            //           child: PageView.builder(
+            //             controller: _controller,
+            //             itemCount: section.length,
+            //             itemBuilder: (context, index) {
+            //               return Sectionview(
+            //                 section: section[index],
+            //                 futureShops: futureShops,
+            //               );
+            //             },
+            //             onPageChanged: (index) {
+            //               setState(() {
+            //                 currentIndex = index;
+            //               });
+            //             },
+            //           ),
+            //         ),
+            //         //   ;
+            //         // }),
+            //         //   },
+            //         // ),
+            //       );
+            //     })
+
+            CustomScrollView(slivers: [
           SliverToBoxAdapter(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Container(
-                  width: 401.0,
-                  height: 75.0,
-                  decoration: const BoxDecoration(color: Colors.white),
-                  child: Align(
-                    alignment: const AlignmentDirectional(0.0, 0.0),
-                    child: Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(
-                          8.0, 0.0, 8.0, 0.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: TextFormField(
-                          controller: cont,
-                          focusNode: fcus,
-                          autofocus: false,
-                          obscureText: false,
-                          decoration: InputDecoration(
-                            labelText: 'What are you craving?',
-                            labelStyle: GoogleFonts.readexPro(
-                                textStyle:
-                                    Theme.of(context).textTheme.labelMedium,
-                                letterSpacing: 0.0),
-                            hintStyle: GoogleFonts.readexPro(
-                                textStyle:
-                                    Theme.of(context).textTheme.labelMedium,
-                                letterSpacing: 0.0),
-                            enabledBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Colors.grey, width: 2.0),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: Color(0xFFE10E0E), width: 2.0),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            errorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.red,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            focusedErrorBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                color: Colors.orange,
-                                width: 2.0,
-                              ),
-                              borderRadius: BorderRadius.circular(22.0),
-                            ),
-                            prefixIcon: const Icon(
-                              Icons.search,
-                            ),
-                          ),
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  height: 233.0,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: SizedBox(
-                    width: double.infinity,
-                    height: 500.0,
-                    child: Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 0.0, 40.0),
-                          child: PageView.builder(
-                              controller: pcont,
-                              scrollDirection: Axis.horizontal,
-                              itemCount: carousel.length,
-                              itemBuilder: (context, index) {
-                                var cr = carousel[index];
-                                return Padding(
-                                  padding: const EdgeInsets.all(18.0),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: CachedNetworkImage(
-                                      imageUrl: cr,
-                                      // 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw1fHxyZXN0YXVyYW50fGVufDB8fHx8MTcyMzI5MTU1OXww&ixlib=rb-4.0.3&q=80&w=1080',
-                                      placeholder: (context, url) =>
-                                          CircularProgressIndicator(), // Shows while loading
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons
-                                              .error), // Shows if loading fails
-                                      width: 300.0,
-                                      height: 200.0,
-                                      fit: BoxFit.cover, // Adjust image scaling
-                                    ),
-                                  ),
-                                );
-                              }),
-                        ),
-                        Align(
-                          alignment: const AlignmentDirectional(0.0, 1.0),
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                16.0, 0.0, 0.0, 16.0),
-                            child: SmoothPageIndicator(
-                              controller: pcont,
-                              count: 3,
-                              axisDirection: Axis.horizontal,
-                              onDotClicked: (index) async {
-                                await pcont.animateToPage(
-                                  index,
-                                  duration: const Duration(milliseconds: 500),
-                                  curve: Curves.ease,
-                                );
-                                setState(() {});
-                              },
-                              effect: const ExpandingDotsEffect(
-                                expansionFactor: 3.0,
-                                spacing: 8.0,
-                                radius: 16.0,
-                                dotWidth: 16.0,
-                                dotHeight: 8.0,
-                                dotColor: Color(0x5CE10E0E),
-                                activeDotColor: Color(0xFFE10E0E),
-                                paintStyle: PaintingStyle.fill,
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            child: searchField(),
+          ),
+          SliverToBoxAdapter(
+            child: buildCarousel(),
           ),
           SliverToBoxAdapter(
             child: // page view
@@ -601,17 +521,17 @@ class _HomePageState extends State<HomePage> {
 
                 final section = snapshot.data!;
 
-                return SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: PageView(
+                return Container(
+                  height: MediaQuery.of(context).size.height * 2,
+                  child: PageView.builder(
                     controller: _controller,
-                    children: [
-                      for (var sc in section)
-                        Sectionview(
-                          section: sc,
-                          futureShops: futureShops,
-                        ),
-                    ],
+                    itemCount: section.length,
+                    itemBuilder: (context, index) {
+                      return Sectionview(
+                        section: section[index],
+                        futureShops: futureShops,
+                      );
+                    },
                     onPageChanged: (index) {
                       setState(() {
                         currentIndex = index;
@@ -651,6 +571,145 @@ class _HomePageState extends State<HomePage> {
               ],
             );
           }),
+    );
+  }
+
+  Widget searchField() {
+    return Container(
+      width: 401.0,
+      height: 75.0,
+      decoration: const BoxDecoration(color: Colors.white),
+      child: Align(
+        alignment: const AlignmentDirectional(0.0, 0.0),
+        child: Padding(
+          padding: const EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+          child: SizedBox(
+            width: double.infinity,
+            child: TextFormField(
+              controller: cont,
+              focusNode: fcus,
+              autofocus: false,
+              obscureText: false,
+              decoration: InputDecoration(
+                labelText: 'What are you craving?',
+                labelStyle: GoogleFonts.readexPro(
+                    textStyle: Theme.of(context).textTheme.labelMedium,
+                    letterSpacing: 0.0),
+                hintStyle: GoogleFonts.readexPro(
+                    textStyle: Theme.of(context).textTheme.labelMedium,
+                    letterSpacing: 0.0),
+                enabledBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(color: Colors.grey, width: 2.0),
+                  borderRadius: BorderRadius.circular(22.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide:
+                      const BorderSide(color: Color(0xFFE10E0E), width: 2.0),
+                  borderRadius: BorderRadius.circular(22.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.red,
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(22.0),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderSide: const BorderSide(
+                    color: Colors.orange,
+                    width: 2.0,
+                  ),
+                  borderRadius: BorderRadius.circular(22.0),
+                ),
+                prefixIcon: const Icon(
+                  Icons.search,
+                ),
+              ),
+              style: GoogleFonts.readexPro(
+                textStyle: Theme.of(context).textTheme.bodyMedium,
+                letterSpacing: 0.0,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildCarousel() {
+    return Container(
+      width: double.infinity,
+      height: 233.0,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: SizedBox(
+        width: double.infinity,
+        height: 500.0,
+        child: Stack(
+          children: [
+            Padding(
+              padding:
+                  const EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 40.0),
+              child: PageView.builder(
+                  controller: pcont,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: carousel.length,
+                  itemBuilder: (context, index) {
+                    var cr = carousel[index];
+                    return Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8.0),
+                        child: CachedNetworkImage(
+                          imageUrl: cr,
+                          // 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHw1fHxyZXN0YXVyYW50fGVufDB8fHx8MTcyMzI5MTU1OXww&ixlib=rb-4.0.3&q=80&w=1080',
+                          placeholder: (context, url) =>
+                              CircularProgressIndicator(), // Shows while loading
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error), // Shows if loading fails
+                          width: 300.0,
+                          height: 200.0,
+                          fit: BoxFit.cover, // Adjust image scaling
+                        ),
+                      ),
+                    );
+                  }),
+            ),
+            Align(
+              alignment: const AlignmentDirectional(0.0, 1.0),
+              child: Padding(
+                padding:
+                    const EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 16.0),
+                child: SmoothPageIndicator(
+                  controller: pcont,
+                  count: 3,
+                  axisDirection: Axis.horizontal,
+                  onDotClicked: (index) async {
+                    await pcont.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.ease,
+                    );
+                    setState(() {});
+                  },
+                  effect: const ExpandingDotsEffect(
+                    expansionFactor: 3.0,
+                    spacing: 8.0,
+                    radius: 16.0,
+                    dotWidth: 16.0,
+                    dotHeight: 8.0,
+                    dotColor: Color(0x5CE10E0E),
+                    activeDotColor: Color(0xFFE10E0E),
+                    paintStyle: PaintingStyle.fill,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }
