@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:eatup/routes/getxCont.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/screens/dashboard/sectionView.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -135,6 +137,8 @@ class _HomePageState extends State<HomePage> {
     } else {
       filteredMenu = menu.where((men) => men[3] != 'user').toList();
     }
+
+    // final sharedData = Get.find<SharedDataController>();
 
     // Get the correct future for the current section
     Future<List<Shop>> currentFuture;
@@ -301,6 +305,10 @@ class _HomePageState extends State<HomePage> {
           SliverToBoxAdapter(
             child: // page view
                 // listview begin
+                //   Obx(() {
+                // final sharedData = Get.find<SharedDataController>();
+
+                // return
                 FutureBuilder<List<Section>>(
               future: futureSection,
               builder: (context, snapshot) {
@@ -315,7 +323,8 @@ class _HomePageState extends State<HomePage> {
                 final section = snapshot.data!;
 
                 return SizedBox(
-                  height: MediaQuery.of(context).size.height * 2,
+                  height: 330 * 3,
+                  // height: 330 * sharedData.sectionL.value.toDouble(),
                   child: PageView.builder(
                     controller: _controller,
                     itemCount: section.length,
@@ -334,6 +343,7 @@ class _HomePageState extends State<HomePage> {
                 );
               },
             ),
+            // }),
           ),
         ]),
       ),

@@ -97,6 +97,15 @@ class DatabaseHelper {
     );
   }
 
+  Future<List<Map<String, dynamic>>> getItemByShop(String g, String orb) async {
+    final db = await database;
+    return db.query(
+      g,
+      where: 'shop = ?', // Filtering by the 'section' column
+      whereArgs: [orb], // The section value to filter by
+    );
+  }
+
   Future<Map<String, dynamic>?> getGenById(int id, String g) async {
     final db = await database; // Get database instance
     List<Map<String, dynamic>> result =

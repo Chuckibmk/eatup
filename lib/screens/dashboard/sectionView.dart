@@ -1,5 +1,7 @@
+// import 'package:eatup/routes/getxCont.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -16,6 +18,8 @@ class Sectionview extends StatefulWidget {
 }
 
 class _SectionviewState extends State<Sectionview> {
+  // final sharedData = Get.find<SharedDataController>();
+
   @override
   Widget build(BuildContext context) {
     // return Placeholder();
@@ -98,6 +102,10 @@ class _SectionviewState extends State<Sectionview> {
             }
 
             final shops = snapshot.data!;
+
+            // sharedData.updateSectionL(shops.length);
+            // home.sectionL = shops.length;
+
             return ListView.separated(
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
@@ -109,7 +117,11 @@ class _SectionviewState extends State<Sectionview> {
 
                 return GestureDetector(
                   onTap: () {
-                    Get.toNamed(product);
+                    Get.toNamed(product, arguments: {
+                      'title': sh.name,
+                      'image': sh.image,
+                      'tabs': sh.tabs,
+                    });
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8.0),

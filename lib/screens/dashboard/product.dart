@@ -12,6 +12,7 @@ class Product extends StatefulWidget {
 
 class _ProductState extends State<Product> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  var argData = Get.arguments;
 
   @override
   Widget build(BuildContext context) {
@@ -38,14 +39,11 @@ class _ProductState extends State<Product> {
                     Container(
                       width: 480.0,
                       height: 239.0,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.white,
                         image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                            'https://images.unsplash.com/photo-1674456720401-1557c76bf72c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwxNHx8c3BhZ2hldHRpfGVufDB8fHx8MTcyMzYzNzk4M3ww&ixlib=rb-4.0.3&q=80&w=1080',
-                          ),
-                        ),
+                            fit: BoxFit.cover,
+                            image: MemoryImage(argData['image'])),
                       ),
                       child: Align(
                         alignment: const AlignmentDirectional(0.0, -1.0),
@@ -138,12 +136,12 @@ class _ProductState extends State<Product> {
                         children: [
                           Padding(
                             padding: const EdgeInsetsDirectional.fromSTEB(
-                                0.0, 20.0, 0.0, 35.0),
+                                0.0, 20.0, 0.0, 20.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 Text(
-                                  'Stephanie\'s Cook',
+                                  argData['title'],
                                   style: GoogleFonts.outfit(
                                     textStyle:
                                         Theme.of(context).textTheme.titleLarge,
@@ -155,19 +153,23 @@ class _ProductState extends State<Product> {
                               ],
                             ),
                           ),
-                          Padding(
+                          Container(
                             padding: const EdgeInsetsDirectional.fromSTEB(
                               0.0,
                               0.0,
                               0.0,
-                              35.0,
+                              25.0,
                             ),
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Padding(
+                            height: 70,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: argData['tabs'].split(',').length,
+                                itemBuilder: (contex, index) {
+                                  var tabs = argData['tabs']
+                                      .split(',')
+                                      .map((e) => e.trim().replaceAll('"', ''))
+                                      .toList();
+                                  return Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 20.0, 0.0),
@@ -198,7 +200,8 @@ class _ProductState extends State<Product> {
                                         ),
                                       ),
                                       child: Text(
-                                        'Breakfast',
+                                        tabs[index],
+                                        // 'Breakfast',
                                         style: GoogleFonts.readexPro(
                                           textStyle: Theme.of(context)
                                               .textTheme
@@ -209,139 +212,8 @@ class _ProductState extends State<Product> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 20.0, 0.0),
-                                    child: ElevatedButton(
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                        elevation:
-                                            WidgetStateProperty.all<double>(
-                                                3.0),
-                                        shape: WidgetStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            side: const BorderSide(
-                                              width: 1.0,
-                                              color: Colors.transparent,
-                                            ),
-                                          ),
-                                        ),
-                                        backgroundColor:
-                                            WidgetStateProperty.all<Color>(
-                                          Colors.transparent,
-                                        ),
-                                        fixedSize:
-                                            WidgetStateProperty.all<Size>(
-                                          const Size.fromHeight(40.0),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Snacks',
-                                        style: GoogleFonts.readexPro(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 20.0, 0.0),
-                                    child: ElevatedButton(
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                        elevation:
-                                            WidgetStateProperty.all<double>(
-                                                3.0),
-                                        shape: WidgetStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            side: const BorderSide(
-                                              width: 1.0,
-                                              color: Colors.transparent,
-                                            ),
-                                          ),
-                                        ),
-                                        backgroundColor:
-                                            WidgetStateProperty.all<Color>(
-                                          Colors.transparent,
-                                        ),
-                                        fixedSize:
-                                            WidgetStateProperty.all<Size>(
-                                          const Size.fromHeight(40.0),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Grills',
-                                        style: GoogleFonts.readexPro(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 20.0, 0.0),
-                                    child: ElevatedButton(
-                                      onPressed: () {},
-                                      style: ButtonStyle(
-                                        elevation:
-                                            WidgetStateProperty.all<double>(
-                                                3.0),
-                                        shape: WidgetStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            side: const BorderSide(
-                                              width: 1.0,
-                                              color: Colors.transparent,
-                                            ),
-                                          ),
-                                        ),
-                                        backgroundColor:
-                                            WidgetStateProperty.all<Color>(
-                                          Colors.transparent,
-                                        ),
-                                        fixedSize:
-                                            WidgetStateProperty.all<Size>(
-                                          const Size.fromHeight(40.0),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Cakes',
-                                        style: GoogleFonts.readexPro(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .titleSmall,
-                                          color: Colors.white,
-                                          letterSpacing: 0.0,
-                                          fontSize: 12,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                  );
+                                }),
                           ),
                           ListView(
                             padding: EdgeInsets.zero,
