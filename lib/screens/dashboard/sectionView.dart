@@ -10,8 +10,13 @@ import '../../routes/route_names.dart';
 class Sectionview extends StatefulWidget {
   final Section section;
   final Future<List<Shop>> futureShops;
-  const Sectionview(
-      {super.key, required this.section, required this.futureShops});
+  // final Future<List<Item>> futureItem;
+  const Sectionview({
+    super.key,
+    required this.section,
+    required this.futureShops,
+    // required this.futureItem
+  });
 
   @override
   State<Sectionview> createState() => _SectionviewState();
@@ -19,7 +24,7 @@ class Sectionview extends StatefulWidget {
 
 class _SectionviewState extends State<Sectionview> {
   // final sharedData = Get.find<SharedDataController>();
-
+  late Future<List<Item>> currentFuture;
   @override
   Widget build(BuildContext context) {
     // return Placeholder();
@@ -115,12 +120,20 @@ class _SectionviewState extends State<Sectionview> {
               itemBuilder: (context, index) {
                 var sh = shops[index];
 
+                Future<void> loadItems() async {
+                  setState(() {
+                    currentFuture = fetchItemByShop('item', sh.name);
+                  });
+                }
+
                 return GestureDetector(
                   onTap: () {
+                    loadItems();
                     Get.toNamed(product, arguments: {
                       'title': sh.name,
                       'image': sh.image,
                       'tabs': sh.tabs,
+                      'items': currentFuture
                     });
                   },
                   child: Padding(

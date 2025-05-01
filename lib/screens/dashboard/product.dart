@@ -1,7 +1,9 @@
 import 'package:eatup/routes/route_names.dart';
+import 'package:eatup/widgets/widg.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class Product extends StatefulWidget {
   const Product({super.key});
@@ -16,6 +18,11 @@ class _ProductState extends State<Product> {
 
   @override
   Widget build(BuildContext context) {
+    final ItemScrollController itemScrollController = ItemScrollController();
+    final Map<String, int> tabIndexMap =
+        {}; // e.g. {'Beverages': 0, 'Snacks': 4}
+    int displayIndex = 0;
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
@@ -169,12 +176,21 @@ class _ProductState extends State<Product> {
                                       .split(',')
                                       .map((e) => e.trim().replaceAll('"', ''))
                                       .toList();
+                                  var tb = tabs[index];
                                   return Padding(
                                     padding:
                                         const EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 20.0, 0.0),
                                     child: ElevatedButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        final index = tabIndexMap[tb];
+                                        if (index != null) {
+                                          itemScrollController.scrollTo(
+                                              index: index,
+                                              duration:
+                                                  Duration(milliseconds: 300));
+                                        }
+                                      },
                                       style: ButtonStyle(
                                         elevation:
                                             WidgetStateProperty.all<double>(
@@ -200,7 +216,7 @@ class _ProductState extends State<Product> {
                                         ),
                                       ),
                                       child: Text(
-                                        tabs[index],
+                                        tb,
                                         // 'Breakfast',
                                         style: GoogleFonts.readexPro(
                                           textStyle: Theme.of(context)
@@ -215,201 +231,79 @@ class _ProductState extends State<Product> {
                                   );
                                 }),
                           ),
-                          ListView(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            children: [
-                              Container(
-                                width: 100.0,
-                                height: 161.0,
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding:
-                                          const EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 15.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text(
-                                            'breakfast',
-                                            style: GoogleFonts.readexPro(
-                                              textStyle: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(0.0, 0.0, 0.0, 0.0),
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            child: Image.network(
-                                              'https://images.unsplash.com/photo-1558896450-09e9d93b30ea?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0NTYyMDF8MHwxfHNlYXJjaHwyMnx8d2FmZmxlfGVufDB8fHx8MTcyMzY0MTQzN3ww&ixlib=rb-4.0.3&q=80&w=1080',
-                                              width: 60.0,
-                                              height: 105.0,
-                                              fit: BoxFit.cover,
-                                              alignment:
-                                                  const Alignment(-1.0, 1.0),
-                                            ),
+                          FutureBuilder<List<Item>>(
+                              future: argData['items'],
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                } else if (snapshot.hasError) {
+                                  return Center(
+                                      child: Text('Error: ${snapshot.error}'));
+                                } else if (!snapshot.hasData ||
+                                    snapshot.data!.isEmpty) {
+                                  return const Center(
+                                      child: Text('No Items available'));
+                                }
+                                final items = snapshot.data!;
+                                final groupedItems = <String, List<Item>>{};
+
+                                for (final item in items) {
+                                  final tab = item
+                                      .tabs; // Assuming `tabs` is a field in Item class
+                                  if (!groupedItems.containsKey(tab)) {
+                                    groupedItems[tab] = [];
+                                  }
+                                  groupedItems[tab]!.add(item);
+                                }
+
+                                // After grouping items
+                                final displayList = <Map<String, dynamic>>[];
+
+                                groupedItems.forEach((tab, itemList) {
+                                  tabIndexMap[tab] =
+                                      displayIndex++; // Store index of header
+                                  displayList
+                                      .add({'type': 'header', 'value': tab});
+                                  for (var item in itemList) {
+                                    displayList
+                                        .add({'type': 'item', 'value': item});
+                                    displayIndex++;
+                                  }
+                                });
+                                return ScrollablePositionedList.separated(
+                                  shrinkWrap: true,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  itemCount: displayList.length,
+                                  itemScrollController: itemScrollController,
+                                  separatorBuilder: (_, __) =>
+                                      const SizedBox(height: 10),
+                                  itemBuilder: (context, index) {
+                                    final entry = displayList[index];
+
+                                    if (entry['type'] == 'header') {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        child: Text(
+                                          entry['value'],
+                                          style: GoogleFonts.readexPro(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold,
+                                            textStyle: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
                                           ),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(15.0, 0.0, 0.0, 0.0),
-                                          child: Container(
-                                            width: 150.0,
-                                            height: 100.0,
-                                            decoration: const BoxDecoration(
-                                              color: Colors.white,
-                                            ),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          -1.0, 0.0),
-                                                  child: Container(
-                                                    decoration:
-                                                        const BoxDecoration(),
-                                                    child: Text(
-                                                      'Waffle (45mins Wait)',
-                                                      style:
-                                                          GoogleFonts.readexPro(
-                                                        textStyle:
-                                                            Theme.of(context)
-                                                                .textTheme
-                                                                .bodyMedium,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 14,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  // decoration:
-                                                  //     const BoxDecoration(),
-                                                  child: Text(
-                                                    'Experience the perfect balance of crispy and fluffy textures with a waffle, customizable with endless sweet or savory top.....',
-                                                    style:
-                                                        GoogleFonts.readexPro(
-                                                      textStyle:
-                                                          Theme.of(context)
-                                                              .textTheme
-                                                              .bodySmall,
-                                                      color: Colors.black87,
-                                                      letterSpacing: 0.0,
-                                                      fontWeight:
-                                                          FontWeight.normal,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      const AlignmentDirectional(
-                                                          -1.0, 0.0),
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                            0.0, 5.0, 0.0, 0.0),
-                                                    child: Container(
-                                                      decoration:
-                                                          const BoxDecoration(),
-                                                      child: Text(
-                                                        '#1500',
-                                                        style: GoogleFonts
-                                                            .readexPro(
-                                                          textStyle:
-                                                              Theme.of(context)
-                                                                  .textTheme
-                                                                  .bodyMedium,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          fontSize: 13,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 0.0, 0.0, 0.0),
-                                          child: IconButton(
-                                            style: ButtonStyle(
-                                              shape: WidgetStateProperty.all<
-                                                  RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20.0),
-                                                  side: const BorderSide(
-                                                      width: 1.0,
-                                                      color:
-                                                          Colors.transparent),
-                                                ),
-                                              ),
-                                              backgroundColor:
-                                                  WidgetStateProperty.all<
-                                                      Color>(
-                                                const Color(0xFFE10E0E),
-                                              ),
-                                              fixedSize:
-                                                  WidgetStateProperty.all<Size>(
-                                                      const Size.square(35.0)),
-                                            ),
-                                            onPressed: () {},
-                                            icon: const Icon(
-                                              Icons.add,
-                                              color: Colors.white,
-                                              size: 20.0,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Divider(
-                                      thickness: 1.0,
-                                      color: Colors.grey,
-                                    ),
-                                    // Container(
-                                    //   width: 100.0,
-                                    //   height: 100.0,
-                                    //   decoration: BoxDecoration(
-                                    //     color: Colors.green,
-                                    //   ),
-                                    // )
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
+                                      );
+                                    }
+
+                                    final Item it = entry['value'];
+                                    return itemWidget(it);
+                                  },
+                                );
+                              })
                         ],
                       ),
                     ),
@@ -419,6 +313,128 @@ class _ProductState extends State<Product> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget itemWidget(dynamic it) {
+    return Container(
+      width: 100.0,
+      height: 161.0,
+      decoration: const BoxDecoration(
+        color: Colors.white,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: it.image != null && it.image!.isNotEmpty
+                    ? Image.memory(
+                        it.image!,
+                        width: 60.0,
+                        height: 105.0,
+                        fit: BoxFit.cover,
+                        alignment: const Alignment(-1.0, 1.0),
+                      )
+                    : const SizedBox(
+                        height: 200,
+                        child: Center(
+                            child: Icon(Icons.image_not_supported, size: 80)),
+                      ),
+              ),
+              Container(
+                width: 200.0,
+                height: 110.0,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Align(
+                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      child: Container(
+                        decoration: const BoxDecoration(),
+                        child: Text(
+                          it.name,
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.bodyMedium,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Text(
+                        it.details,
+                        style: GoogleFonts.readexPro(
+                          textStyle: Theme.of(context).textTheme.bodySmall,
+                          color: Colors.black87,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.normal,
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            0.0, 5.0, 0.0, 0.0),
+                        child: Container(
+                          decoration: const BoxDecoration(),
+                          child: Text(
+                            it.price,
+                            style: GoogleFonts.readexPro(
+                              textStyle: Theme.of(context).textTheme.bodyMedium,
+                              letterSpacing: 0.0,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 13,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                style: ButtonStyle(
+                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.0),
+                      side: const BorderSide(
+                          width: 1.0, color: Colors.transparent),
+                    ),
+                  ),
+                  backgroundColor: WidgetStateProperty.all<Color>(
+                    const Color(0xFFE10E0E),
+                  ),
+                  fixedSize:
+                      WidgetStateProperty.all<Size>(const Size.square(35.0)),
+                ),
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                  size: 20.0,
+                ),
+              ),
+            ],
+          ),
+          const Divider(
+            thickness: 1.0,
+            color: Colors.grey,
+          ),
+        ],
       ),
     );
   }

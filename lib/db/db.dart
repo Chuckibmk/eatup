@@ -101,8 +101,9 @@ class DatabaseHelper {
     final db = await database;
     return db.query(
       g,
-      where: 'shop = ?', // Filtering by the 'section' column
-      whereArgs: [orb], // The section value to filter by
+      groupBy: 'tabs',
+      where: 'shop = ?', // Filtering by the 'shop' column
+      whereArgs: [orb], // The shop value to filter by
     );
   }
 

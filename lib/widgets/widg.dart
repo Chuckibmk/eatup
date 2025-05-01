@@ -599,3 +599,10 @@ Future<List<Shop>> fetchShopBySection(String g, String orb) async {
 
   return items.map((json) => Shop.fromJson(json)).toList();
 }
+
+Future<List<Item>> fetchItemByShop(String g, String orb) async {
+  final dbHelper = DatabaseHelper();
+  List<Map<String, dynamic>> items = await dbHelper.getItemByShop(g, orb);
+
+  return items.map((json) => Item.fromJson(json)).toList();
+}
