@@ -13,6 +13,7 @@ import 'package:eatup/screens/dashboard/cart.dart';
 import 'package:eatup/screens/dashboard/dashboard.dart';
 import 'package:eatup/screens/dashboard/help.dart';
 import 'package:eatup/screens/dashboard/home.dart';
+import 'package:eatup/screens/dashboard/item.dart';
 import 'package:eatup/screens/dashboard/product.dart';
 import 'package:eatup/screens/dashboard/settings.dart';
 import 'package:eatup/screens/splash/splash.dart';
@@ -107,6 +108,11 @@ List<GetPage> getPage = [
   GetPage(
     name: address,
     page: () => const Address(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: item,
+    page: () => Items(),
     transition: Transition.cupertino,
   ),
 ];

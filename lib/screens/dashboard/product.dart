@@ -421,7 +421,18 @@ class _ProductState extends State<Product> {
                   fixedSize:
                       WidgetStateProperty.all<Size>(const Size.square(35.0)),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(
+                    item,
+                    arguments: {
+                      'id': it.id,
+                      'title': it.name,
+                      'detail': it.details,
+                      'image': it.image,
+                      'price': it.price,
+                    },
+                  );
+                },
                 icon: const Icon(
                   Icons.add,
                   color: Colors.white,

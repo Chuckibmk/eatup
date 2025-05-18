@@ -10,12 +10,10 @@ import '../../routes/route_names.dart';
 class Sectionview extends StatefulWidget {
   final Section section;
   final Future<List<Shop>> futureShops;
-  // final Future<List<Item>> futureItem;
   const Sectionview({
     super.key,
     required this.section,
     required this.futureShops,
-    // required this.futureItem
   });
 
   @override
@@ -130,6 +128,7 @@ class _SectionviewState extends State<Sectionview> {
                   onTap: () {
                     loadItems();
                     Get.toNamed(product, arguments: {
+                      'id': sh.id,
                       'title': sh.name,
                       'image': sh.image,
                       'tabs': sh.tabs,
