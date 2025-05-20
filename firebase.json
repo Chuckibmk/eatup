@@ -1,1 +1,36 @@
-{"flutter":{"platforms":{"dart":{"lib/firebase_options.dart":{"projectId":"eatup-f145e","configurations":{"android":"1:7997260111:android:86a47af23e31450013853a"}}},"android":{"default":{"projectId":"eatup-f145e","appId":"1:7997260111:android:86a47af23e31450013853a","fileOutput":"android/app/google-services.json"}}}}}
+{
+  "flutter": {
+    "platforms": {
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "eatup-f145e",
+          "configurations": {
+            "android": "1:7997260111:android:86a47af23e31450013853a"
+          }
+        }
+      },
+      "android": {
+        "default": {
+          "projectId": "eatup-f145e",
+          "appId": "1:7997260111:android:86a47af23e31450013853a",
+          "fileOutput": "android/app/google-services.json"
+        }
+      }
+    }
+  },
+  "hosting": {
+    "source": "build/web",
+    
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

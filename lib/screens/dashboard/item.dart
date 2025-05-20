@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:get/route_manager.dart';
+import 'package:eatup/widgets/products.dart';
 
 class Items extends StatelessWidget {
   Items({super.key});
@@ -12,6 +13,7 @@ class Items extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('ha: ${c.cartItems}');
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -199,7 +201,10 @@ class Items extends StatelessWidget {
                                   fixedSize: WidgetStateProperty.all<Size>(
                                       const Size.square(35.0)),
                                 ),
-                                onPressed: () => c.addToCart(arg),
+                                onPressed: () => c.addToCart(Product(
+                                    id: arg['id'],
+                                    name: arg['title'],
+                                    price: double.parse(arg['price']))),
                                 icon: const Icon(
                                   Icons.add,
                                   color: Colors.white,
@@ -208,7 +213,7 @@ class Items extends StatelessWidget {
                               ),
                               SizedBox(width: 20),
                               Obx(
-                                () => Text(c.cartItems.toString(),
+                                () => Text(c.itemCount.toString(),
                                     style: TextStyle(fontSize: 20)),
                               ),
                               SizedBox(width: 20),
@@ -230,7 +235,7 @@ class Items extends StatelessWidget {
                                   fixedSize: WidgetStateProperty.all<Size>(
                                       const Size.square(35.0)),
                                 ),
-                                onPressed: () => c.removeFromCart(arg),
+                                onPressed: () => c.removeFromCart(),
                                 icon: const Icon(
                                   Icons.remove,
                                   color: Colors.white,
