@@ -9,7 +9,7 @@ import 'package:eatup/widgets/products.dart';
 class Items extends StatelessWidget {
   Items({super.key});
   final arg = Get.arguments;
-  final CartController c = CartController();
+  final CartController c = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -213,7 +213,8 @@ class Items extends StatelessWidget {
                               ),
                               SizedBox(width: 20),
                               Obx(
-                                () => Text(c.itemCount.toString(),
+                                () => Text(
+                                    c.getProductQuantity(arg['id']).toString(),
                                     style: TextStyle(fontSize: 20)),
                               ),
                               SizedBox(width: 20),
@@ -235,7 +236,10 @@ class Items extends StatelessWidget {
                                   fixedSize: WidgetStateProperty.all<Size>(
                                       const Size.square(35.0)),
                                 ),
-                                onPressed: () => c.removeFromCart(),
+                                onPressed: () => c.removeFromCart(Product(
+                                    id: arg['id'],
+                                    name: arg['title'],
+                                    price: double.parse(arg['price']))),
                                 icon: const Icon(
                                   Icons.remove,
                                   color: Colors.white,

@@ -10,3 +10,15 @@ class Product {
     return 'Product(id:$id,name:$name,price:$price)';
   }
 }
+
+class CartItem {
+  final Product product;
+  int quantity;
+
+  CartItem({required this.product, this.quantity = 1});
+
+  @override
+  String toString() {
+    return '${product.name} x$quantity';
+  }
+}
