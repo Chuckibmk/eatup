@@ -96,7 +96,7 @@ class _StartedState extends State<Started> {
                             itemBuilder: (context, index) {
                               var cr = carousel[index];
                               return ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
+                                borderRadius: BorderRadius.circular(0),
                                 child: CachedNetworkImage(
                                   imageUrl: cr,
                                   placeholder: (context, url) =>
