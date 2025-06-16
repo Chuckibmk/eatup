@@ -186,7 +186,16 @@ class _CartState extends State<Cart> {
                                                             const Size.square(
                                                                 30.0)),
                                                   ),
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    c.deleteFromCart(
+                                                        Product(
+                                                            id: item.product.id,
+                                                            name: item
+                                                                .product.name,
+                                                            price: item
+                                                                .product.price),
+                                                        context);
+                                                  },
                                                   icon: const Icon(
                                                     Icons.delete_sharp,
                                                     color: Color(0xFFE10E0E),
@@ -227,7 +236,7 @@ class _CartState extends State<Cart> {
                                                   ),
                                                   TextSpan(
                                                     text:
-                                                        '${item.product.price}',
+                                                        '${item.product.price * c.getProductQuantity(item.product.id)}',
                                                     style: const TextStyle(),
                                                   ),
                                                 ],
@@ -254,9 +263,10 @@ class _CartState extends State<Cart> {
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
                                                   IconButton(
-                                                    constraints: BoxConstraints(
-                                                        maxHeight: 25,
-                                                        maxWidth: 25),
+                                                    constraints:
+                                                        const BoxConstraints(
+                                                            maxHeight: 25,
+                                                            maxWidth: 25),
                                                     style: ButtonStyle(
                                                       shape: WidgetStateProperty
                                                           .all<
@@ -303,14 +313,15 @@ class _CartState extends State<Cart> {
                                                             .getProductQuantity(
                                                                 item.product.id)
                                                             .toString(),
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 15));
                                                   }),
 
                                                   IconButton(
-                                                    constraints: BoxConstraints(
-                                                        maxHeight: 25,
-                                                        maxWidth: 25),
+                                                    constraints:
+                                                        const BoxConstraints(
+                                                            maxHeight: 25,
+                                                            maxWidth: 25),
                                                     style: ButtonStyle(
                                                       shape: WidgetStateProperty
                                                           .all<

@@ -13,7 +13,7 @@ class Items extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('ha: ${c.cartItems}');
+    // print('ha: ${c.cartItems}');
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -102,7 +102,7 @@ class Items extends StatelessWidget {
                               Get.toNamed(cart);
                             },
                             icon: Badge(
-                              label: Text(c.itemCount.toString()),
+                              label: Obx(() => Text(c.itemCount.toString())),
                               child: const Icon(
                                 Icons.shopping_cart,
                                 color: Color(0xFFE10E0E),

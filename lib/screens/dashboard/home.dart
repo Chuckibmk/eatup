@@ -229,7 +229,7 @@ class _HomePageState extends State<HomePage> {
                 Get.toNamed(cart);
               },
               icon: Badge(
-                label: Text(c.itemCount.toString()),
+                label: Obx(() => Text(c.itemCount.toString())),
                 child: const Icon(
                   Icons.shopping_cart,
                   color: Color(0xFFE10E0E),

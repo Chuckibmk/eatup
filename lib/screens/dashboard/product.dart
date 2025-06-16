@@ -126,7 +126,8 @@ class _ProductState extends State<Product> {
                                     Get.toNamed(cart);
                                   },
                                   icon: Badge(
-                                    label: Text(c.itemCount.toString()),
+                                    label:
+                                        Obx(() => Text(c.itemCount.toString())),
                                     child: const Icon(
                                       Icons.shopping_cart,
                                       color: Color(0xFFE10E0E),

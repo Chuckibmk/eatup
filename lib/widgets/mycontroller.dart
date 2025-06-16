@@ -12,23 +12,28 @@ class CartController extends GetxController {
     if (index != -1) {
       cartItems[index].quantity.value++;
       showSuccessToast(context: ctx, message: 'Cart has been updated');
-      cartItems.refresh();
+      // cartItems.refresh();
     } else {
       cartItems.add(CartItem(product: product));
       showSuccessToast(context: ctx, message: 'Cart has been updated');
     }
   }
 
+  void deleteFromCart(Product product, BuildContext ctx) {
+    int index =
+        cartItems.indexWhere((element) => element.product.id == product.id);
+
+    cartItems.removeAt(index);
+    showSuccessToast(context: ctx, message: 'Cart has been updated');
+  }
+
   void removeFromCart(Product product, BuildContext ctx) {
-    if (cartItems.isEmpty) {
-      Get.snackbar(
-        'Note',
-        'Can not be less than 0',
-        icon: Icon(Icons.info),
-        barBlur: 100,
-        isDismissible: true,
-        duration: Duration(seconds: 3),
-      );
+    int index =
+        cartItems.indexWhere((element) => element.product.id == product.id);
+
+    if (cartItems[index].quantity.value == 1) {
+      cartItems.removeAt(index);
+      showSuccessToast(context: ctx, message: 'Cart has been updated');
     } else {
       int index =
           cartItems.indexWhere((element) => element.product.id == product.id);
@@ -36,7 +41,7 @@ class CartController extends GetxController {
         cartItems[index].quantity.value--;
         showSuccessToast(context: ctx, message: 'Cart has been updated');
 
-        cartItems.refresh();
+        // cartItems.refresh();
       } else {
         cartItems.remove(CartItem(product: product));
         showSuccessToast(context: ctx, message: 'Cart has been updated');

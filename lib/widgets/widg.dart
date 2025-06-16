@@ -52,14 +52,14 @@ void showSuccessToast({
     pauseOnHover: true,
     dragToClose: true,
     applyBlurEffect: false,
-    callbacks: ToastificationCallbacks(
-      onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
-      onCloseButtonTap: (toastItem) =>
-          print('Toast ${toastItem.id} close button tapped'),
-      onAutoCompleteCompleted: (toastItem) =>
-          print('Toast ${toastItem.id} auto complete completed'),
-      onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
-    ),
+    // callbacks: ToastificationCallbacks(
+    //   onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
+    //   onCloseButtonTap: (toastItem) =>
+    //       print('Toast ${toastItem.id} close button tapped'),
+    //   onAutoCompleteCompleted: (toastItem) =>
+    //       print('Toast ${toastItem.id} auto complete completed'),
+    //   onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
+    // ),
   );
 }
 
@@ -103,14 +103,14 @@ void showWarningToast({
     pauseOnHover: true,
     dragToClose: true,
     applyBlurEffect: false,
-    callbacks: ToastificationCallbacks(
-      onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
-      onCloseButtonTap: (toastItem) =>
-          print('Toast ${toastItem.id} close button tapped'),
-      onAutoCompleteCompleted: (toastItem) =>
-          print('Toast ${toastItem.id} auto complete completed'),
-      onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
-    ),
+    // callbacks: ToastificationCallbacks(
+    //   onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
+    //   onCloseButtonTap: (toastItem) =>
+    //       print('Toast ${toastItem.id} close button tapped'),
+    //   onAutoCompleteCompleted: (toastItem) =>
+    //       print('Toast ${toastItem.id} auto complete completed'),
+    //   onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
+    // ),
   );
 }
 
@@ -154,14 +154,14 @@ void showErrorToast({
     pauseOnHover: true,
     dragToClose: true,
     applyBlurEffect: false,
-    callbacks: ToastificationCallbacks(
-      onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
-      onCloseButtonTap: (toastItem) =>
-          print('Toast ${toastItem.id} close button tapped'),
-      onAutoCompleteCompleted: (toastItem) =>
-          print('Toast ${toastItem.id} auto complete completed'),
-      onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
-    ),
+    // callbacks: ToastificationCallbacks(
+    //   onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
+    //   onCloseButtonTap: (toastItem) =>
+    //       print('Toast ${toastItem.id} close button tapped'),
+    //   onAutoCompleteCompleted: (toastItem) =>
+    //       print('Toast ${toastItem.id} auto complete completed'),
+    //   onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
+    // ),
   );
 }
 
@@ -205,14 +205,14 @@ void showInfoToast({
     pauseOnHover: true,
     dragToClose: true,
     applyBlurEffect: false,
-    callbacks: ToastificationCallbacks(
-      onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
-      onCloseButtonTap: (toastItem) =>
-          print('Toast ${toastItem.id} close button tapped'),
-      onAutoCompleteCompleted: (toastItem) =>
-          print('Toast ${toastItem.id} auto complete completed'),
-      onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
-    ),
+    // callbacks: ToastificationCallbacks(
+    //   onTap: (toastItem) => print('Toast ${toastItem.id} tapped'),
+    //   onCloseButtonTap: (toastItem) =>
+    //       print('Toast ${toastItem.id} close button tapped'),
+    //   onAutoCompleteCompleted: (toastItem) =>
+    //       print('Toast ${toastItem.id} auto complete completed'),
+    //   onDismissed: (toastItem) => print('Toast ${toastItem.id} dismissed'),
+    // ),
   );
 }
 
