@@ -1,7 +1,8 @@
 import 'package:eatup/routes/route_names.dart';
+import 'package:eatup/widgets/mycontroller.dart';
 import 'package:eatup/widgets/widg.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -22,6 +23,8 @@ class _ProductState extends State<Product> {
     final Map<String, int> tabIndexMap =
         {}; // e.g. {'Beverages': 0, 'Snacks': 4}
     int displayIndex = 0;
+
+    final CartController c = Get.find();
 
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
@@ -122,10 +125,13 @@ class _ProductState extends State<Product> {
                                   onPressed: () {
                                     Get.toNamed(cart);
                                   },
-                                  icon: const Icon(
-                                    Icons.shopping_cart,
-                                    color: Color(0xFFE10E0E),
-                                    size: 25.0,
+                                  icon: Badge(
+                                    label: Text(c.itemCount.toString()),
+                                    child: const Icon(
+                                      Icons.shopping_cart,
+                                      color: Color(0xFFE10E0E),
+                                      size: 25.0,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -329,117 +335,121 @@ class _ProductState extends State<Product> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: it.image != null && it.image!.isNotEmpty
-                    ? Image.memory(
-                        it.image!,
-                        width: 60.0,
-                        height: 105.0,
-                        fit: BoxFit.cover,
-                        alignment: const Alignment(-1.0, 1.0),
-                      )
-                    : const SizedBox(
-                        height: 200,
-                        child: Center(
-                            child: Icon(Icons.image_not_supported, size: 80)),
-                      ),
-              ),
-              Container(
-                width: 200.0,
-                height: 110.0,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
+          SizedBox(
+            height: 120,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: it.image != null && it.image!.isNotEmpty
+                      ? Image.memory(
+                          it.image!,
+                          width: 80.0,
+                          // height: 90.0,
+                          fit: BoxFit.cover,
+                          alignment: const Alignment(-1.0, 1.0),
+                        )
+                      : const SizedBox(
+                          height: 200,
+                          child: Center(
+                              child: Icon(Icons.image_not_supported, size: 80)),
+                        ),
                 ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
-                      child: Container(
-                        decoration: const BoxDecoration(),
-                        child: Text(
-                          it.name,
-                          style: GoogleFonts.readexPro(
-                            textStyle: Theme.of(context).textTheme.bodyMedium,
-                            letterSpacing: 0.0,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        it.details,
-                        style: GoogleFonts.readexPro(
-                          textStyle: Theme.of(context).textTheme.bodySmall,
-                          color: Colors.black87,
-                          letterSpacing: 0.0,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    Align(
-                      alignment: const AlignmentDirectional(-1.0, 0.0),
-                      child: Padding(
-                        padding: const EdgeInsetsDirectional.fromSTEB(
-                            0.0, 5.0, 0.0, 0.0),
+                Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  // height: 110.0,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
                         child: Container(
                           decoration: const BoxDecoration(),
                           child: Text(
-                            it.price,
+                            it.name,
                             style: GoogleFonts.readexPro(
                               textStyle: Theme.of(context).textTheme.bodyMedium,
                               letterSpacing: 0.0,
                               fontWeight: FontWeight.w600,
-                              fontSize: 13,
+                              fontSize: 14,
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              IconButton(
-                style: ButtonStyle(
-                  shape: WidgetStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                      side: const BorderSide(
-                          width: 1.0, color: Colors.transparent),
-                    ),
+                      Expanded(
+                        child: Text(
+                          it.details,
+                          style: GoogleFonts.readexPro(
+                            textStyle: Theme.of(context).textTheme.bodySmall,
+                            color: Colors.black87,
+                            letterSpacing: 0.0,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      ),
+                      Align(
+                        alignment: const AlignmentDirectional(-1.0, 0.0),
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              0.0, 5.0, 0.0, 0.0),
+                          child: Container(
+                            decoration: const BoxDecoration(),
+                            child: Text(
+                              it.price,
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                letterSpacing: 0.0,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  backgroundColor: WidgetStateProperty.all<Color>(
-                    const Color(0xFFE10E0E),
+                ),
+                IconButton(
+                  style: ButtonStyle(
+                    shape: WidgetStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                        side: const BorderSide(
+                            width: 1.0, color: Colors.transparent),
+                      ),
+                    ),
+                    backgroundColor: WidgetStateProperty.all<Color>(
+                      const Color(0xFFE10E0E),
+                    ),
+                    fixedSize:
+                        WidgetStateProperty.all<Size>(const Size.square(35.0)),
                   ),
-                  fixedSize:
-                      WidgetStateProperty.all<Size>(const Size.square(35.0)),
+                  onPressed: () {
+                    Get.toNamed(
+                      item,
+                      arguments: {
+                        'id': it.id,
+                        'title': it.name,
+                        'detail': it.details,
+                        'image': it.image,
+                        'price': it.price,
+                      },
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    color: Colors.white,
+                    size: 20.0,
+                  ),
                 ),
-                onPressed: () {
-                  Get.toNamed(
-                    item,
-                    arguments: {
-                      'id': it.id,
-                      'title': it.name,
-                      'detail': it.details,
-                      'image': it.image,
-                      'price': it.price,
-                    },
-                  );
-                },
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 20.0,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
           const Divider(
             thickness: 1.0,

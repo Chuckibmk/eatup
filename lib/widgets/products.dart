@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class Product {
   final int id;
   final String name;
@@ -13,9 +15,9 @@ class Product {
 
 class CartItem {
   final Product product;
-  int quantity;
+  RxInt quantity;
 
-  CartItem({required this.product, this.quantity = 1});
+  CartItem({required this.product, int quantity = 1}) : quantity = quantity.obs;
 
   @override
   String toString() {

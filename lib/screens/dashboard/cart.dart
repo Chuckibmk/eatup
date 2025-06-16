@@ -1,9 +1,11 @@
-import 'package:counter_button/counter_button.dart';
 import 'package:eatup/routes/route_names.dart';
+import 'package:eatup/widgets/mycontroller.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
+import 'package:get/get.dart';
+// import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:eatup/widgets/products.dart';
 
 class Cart extends StatefulWidget {
   const Cart({super.key});
@@ -14,7 +16,8 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  int _counterVal = 0;
+  // final arg = Get.arguments;
+  final CartController c = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +84,7 @@ class _CartState extends State<Cart> {
                   ),
                   child: Padding(
                     padding: const EdgeInsetsDirectional.fromSTEB(
-                        18.0, 10.0, 18.0, 10.0),
+                        15.0, 10.0, 15.0, 10.0),
                     child: Card(
                       clipBehavior: Clip.antiAliasWithSaveLayer,
                       color: Colors.white,
@@ -114,194 +117,249 @@ class _CartState extends State<Cart> {
                             endIndent: 10.0,
                             color: Color(0xCCABA5A5),
                           ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
-                                child: IconButton(
-                                  style: ButtonStyle(
-                                    shape: WidgetStateProperty.all<
-                                        RoundedRectangleBorder>(
-                                      RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                        side: const BorderSide(
-                                            width: 1.0,
-                                            color: Colors.transparent),
-                                      ),
-                                    ),
-                                    fixedSize: WidgetStateProperty.all<Size>(
-                                        const Size.square(36.0)),
-                                  ),
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Color(0xFFE10E0E),
-                                    size: 15.0,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Fried Yam',
-                                  style: GoogleFonts.readexPro(
-                                    letterSpacing: 0.0,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment:
-                                      const AlignmentDirectional(1.0, 0.0),
-                                  child: Padding(
-                                    padding:
-                                        const EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 10.0, 0.0),
-                                    child: IconButton(
-                                      style: ButtonStyle(
-                                        shape: WidgetStateProperty.all<
-                                            RoundedRectangleBorder>(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(20.0),
-                                            side: const BorderSide(
-                                                width: 1.0,
-                                                color: Colors.transparent),
+                          Obx(() => Column(
+                                children: c.cartItems.map((item) {
+                                  return Column(
+                                    children: [
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          IconButton(
+                                            style: ButtonStyle(
+                                              shape: WidgetStateProperty.all<
+                                                  RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  side: const BorderSide(
+                                                      width: 1.0,
+                                                      color:
+                                                          Colors.transparent),
+                                                ),
+                                              ),
+                                              fixedSize:
+                                                  WidgetStateProperty.all<Size>(
+                                                      const Size.square(36.0)),
+                                            ),
+                                            onPressed: () {},
+                                            icon: const Icon(
+                                              Icons.edit,
+                                              color: Color(0xFFE10E0E),
+                                              size: 15.0,
+                                            ),
                                           ),
-                                        ),
-                                        fixedSize:
-                                            WidgetStateProperty.all<Size>(
-                                                const Size.square(30.0)),
+                                          Text(
+                                            item.product.name,
+                                            style: GoogleFonts.readexPro(
+                                              letterSpacing: 0.0,
+                                              fontSize: 20,
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      1.0, 0.0),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                        0.0, 0.0, 10.0, 0.0),
+                                                child: IconButton(
+                                                  style: ButtonStyle(
+                                                    shape: WidgetStateProperty.all<
+                                                        RoundedRectangleBorder>(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20.0),
+                                                        side: const BorderSide(
+                                                            width: 1.0,
+                                                            color: Colors
+                                                                .transparent),
+                                                      ),
+                                                    ),
+                                                    fixedSize:
+                                                        WidgetStateProperty.all<
+                                                                Size>(
+                                                            const Size.square(
+                                                                30.0)),
+                                                  ),
+                                                  onPressed: () {},
+                                                  icon: const Icon(
+                                                    Icons.delete_sharp,
+                                                    color: Color(0xFFE10E0E),
+                                                    size: 25.0,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      onPressed: () {},
-                                      icon: const Icon(
-                                        Icons.delete_sharp,
-                                        color: Color(0xFFE10E0E),
-                                        size: 15.0,
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsetsDirectional
+                                                .fromSTEB(50.0, 0.0, 0.0, 0.0),
+                                            child: RichText(
+                                              textScaler: MediaQuery.of(context)
+                                                  .textScaler,
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: 'NGN ',
+                                                    style:
+                                                        GoogleFonts.readexPro(
+                                                      textStyle:
+                                                          Theme.of(context)
+                                                              .textTheme
+                                                              .bodyMedium,
+                                                      color:
+                                                          const Color.fromARGB(
+                                                              255, 90, 90, 90),
+                                                      letterSpacing: 0.0,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  TextSpan(
+                                                    text:
+                                                        '${item.product.price}',
+                                                    style: const TextStyle(),
+                                                  ),
+                                                ],
+                                                style: GoogleFonts.readexPro(
+                                                  textStyle: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium,
+                                                  color: const Color.fromARGB(
+                                                      255, 90, 90, 90),
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 17,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Expanded(child: Container()),
+                                          Expanded(
+                                            child: Align(
+                                              alignment:
+                                                  const AlignmentDirectional(
+                                                      0.0, 0.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  IconButton(
+                                                    constraints: BoxConstraints(
+                                                        maxHeight: 25,
+                                                        maxWidth: 25),
+                                                    style: ButtonStyle(
+                                                      shape: WidgetStateProperty
+                                                          .all<
+                                                              RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20.0),
+                                                          side: const BorderSide(
+                                                              width: 1.0,
+                                                              color: Colors
+                                                                  .transparent),
+                                                        ),
+                                                      ),
+                                                      backgroundColor:
+                                                          WidgetStateProperty
+                                                              .all<Color>(
+                                                        const Color(0xFFE10E0E),
+                                                      ),
+                                                    ),
+                                                    onPressed: () =>
+                                                        c.removeFromCart(
+                                                            Product(
+                                                                id: item
+                                                                    .product.id,
+                                                                name: item
+                                                                    .product
+                                                                    .name,
+                                                                price: item
+                                                                    .product
+                                                                    .price),
+                                                            context),
+                                                    icon: const Icon(
+                                                      Icons.remove,
+                                                      color: Colors.white,
+                                                      size: 10.0,
+                                                    ),
+                                                  ),
+                                                  // SizedBox(width: 5),
+                                                  Obx(() {
+                                                    return Text(
+                                                        c
+                                                            .getProductQuantity(
+                                                                item.product.id)
+                                                            .toString(),
+                                                        style: TextStyle(
+                                                            fontSize: 15));
+                                                  }),
+
+                                                  IconButton(
+                                                    constraints: BoxConstraints(
+                                                        maxHeight: 25,
+                                                        maxWidth: 25),
+                                                    style: ButtonStyle(
+                                                      shape: WidgetStateProperty
+                                                          .all<
+                                                              RoundedRectangleBorder>(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      20.0),
+                                                          side: const BorderSide(
+                                                              width: 1.0,
+                                                              color: Colors
+                                                                  .transparent),
+                                                        ),
+                                                      ),
+                                                      backgroundColor:
+                                                          WidgetStateProperty
+                                                              .all<Color>(
+                                                        const Color(0xFFE10E0E),
+                                                      ),
+                                                    ),
+                                                    onPressed: () =>
+                                                        c.addToCart(
+                                                            Product(
+                                                                id: item
+                                                                    .product.id,
+                                                                name: item
+                                                                    .product
+                                                                    .name,
+                                                                price: item
+                                                                    .product
+                                                                    .price),
+                                                            context),
+                                                    icon: const Icon(
+                                                      Icons.add,
+                                                      color: Colors.white,
+                                                      size: 10.0,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    50.0, 0.0, 0.0, 0.0),
-                                child: RichText(
-                                  textScaler: MediaQuery.of(context).textScaler,
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: '1x',
-                                        style: GoogleFonts.readexPro(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                          color: const Color.fromARGB(
-                                              255, 90, 90, 90),
-                                          fontSize: 15.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const TextSpan(
-                                        text: 'Fried Egg',
-                                        style: TextStyle(),
-                                      )
                                     ],
-                                    style: GoogleFonts.readexPro(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      color:
-                                          const Color.fromARGB(255, 54, 54, 54),
-                                      fontSize: 15.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsetsDirectional.fromSTEB(
-                                    50.0, 0.0, 0.0, 0.0),
-                                child: RichText(
-                                  textScaler: MediaQuery.of(context).textScaler,
-                                  text: TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: 'NGN',
-                                        style: GoogleFonts.readexPro(
-                                          textStyle: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                          color: const Color.fromARGB(
-                                              255, 90, 90, 90),
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const TextSpan(
-                                        text: '6000',
-                                        style: TextStyle(),
-                                      ),
-                                    ],
-                                    style: GoogleFonts.readexPro(
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
-                                      color:
-                                          const Color.fromARGB(255, 90, 90, 90),
-                                      letterSpacing: 0.0,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 17,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                child: Align(
-                                  alignment:
-                                      const AlignmentDirectional(1.0, 0.0),
-                                  // child: Container(
-                                  // width: 100.0,
-                                  // height: 25.0,
-                                  // decoration: BoxDecoration(
-                                  //   color: Colors.transparent,
-                                  //   borderRadius: BorderRadius.circular(8.0),
-                                  //   shape: BoxShape.rectangle,
-                                  //   border: Border.all(
-                                  //     color: Colors.transparent,
-                                  //   ),
-                                  // ),
-                                  child: CounterButton(
-                                    count: _counterVal,
-                                    onChange: (int val) {
-                                      setState(() {
-                                        _counterVal = val;
-                                      });
-                                    },
-                                    loading: false,
-                                    buttonColor: const Color(0xFFE10E0E),
-                                  ),
-                                  // ),
-                                ),
-                              )
-                            ],
-                          ),
+                                  );
+                                }).toList(),
+                              )),
                         ],
                       ),
                     ),
@@ -498,3 +556,46 @@ class _CartState extends State<Cart> {
     );
   }
 }
+// this syntax should be be if theres a child in cart items, as of last update theres non:
+// Row(
+                                        //   mainAxisSize: MainAxisSize.max,
+                                        //   children: [
+                                        //     Padding(
+                                        //       padding: const EdgeInsetsDirectional.fromSTEB(
+                                        //           50.0, 0.0, 0.0, 0.0),
+                                        //       child: RichText(
+                                        //         textScaler: MediaQuery.of(context).textScaler,
+                                        //         text: TextSpan(
+                                        //           children: [
+                                        //             TextSpan(
+                                        //               text: '1x ',
+                                        //               style: GoogleFonts.readexPro(
+                                        //                 textStyle: Theme.of(context)
+                                        //                     .textTheme
+                                        //                     .bodyMedium,
+                                        //                 color: const Color.fromARGB(
+                                        //                     255, 90, 90, 90),
+                                        //                 fontSize: 15.0,
+                                        //                 letterSpacing: 0.0,
+                                        //                 fontWeight: FontWeight.bold,
+                                        //               ),
+                                        //             ),
+                                        //             const TextSpan(
+                                        //               text: 'Fried Egg',
+                                        //               style: TextStyle(),
+                                        //             )
+                                        //           ],
+                                        //           style: GoogleFonts.readexPro(
+                                        //             textStyle: Theme.of(context)
+                                        //                 .textTheme
+                                        //                 .bodyMedium,
+                                        //             color:
+                                        //                 const Color.fromARGB(255, 54, 54, 54),
+                                        //             fontSize: 15.0,
+                                        //             letterSpacing: 0.0,
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),

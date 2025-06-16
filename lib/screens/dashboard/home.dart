@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:eatup/routes/getxCont.dart';
 import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/screens/dashboard/sectionView.dart';
+import 'package:eatup/widgets/mycontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/route_manager.dart';
@@ -130,6 +131,8 @@ class _HomePageState extends State<HomePage> {
   final _controller = PageController();
   int currentIndex = 0;
 
+  final CartController c = Get.find();
+
   @override
   Widget build(BuildContext context) {
     if (user != null) {
@@ -219,18 +222,20 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
-            style: ButtonStyle(
-              fixedSize: WidgetStateProperty.all<Size>(const Size.square(60)),
-            ),
-            onPressed: () {
-              Get.toNamed(cart);
-            },
-            icon: const Icon(
-              Icons.shopping_cart,
-              color: Color(0xFFE10E0E),
-              size: 30.0,
-            ),
-          ),
+              style: ButtonStyle(
+                fixedSize: WidgetStateProperty.all<Size>(const Size.square(60)),
+              ),
+              onPressed: () {
+                Get.toNamed(cart);
+              },
+              icon: Badge(
+                label: Text(c.itemCount.toString()),
+                child: const Icon(
+                  Icons.shopping_cart,
+                  color: Color(0xFFE10E0E),
+                  size: 25.0,
+                ),
+              )),
         ],
         centerTitle: true,
         elevation: 0.0,

@@ -40,7 +40,6 @@ dependencies:
   smooth_page_indicator: ^1.2.0+3
   google_fonts: ^6.2.1
   font_awesome_flutter: ^10.7.0
-  counter_button: ^1.0.1
   firebase_core: 
   cloud_firestore:
   firebase_auth:

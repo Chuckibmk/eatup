@@ -1,3 +1,4 @@
+import 'package:eatup/widgets/widg.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'products.dart';
@@ -5,18 +6,20 @@ import 'products.dart';
 class CartController extends GetxController {
   var cartItems = <CartItem>[].obs;
 
-  void addToCart(Product product) {
+  void addToCart(Product product, BuildContext ctx) {
     int index =
         cartItems.indexWhere((element) => element.product.id == product.id);
     if (index != -1) {
-      cartItems[index].quantity++;
+      cartItems[index].quantity.value++;
+      showSuccessToast(context: ctx, message: 'Cart has been updated');
+      cartItems.refresh();
     } else {
-      print('adding to cart: $product');
       cartItems.add(CartItem(product: product));
+      showSuccessToast(context: ctx, message: 'Cart has been updated');
     }
   }
 
-  void removeFromCart(Product product) {
+  void removeFromCart(Product product, BuildContext ctx) {
     if (cartItems.isEmpty) {
       Get.snackbar(
         'Note',
@@ -30,10 +33,13 @@ class CartController extends GetxController {
       int index =
           cartItems.indexWhere((element) => element.product.id == product.id);
       if (index != -1) {
-        cartItems[index].quantity--;
+        cartItems[index].quantity.value--;
+        showSuccessToast(context: ctx, message: 'Cart has been updated');
+
+        cartItems.refresh();
       } else {
-        print('Removing from cart: $product');
         cartItems.remove(CartItem(product: product));
+        showSuccessToast(context: ctx, message: 'Cart has been updated');
       }
     }
   }
@@ -47,6 +53,6 @@ class CartController extends GetxController {
 
   int getProductQuantity(int productId) {
     final item = cartItems.firstWhereOrNull((e) => e.product.id == productId);
-    return item?.quantity ?? 0;
+    return item?.quantity.value ?? 0;
   }
 }
