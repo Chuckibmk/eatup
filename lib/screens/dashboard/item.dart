@@ -192,7 +192,9 @@ class Items extends StatelessWidget {
                                 Product(
                                     id: arg['id'],
                                     name: arg['title'],
-                                    price: double.parse(arg['price'])),
+                                    price: double.parse(arg['price']),
+                                    details: arg['detail'],
+                                    image: arg['image']),
                                 context),
                             style: ButtonStyle(
                               backgroundColor: const WidgetStatePropertyAll(

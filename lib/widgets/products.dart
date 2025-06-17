@@ -1,11 +1,20 @@
+import 'dart:typed_data';
+
 import 'package:get/get.dart';
 
 class Product {
   final int id;
   final String name;
   final double price;
+  final details;
+  final image;
 
-  Product({required this.id, required this.name, required this.price});
+  Product(
+      {required this.id,
+      required this.name,
+      required this.price,
+      this.details,
+      this.image});
 
   @override
   String toString() {

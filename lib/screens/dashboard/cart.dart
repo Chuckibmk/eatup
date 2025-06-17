@@ -2,7 +2,6 @@ import 'package:eatup/routes/route_names.dart';
 import 'package:eatup/widgets/mycontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:get/route_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:eatup/widgets/products.dart';
@@ -82,7 +81,7 @@ class _CartState extends State<Cart> {
                               () => Container(
                                 width: double.infinity,
                                 // width: 396.0,
-                                height: 210 * c.itemCount.toDouble(),
+                                height: 100 + (100 * c.itemCount.toDouble()),
                                 decoration: const BoxDecoration(
                                   color: Colors.white,
                                 ),
@@ -155,21 +154,25 @@ class _CartState extends State<Cart> {
                                                                         36.0)),
                                                           ),
                                                           onPressed: () {
-                                                            // Get.toNamed(
-                                                            //   item,
-                                                            //   arguments: {
-                                                            //     'id': items
-                                                            //         .product.id,
-                                                            //     'title': items
-                                                            //         .product
-                                                            //         .name,
-                                                            //     // 'detail': items.product.details,
-                                                            //     // 'image': it.image,
-                                                            //     'price': items
-                                                            //         .product
-                                                            //         .price,
-                                                            //   },
-                                                            // );
+                                                            Get.toNamed(
+                                                              item,
+                                                              arguments: {
+                                                                'id': items
+                                                                    .product.id,
+                                                                'title': items
+                                                                    .product
+                                                                    .name,
+                                                                'detail': items
+                                                                    .product
+                                                                    .details,
+                                                                'image': items
+                                                                    .product
+                                                                    .image,
+                                                                'price': items
+                                                                    .product
+                                                                    .price,
+                                                              },
+                                                            );
                                                           },
                                                           icon: const Icon(
                                                             Icons.edit,

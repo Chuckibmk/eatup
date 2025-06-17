@@ -47,7 +47,5 @@ class MyApp extends StatelessWidget {
 }
 
 /// next tasks:
-/// make that cart card growable,
-/// the edit button on cart(either remove or link it to corresponding product page)
 // - Implemented buttons for checking out as a guest and logging in.
 /// save cart to db...
