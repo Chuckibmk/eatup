@@ -10,6 +10,7 @@ import 'package:eatup/screens/account/payments.dart';
 import 'package:eatup/screens/account/profile.dart';
 import 'package:eatup/screens/account/register.dart';
 import 'package:eatup/screens/dashboard/cart.dart';
+import 'package:eatup/screens/dashboard/checkout.dart';
 import 'package:eatup/screens/dashboard/dashboard.dart';
 import 'package:eatup/screens/dashboard/help.dart';
 import 'package:eatup/screens/dashboard/home.dart';
@@ -113,6 +114,11 @@ List<GetPage> getPage = [
   GetPage(
     name: item,
     page: () => Items(),
+    transition: Transition.cupertino,
+  ),
+  GetPage(
+    name: checkout,
+    page: () => const Checkout(),
     transition: Transition.cupertino,
   ),
 ];

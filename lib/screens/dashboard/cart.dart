@@ -15,7 +15,6 @@ class Cart extends StatefulWidget {
 
 class _CartState extends State<Cart> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  // final arg = Get.arguments;
   final CartController c = Get.find();
 
   @override
@@ -530,7 +529,9 @@ class _CartState extends State<Cart> {
                                         width: 300.0,
                                         height: 50.0,
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Get.toNamed(checkout);
+                                          },
                                           style: ButtonStyle(
                                             elevation:
                                                 WidgetStateProperty.all<double>(
