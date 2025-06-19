@@ -1,9 +1,11 @@
+import 'package:country_state_city_pro/country_state_city_pro.dart';
 import 'package:eatup/widgets/mycontroller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:eatup/widgets/products.dart';
 import 'package:eatup/routes/route_names.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class Checkout extends StatefulWidget {
   const Checkout({super.key});
@@ -22,6 +24,27 @@ class _CheckoutState extends State<Checkout> {
     ['Discount', 'NGN 0'],
   ];
   final CartController c = Get.find();
+  final coupon = TextEditingController();
+  final cpcn = FocusNode();
+
+  final rname = TextEditingController();
+  final rncn = FocusNode();
+
+  final phoneno = TextEditingController();
+  final pncn = FocusNode();
+
+  final email = TextEditingController();
+  final emcn = FocusNode();
+
+  final stradd = TextEditingController();
+  final safn = FocusNode();
+
+  final country = TextEditingController();
+  final state = TextEditingController();
+  final city = TextEditingController();
+
+  bool couponvisible = false;
+  bool deliveryvisible = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +77,23 @@ class _CheckoutState extends State<Checkout> {
             ),
           ),
         ),
-        actions: const [],
+        actions: [
+          IconButton(
+              style: ButtonStyle(
+                fixedSize: WidgetStateProperty.all<Size>(const Size.square(60)),
+              ),
+              onPressed: () {
+                Get.toNamed(cart);
+              },
+              icon: Badge(
+                label: Obx(() => Text(c.itemCount.toString())),
+                child: const Icon(
+                  Icons.shopping_cart,
+                  color: Color(0xFFE10E0E),
+                  size: 25.0,
+                ),
+              )),
+        ],
         centerTitle: false,
         elevation: 0.0,
       ),
@@ -67,7 +106,7 @@ class _CheckoutState extends State<Checkout> {
             Container(
               width: double.infinity,
               // width: 396.0,
-              height: 100,
+              // height: 100,
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
@@ -86,7 +125,7 @@ class _CheckoutState extends State<Checkout> {
                       alignment: const AlignmentDirectional(-1.0, 0.0),
                       child: Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
-                            10.0, 20.0, 0.0, 0.0),
+                            10.0, 10.0, 0.0, 0.0),
                         child: Text(
                           'Contact Details',
                           style: GoogleFonts.readexPro(
@@ -104,14 +143,594 @@ class _CheckoutState extends State<Checkout> {
                       endIndent: 10.0,
                       color: Color(0xCCABA5A5),
                     ),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      height: 32.0,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                      ),
+                      alignment: const AlignmentDirectional(0.0, 0.0),
+                      child: Text(
+                        'Please complete your contact information and click "Pay Now" to complete your order',
+                        textAlign: TextAlign.center,
+                        style: GoogleFonts.readexPro(
+                          textStyle: Theme.of(context).textTheme.labelMedium,
+                          letterSpacing: 0.0,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      width: MediaQuery.sizeOf(context).width * 0.85,
+                      child: Column(
+                        children: [
+                          Align(
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 4.0),
+                              child: Text(
+                                'Name',
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.readexPro(
+                                  textStyle:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                  fontSize: 14,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            child: TextFormField(
+                              controller: rname,
+                              focusNode: rncn,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Enter Name',
+                                alignLabelWithHint: false,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.orange,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.red,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                fontSize: 14,
+                                letterSpacing: 0.0,
+                                // fontWeight: FontWeight.bold,
+                              ),
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return 'Fill in Recipient Name';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 10.0, 0.0, 4.0),
+                              child: Text(
+                                'Email',
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.readexPro(
+                                  textStyle:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                  fontSize: 14,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(0.0, 0.0),
+                            child: TextFormField(
+                              controller: email,
+                              focusNode: emcn,
+                              autofocus: false,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                hintText: 'Enter email address',
+                                alignLabelWithHint: false,
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.grey,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                errorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.orange,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                                focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.red,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodyMedium,
+                                fontSize: 14,
+                                letterSpacing: 0.0,
+                                // fontWeight: FontWeight.bold,
+                              ),
+                              validator: (val) {
+                                if (val!.isEmpty) {
+                                  return 'Fill in Recipient Name';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                          Align(
+                            alignment: const AlignmentDirectional(-1.0, 0.0),
+                            child: Padding(
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 10.0, 0.0, 4.0),
+                              child: Text(
+                                'Phone Number',
+                                textAlign: TextAlign.start,
+                                style: GoogleFonts.readexPro(
+                                  textStyle:
+                                      Theme.of(context).textTheme.bodyMedium,
+                                  fontSize: 14,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: const Alignment(0.0, 0.0),
+                            child: IntlPhoneField(
+                              controller: phoneno,
+                              focusNode: pncn,
+                              decoration: InputDecoration(
+                                hintText: 'Enter phone number',
+                                border: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Color(0xffe0e3e7),
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              initialCountryCode: 'US',
+                              // onChanged: (phone) {
+                              //   print(phone.completeNumber);
+                              // },
+                              validator: (val) {
+                                if (val?.completeNumber != null) {
+                                  return 'Fill in Phone Number';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Align(
+                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 0.0, 0.0),
+                        child: Text(
+                          'Delivery Details',
+                          style: GoogleFonts.readexPro(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.0,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 0.0, 0.0),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.error_outline,
+                              color: Colors.red,
+                            ),
+                            title: Text(
+                              'Kindly fill in address details if this order must be delivered to your current location',
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodySmall,
+                                letterSpacing: 0.0,
+                              ),
+                            ),
+                            trailing: IconButton(
+                                onPressed: () => setState(() {
+                                      deliveryvisible = !deliveryvisible;
+                                    }),
+                                icon: Icon(deliveryvisible
+                                    ? Icons.keyboard_arrow_up_outlined
+                                    : Icons.keyboard_arrow_down_outlined)),
+                          )),
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * 0.85,
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Visibility(
+                        visible: deliveryvisible,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 4.0),
+                                child: Text(
+                                  'Street Address',
+                                  textAlign: TextAlign.start,
+                                  style: GoogleFonts.readexPro(
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 14,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 4.0),
+                                child: SizedBox(
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  child: TextFormField(
+                                    controller: stradd,
+                                    focusNode: safn,
+                                    autofocus: false,
+                                    obscureText: false,
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter Street Address',
+                                      alignLabelWithHint: false,
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.grey,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.green,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.orange,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Colors.red,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                    style: GoogleFonts.readexPro(
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                      fontSize: 14,
+                                      letterSpacing: 0.0,
+                                      // fontWeight: FontWeight.bold,
+                                    ),
+                                    validator: (val) {
+                                      if (val!.isEmpty) {
+                                        return 'Fill in Street Address';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 20.0, 0.0, 4.0),
+                                child: Text(
+                                  'Location',
+                                  textAlign: TextAlign.start,
+                                  style: GoogleFonts.readexPro(
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 14,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 4.0),
+                                child: SizedBox(
+                                  width: MediaQuery.sizeOf(context).width * 1.0,
+                                  // height: 50.0,
+                                  child: CountryStateCityPicker(
+                                    country: country,
+                                    state: state,
+                                    city: city,
+                                    dialogColor: Colors.white,
+                                    textFieldDecoration: InputDecoration(
+                                      border: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                          color: Color(0xffe0e3e7),
+                                          width: 2.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                      // fillColor: Colors.blueGrey.shade100,
+                                      // filled: false,
+                                      suffixIcon: const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Color(0xff57636c),
+                                        size: 24.0,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      child: Padding(
+                        padding: const EdgeInsetsDirectional.fromSTEB(
+                            10.0, 0.0, 0.0, 0.0),
+                        child: Text(
+                          'Add a coupon (optional)',
+                          style: GoogleFonts.readexPro(
+                            color: Colors.black,
+                            fontWeight: FontWeight.w500,
+                            letterSpacing: 0.0,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: const AlignmentDirectional(-1.0, 0.0),
+                      child: Padding(
+                          padding: const EdgeInsetsDirectional.fromSTEB(
+                              10.0, 0.0, 0.0, 0.0),
+                          child: ListTile(
+                            leading: const Icon(
+                              Icons.error_outline,
+                              color: Colors.red,
+                            ),
+                            title: Text(
+                              'If you have a coupon code, please apply it below',
+                              textAlign: TextAlign.left,
+                              style: GoogleFonts.readexPro(
+                                textStyle:
+                                    Theme.of(context).textTheme.bodySmall,
+                                letterSpacing: 0.0,
+                              ),
+                            ),
+                            trailing: IconButton(
+                                onPressed: () => setState(() {
+                                      couponvisible = !couponvisible;
+                                    }),
+                                icon: Icon(couponvisible
+                                    ? Icons.keyboard_arrow_up_outlined
+                                    : Icons.keyboard_arrow_down_outlined)),
+                          )),
+                    ),
+                    Container(
+                      width: MediaQuery.sizeOf(context).width * 0.85,
+                      padding: const EdgeInsets.only(bottom: 20),
+                      child: Visibility(
+                        visible: couponvisible,
+                        child: Column(
+                          children: [
+                            Align(
+                              alignment: const AlignmentDirectional(-1.0, 0.0),
+                              child: Padding(
+                                padding: const EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 4.0),
+                                child: Text(
+                                  'Coupon',
+                                  textAlign: TextAlign.start,
+                                  style: GoogleFonts.readexPro(
+                                    textStyle:
+                                        Theme.of(context).textTheme.bodyMedium,
+                                    fontSize: 14,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Align(
+                                  alignment:
+                                      const AlignmentDirectional(-1.0, 0.0),
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    child: TextFormField(
+                                      controller: coupon,
+                                      focusNode: cpcn,
+                                      autofocus: false,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        hintText: 'Enter Coupon',
+                                        alignLabelWithHint: false,
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.grey,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.green,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.orange,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Colors.red,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      style: GoogleFonts.readexPro(
+                                        textStyle: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                        fontSize: 14,
+                                        letterSpacing: 0.0,
+                                        // fontWeight: FontWeight.bold,
+                                      ),
+                                      validator: (val) {
+                                        if (val!.isEmpty) {
+                                          return 'Enter Coupon';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                Align(
+                                  alignment:
+                                      const AlignmentDirectional(1.0, 0.0),
+                                  child: SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.3,
+                                    child: ElevatedButton(
+                                      onPressed: () {},
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            const WidgetStatePropertyAll(
+                                                Color(0xFFE10E0E)),
+                                        elevation:
+                                            const WidgetStatePropertyAll(3.0),
+                                        shape: WidgetStatePropertyAll(
+                                          RoundedRectangleBorder(
+                                            side: const BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Apply',
+                                        style: GoogleFonts.readexPro(
+                                          color: Colors.white,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    )
                   ]),
                 ),
               ),
             ),
             Container(
               width: double.infinity,
-              // width: 396.0,
-              // height: 100 + (100 * c.itemCount.toDouble()),
               decoration: const BoxDecoration(
                 color: Colors.white,
               ),
@@ -528,6 +1147,40 @@ class _CheckoutState extends State<Checkout> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+              ),
+            ),
+            Align(
+              alignment: const AlignmentDirectional(0.0, 0.0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: 67.0,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Get.offAllNamed(home);
+                  },
+                  style: ButtonStyle(
+                    backgroundColor:
+                        const WidgetStatePropertyAll(Color(0xFFE10E0E)),
+                    elevation: const WidgetStatePropertyAll(3.0),
+                    shape: WidgetStatePropertyAll(
+                      RoundedRectangleBorder(
+                        side: const BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(12.0),
+                      ),
+                    ),
+                  ),
+                  child: Text(
+                    'Continue',
+                    style: GoogleFonts.readexPro(
+                      color: Colors.white,
+                      letterSpacing: 0.0,
+                      fontWeight: FontWeight.normal,
+                    ),
                   ),
                 ),
               ),

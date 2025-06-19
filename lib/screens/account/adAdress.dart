@@ -319,14 +319,6 @@ class _AdAddState extends State<AdAdd> {
                                         autofocus: false,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelStyle: GoogleFonts.readexPro(
-                                            textStyle: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium,
-                                            fontSize: 14,
-                                            letterSpacing: 0.0,
-                                            // fontWeight: FontWeight.bold,
-                                          ),
                                           alignLabelWithHint: false,
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: const BorderSide(
@@ -422,14 +414,6 @@ class _AdAddState extends State<AdAdd> {
                                         autofocus: false,
                                         obscureText: false,
                                         decoration: InputDecoration(
-                                          labelStyle: GoogleFonts.readexPro(
-                                            textStyle: Theme.of(context)
-                                                .textTheme
-                                                .labelMedium,
-                                            fontSize: 14,
-                                            letterSpacing: 0.0,
-                                            // fontWeight: FontWeight.bold,
-                                          ),
                                           alignLabelWithHint: false,
                                           enabledBorder: OutlineInputBorder(
                                             borderSide: const BorderSide(
